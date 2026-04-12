@@ -2744,6 +2744,98 @@ function closeHistorico() {
 }
 
 // ═══════════════════════════════════════════════
+// COMENTÁRIOS E SUGESTÕES
+// ═══════════════════════════════════════════════
+function getComentarios() {
+  try {
+    return JSON.parse(localStorage.getItem("guia-comentarios") || "[]");
+  } catch {
+    return [];
+  }
+}
+function formatComentarioDate(ts) {
+  try {
+    return new Date(ts).toLocaleString("pt-BR", {
+      dateStyle: "short",
+      timeStyle: "short",
+    });
+  } catch {
+    return "";
+  }
+}
+function renderComentarios() {
+  const el = document.getElementById("comentariosContent");
+  if (!el) return;
+
+  const comentarios = getComentarios();
+  if (!comentarios.length) {
+    el.innerHTML =
+      '<div class="comentario-empty">Nenhum comentário salvo ainda.<br>Use esse espaço para registrar melhorias e sugestões.</div>';
+    return;
+  }
+
+  el.innerHTML =
+    '<div class="comentario-list">' +
+    comentarios
+      .map(
+        (item) => `
+          <article class="comentario-item">
+            <div class="comentario-item-head">
+              <div>
+                <div class="comentario-author">${escapeHtml(item.nome || "Anônimo")}</div>
+                <div class="comentario-date">${formatComentarioDate(item.ts)}</div>
+              </div>
+            </div>
+            <div class="comentario-body">${escapeHtml(item.texto)}</div>
+            <button class="comentario-delete" type="button" onclick="removeComentario(${item.id})">Excluir</button>
+          </article>`,
+      )
+      .join("") +
+    "</div>";
+}
+function openComentarios() {
+  renderComentarios();
+  document.getElementById("comentariosModal").style.display = "flex";
+}
+function closeComentarios() {
+  document.getElementById("comentariosModal").style.display = "none";
+}
+function saveComentario(event) {
+  event.preventDefault();
+
+  const nomeInput = document.getElementById("comentarioNome");
+  const textoInput = document.getElementById("comentarioTexto");
+  const nome = nomeInput?.value.trim() || "";
+  const texto = textoInput?.value.trim() || "";
+
+  if (!texto) {
+    showToast("Escreva um comentário antes de salvar.");
+    return;
+  }
+
+  const comentarios = getComentarios();
+  comentarios.unshift({
+    id: Date.now(),
+    nome,
+    texto,
+    ts: Date.now(),
+  });
+  localStorage.setItem("guia-comentarios", JSON.stringify(comentarios.slice(0, 30)));
+
+  if (nomeInput) nomeInput.value = "";
+  if (textoInput) textoInput.value = "";
+
+  renderComentarios();
+  showToast("Comentário salvo neste navegador.");
+}
+function removeComentario(id) {
+  const comentarios = getComentarios().filter((item) => item.id !== id);
+  localStorage.setItem("guia-comentarios", JSON.stringify(comentarios));
+  renderComentarios();
+  showToast("Comentário removido.");
+}
+
+// ═══════════════════════════════════════════════
 // FAVORITOS
 // ═══════════════════════════════════════════════
 function getFavoritos() {
@@ -3515,6 +3607,7 @@ document.addEventListener("keydown", (e) => {
       "quizModal",
       "favoritosModal",
       "historicoModal",
+      "comentariosModal",
     ].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.style.display = "none";

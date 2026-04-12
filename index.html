@@ -42,6 +42,7 @@
     <button class="hdr-btn" onclick="openMiniProjetos()" title="Mini-projetos práticos">🏗 Projetos</button>
     <button class="hdr-btn" onclick="openFavoritos()" title="Meus favoritos">🔖 Favoritos</button>
     <button class="hdr-btn" onclick="openHistorico()" title="Histórico recente">🕐 Histórico</button>
+    <button class="hdr-btn" onclick="openComentarios()" title="Comentários e sugestões">💬 Sugestões</button>
     <button class="hdr-btn hdr-btn-quiz" onclick="startRandomQuiz()" title="Quiz aleatório">🧠 Quiz</button>
   </div>
 </header>
@@ -222,6 +223,25 @@
       <button class="modal-close-btn" onclick="closeHistorico()">✕</button>
     </div>
     <div id="historicoContent"></div>
+  </div>
+</div>
+
+<!-- ══════════════ MODAL COMENTÁRIOS ══════════════ -->
+<div class="modal-overlay" id="comentariosModal" style="display:none" onclick="if(event.target===this)closeComentarios()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>💬 Comentários e Sugestões</h2>
+      <button class="modal-close-btn" onclick="closeComentarios()">✕</button>
+    </div>
+    <p class="modal-subtitle">Salvo localmente neste navegador. Use para anotar melhorias, dúvidas ou ideias.</p>
+    <form class="comentario-form" onsubmit="saveComentario(event)">
+      <input class="comentario-input" id="comentarioNome" type="text" maxlength="50" placeholder="Seu nome ou apelido (opcional)">
+      <textarea class="comentario-textarea" id="comentarioTexto" rows="4" maxlength="500" placeholder="Escreva sua sugestão, comentário ou ponto de melhoria..." required></textarea>
+      <div class="comentario-form-actions">
+        <button class="comentario-save-btn" type="submit">Salvar comentário</button>
+      </div>
+    </form>
+    <div id="comentariosContent"></div>
   </div>
 </div>
 

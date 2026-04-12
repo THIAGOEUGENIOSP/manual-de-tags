@@ -1075,6 +1075,113 @@
 }
 .fav-remove:hover { color: var(--red); }
 
+.comentario-form {
+  display: grid;
+  gap: 0.65rem;
+  margin-bottom: 1rem;
+}
+
+.comentario-input,
+.comentario-textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(11,13,18,0.72);
+  color: var(--text);
+  padding: 0.8rem 0.9rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.comentario-input:focus,
+.comentario-textarea:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(74,158,255,0.12);
+}
+
+.comentario-textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.comentario-form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.comentario-save-btn {
+  padding: 0.65rem 1rem;
+  border: 1px solid rgba(62,207,142,0.28);
+  border-radius: 10px;
+  background: rgba(62,207,142,0.12);
+  color: var(--green);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.comentario-empty {
+  padding: 1rem;
+  text-align: center;
+  color: var(--muted);
+  border: 1px dashed rgba(255,255,255,0.08);
+  border-radius: 12px;
+}
+
+.comentario-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.comentario-item {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface2);
+  padding: 0.85rem;
+}
+
+.comentario-item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.55rem;
+}
+
+.comentario-author {
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.comentario-date {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.comentario-body {
+  color: var(--text);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.comentario-delete {
+  margin-top: 0.75rem;
+  padding: 0.38rem 0.7rem;
+  border: 1px solid rgba(255,107,107,0.24);
+  border-radius: 8px;
+  background: rgba(255,107,107,0.08);
+  color: var(--red);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 /* ══════════════════════════════════════════════
    FAVORITO BUTTON no painel
 ══════════════════════════════════════════════ */
