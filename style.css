@@ -1403,3 +1403,140 @@
 .back-to-top:hover {
   filter: brightness(1.06);
 }
+
+@media (max-width: 720px) {
+  header {
+    padding: 1.8rem 1rem 1.4rem;
+  }
+
+  .stats {
+    gap: 0.9rem;
+  }
+
+  .stat-num {
+    font-size: 1.15rem;
+  }
+
+  .lang-tabs {
+    justify-content: flex-start;
+    gap: 0.2rem;
+    padding: 0 0.25rem;
+  }
+
+  .lang-tab {
+    padding: 0.8rem 0.45rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+  }
+
+  .lang-banner {
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .lang-banner-text h3 {
+    font-size: 0.88rem;
+  }
+
+  .lang-banner-text p {
+    font-size: 0.68rem;
+  }
+
+  .container {
+    padding: 0.35rem 0.7rem 4.5rem;
+  }
+
+  table,
+  tbody,
+  tr,
+  td {
+    display: block;
+    width: 100%;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody tr {
+    margin-bottom: 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(17,20,28,0.9);
+  }
+
+  tbody td {
+    padding: 0.55rem 0.8rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  tbody td:last-child {
+    border-bottom: none;
+  }
+
+  .tag-cell {
+    white-space: normal;
+    word-break: break-word;
+    font-size: 0.72rem;
+    padding-bottom: 0.35rem;
+  }
+
+  .name-cell {
+    font-size: 0.78rem;
+    line-height: 1.35;
+  }
+
+  .desc-cell {
+    max-width: none;
+    font-size: 0.72rem;
+  }
+
+  .level-badge,
+  .essential-badge {
+    margin-top: 0.3rem;
+    margin-left: 0;
+  }
+
+  .usage-meta {
+    gap: 0.3rem;
+  }
+
+  .usage-pill {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .example-row td {
+    padding: 0 0 1rem;
+    border-bottom: none;
+  }
+
+  .example-inline-panel {
+    margin-top: -0.2rem;
+    padding: 0.9rem;
+    border-radius: 12px;
+  }
+
+  .example-card {
+    padding: 0.75rem;
+  }
+
+  .example-editor,
+  .example-code {
+    min-height: 220px;
+    font-size: 0.72rem;
+  }
+
+  .example-preview-frame {
+    min-height: 220px;
+  }
+
+  .back-to-top {
+    right: 0.8rem;
+    bottom: 0.8rem;
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+}
