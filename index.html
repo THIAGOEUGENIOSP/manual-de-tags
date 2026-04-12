@@ -16,17 +16,209 @@
     <span class="lang-badge badge-js">( ) JS</span>
   </div>
   <h1>Guia Completo <em>Front-End</em></h1>
-  <p class="subtitle">HTML · CSS · JavaScript — Uma referência completa para o seu aprendizado.</p>
+  <p class="subtitle">HTML · CSS · JavaScript — Referência total em Português-BR</p>
   <div class="stats">
     <div class="stat"><div class="stat-num html">140+</div><div class="stat-label">Tags HTML</div></div>
     <div class="stat"><div class="stat-num css">200+</div><div class="stat-label">Props CSS</div></div>
     <div class="stat"><div class="stat-num js">180+</div><div class="stat-label">Métodos JS</div></div>
-    <div class="stat"><div class="stat-num total">500+</div><div class="stat-label">Total</div></div>
+    <div class="stat"><div class="stat-num total" id="accessCount">0</div><div class="stat-label">Acessos</div></div>
   </div>
   <div class="search-wrap">
     <input type="text" id="searchInput" placeholder="Buscar qualquer tag, propriedade ou método..." oninput="applyFilters()">
   </div>
+  <div class="global-progress-wrap">
+    <div class="global-progress-bar" id="globalProgressBar" style="width:0%"></div>
+  </div>
+  <div class="header-actions">
+    <button class="hdr-btn" onclick="openTrilha()" title="Trilha de aprendizado">🗺 Trilha</button>
+    <button class="hdr-btn" onclick="openMiniProjetos()" title="Mini-projetos práticos">🏗 Projetos</button>
+    <button class="hdr-btn" onclick="openFavoritos()" title="Meus favoritos">🔖 Favoritos</button>
+    <button class="hdr-btn" onclick="openHistorico()" title="Histórico recente">🕐 Histórico</button>
+    <button class="hdr-btn hdr-btn-quiz" onclick="startRandomQuiz()" title="Quiz aleatório">🧠 Quiz</button>
+  </div>
 </header>
+
+<!-- ══════════════ TRILHA BANNER ══════════════ -->
+<div class="trilha-banner" id="trilhaBanner">
+  <div class="trilha-inner">
+    <div class="trilha-icon">🗺</div>
+    <div class="trilha-text"><strong>Novo por aqui?</strong> Siga a trilha de aprendizado recomendada para iniciantes</div>
+    <button class="trilha-btn" onclick="openTrilha()">Ver Trilha</button>
+    <button class="trilha-close" onclick="closeTrilhaBanner()">✕</button>
+  </div>
+</div>
+
+<!-- ══════════════ MODAL TRILHA ══════════════ -->
+<div class="modal-overlay" id="trilhaModal" style="display:none" onclick="if(event.target===this)closeTrilhaModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>🗺 Trilha de Aprendizado</h2>
+      <button class="modal-close-btn" onclick="closeTrilhaModal()">✕</button>
+    </div>
+    <p class="modal-subtitle">Sequência recomendada para quem está começando do zero</p>
+    <div class="trilha-steps">
+      <div class="trilha-step" data-step="1">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Estrutura HTML</div>
+          <div class="step-desc">Tags fundamentais: h1–h6, p, a, img, div, ul/li</div>
+          <div class="step-tags">
+            <button class="step-tag-btn" onclick="jumpAndClose('html','&lt;h1&gt; … &lt;h6&gt;')">h1–h6</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('html','&lt;p&gt;')">p</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('html','&lt;a&gt;')">a</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('html','&lt;img&gt;')">img</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('html','&lt;div&gt;')">div</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('html','&lt;ul&gt;')">ul</button>
+          </div>
+        </div>
+        <div class="step-check" id="step-check-1"></div>
+      </div>
+      <div class="trilha-step" data-step="2">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">HTML Semântico</div>
+          <div class="step-desc">Estruture com significado: header, nav, main, section, footer</div>
+          <div class="step-tags">
+            <button class="step-tag-btn" onclick="jumpAndClose('html','&lt;header&gt;')">header</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('html','&lt;nav&gt;')">nav</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('html','&lt;main&gt;')">main</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('html','&lt;section&gt;')">section</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('html','&lt;footer&gt;')">footer</button>
+          </div>
+        </div>
+        <div class="step-check" id="step-check-2"></div>
+      </div>
+      <div class="trilha-step" data-step="3">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">CSS Essencial</div>
+          <div class="step-desc">Estilize com color, background, margin, padding, border, font-size</div>
+          <div class="step-tags">
+            <button class="step-tag-btn" onclick="jumpAndClose('css','color')">color</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('css','background')">background</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('css','margin')">margin</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('css','padding')">padding</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('css','font-size')">font-size</button>
+          </div>
+        </div>
+        <div class="step-check" id="step-check-3"></div>
+      </div>
+      <div class="trilha-step" data-step="4">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">CSS Flexbox</div>
+          <div class="step-desc">Posicione com display flex, justify-content, align-items, gap</div>
+          <div class="step-tags">
+            <button class="step-tag-btn" onclick="jumpAndClose('css','display')">display</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('css','flex')">flex</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('css','justify-content')">justify-content</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('css','align-items')">align-items</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('css','gap')">gap</button>
+          </div>
+        </div>
+        <div class="step-check" id="step-check-4"></div>
+      </div>
+      <div class="trilha-step" data-step="5">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">JavaScript DOM</div>
+          <div class="step-desc">Manipule a página com querySelector, addEventListener, classList</div>
+          <div class="step-tags">
+            <button class="step-tag-btn" onclick="jumpAndClose('js','document.querySelector()')">querySelector</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('js','.addEventListener()')">.addEventListener</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('js','.classList.add()')">.classList</button>
+            <button class="step-tag-btn" onclick="jumpAndClose('js','fetch(url)')">fetch</button>
+          </div>
+        </div>
+        <div class="step-check" id="step-check-5"></div>
+      </div>
+      <div class="trilha-step" data-step="6">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <div class="step-title">Mini-Projetos</div>
+          <div class="step-desc">Combine tudo em projetos reais: card, navbar, formulário, to-do</div>
+          <div class="step-tags">
+            <button class="step-tag-btn" onclick="closeTrilhaModal();openMiniProjetos()">Ver Projetos</button>
+          </div>
+        </div>
+        <div class="step-check" id="step-check-6"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ MODAL MINI-PROJETOS ══════════════ -->
+<div class="modal-overlay" id="miniProjetosModal" style="display:none" onclick="if(event.target===this)closeMiniProjetos()">
+  <div class="modal-box modal-box-wide">
+    <div class="modal-head">
+      <h2>🏗 Mini-Projetos</h2>
+      <button class="modal-close-btn" onclick="closeMiniProjetos()">✕</button>
+    </div>
+    <p class="modal-subtitle">Projetos práticos combinando HTML + CSS + JS — edite e veja ao vivo</p>
+    <div class="projetos-tabs" id="projetosTabs"></div>
+    <div class="proj-preview-wrap">
+      <div class="proj-editor-col">
+        <div class="proj-editor-label">✏️ Código editável</div>
+        <textarea class="proj-editor" id="projetoEditor" spellcheck="false"></textarea>
+        <div class="proj-actions">
+          <button class="proj-run-btn" onclick="runProjeto()">▶ Executar</button>
+          <button class="proj-reset-btn" onclick="resetProjeto()">↺ Restaurar</button>
+        </div>
+      </div>
+      <div class="proj-frame-col">
+        <div class="preview-browser">
+          <div class="preview-browser-bar">
+            <div class="preview-browser-dots">
+              <span class="preview-dot preview-dot-red"></span>
+              <span class="preview-dot preview-dot-yellow"></span>
+              <span class="preview-dot preview-dot-green"></span>
+            </div>
+            <div class="preview-browser-url" id="projBrowserUrl">mini-projeto</div>
+            <span class="preview-browser-label">LIVE</span>
+          </div>
+          <iframe id="projetoFrame" class="proj-frame" sandbox="allow-scripts"></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="proj-info" id="projetoInfo"></div>
+  </div>
+</div>
+
+<!-- ══════════════ MODAL QUIZ ══════════════ -->
+<div class="modal-overlay" id="quizModal" style="display:none" onclick="if(event.target===this)closeQuiz()">
+  <div class="modal-box modal-box-quiz">
+    <div class="modal-head">
+      <h2>🧠 Quiz Rápido</h2>
+      <button class="modal-close-btn" onclick="closeQuiz()">✕</button>
+    </div>
+    <div id="quizContent"></div>
+  </div>
+</div>
+
+<!-- ══════════════ MODAL FAVORITOS ══════════════ -->
+<div class="modal-overlay" id="favoritosModal" style="display:none" onclick="if(event.target===this)closeFavoritos()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>🔖 Favoritos</h2>
+      <button class="modal-close-btn" onclick="closeFavoritos()">✕</button>
+    </div>
+    <div id="favoritosContent"></div>
+  </div>
+</div>
+
+<!-- ══════════════ MODAL HISTÓRICO ══════════════ -->
+<div class="modal-overlay" id="historicoModal" style="display:none" onclick="if(event.target===this)closeHistorico()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>🕐 Histórico Recente</h2>
+      <button class="modal-close-btn" onclick="closeHistorico()">✕</button>
+    </div>
+    <div id="historicoContent"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
 <!-- ══════════════ LANGUAGE TABS ══════════════ -->
 <div class="lang-tabs">
@@ -1104,6 +1296,7 @@
   ✦ Guia Completo Front-End — HTML · CSS · JavaScript — 500+ referências — Português-BR ✦
 </footer>
 
+<button class="back-to-top" id="backToTopBtn" type="button" onclick="scrollToTop()" aria-label="Voltar ao topo" title="Voltar ao topo">↑</button>
 <script src="script.js"></script>
 </body>
 </html>

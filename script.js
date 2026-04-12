@@ -2367,6 +2367,7 @@ function openInlineExample(row, lang, token, name, details) {
 
   const detailRow = document.createElement("tr");
   detailRow.className = "example-row";
+  const isFav = isFavorito(lang, token);
   detailRow.innerHTML = `
     <td colspan="${row.children.length}">
       <div class="example-inline-panel">
@@ -2376,8 +2377,11 @@ function openInlineExample(row, lang, token, name, details) {
             <h3>${escapeHtml(token)} - ${escapeHtml(name)}</h3>
           </div>
           <div class="example-actions">
+            <button type="button" class="example-fav ${isFav ? "is-fav" : ""}" aria-label="Favoritar" data-label="${isFav ? "Salvo" : "Favoritar"}" title="Adicionar aos favoritos">${isFav ? "★" : "☆"}</button>
+            <button type="button" class="example-quiz-btn" aria-label="Testar com quiz" data-label="Quiz" title="Testar com quiz">🧠 Quiz</button>
             ${canEdit ? '<button type="button" class="example-reset" aria-label="Restaurar exemplo" data-label="Restaurar">Restaurar</button>' : ""}
             <button type="button" class="example-copy" aria-label="Copiar exemplo" data-label="Copiar exemplo">Copiar exemplo</button>
+            ${preview ? '<button type="button" class="example-theme-toggle" aria-label="Alternar tema do preview" title="Alternar tema claro/escuro">🌙</button>' : ""}
             <button type="button" class="example-close" aria-label="Fechar exemplo">Fechar</button>
           </div>
         </div>
@@ -2399,6 +2403,9 @@ function openInlineExample(row, lang, token, name, details) {
               : `<pre class="example-code">${escapeHtml(details.example)}</pre>`
           }
         </div>
+        ${getCommonErrorBlock(lang, token)}
+        ${getCasosDeUso(lang, token)}
+        ${getBrowserCompat(lang, token)}
         ${
           preview
             ? `
@@ -2454,6 +2461,64 @@ function openInlineExample(row, lang, token, name, details) {
       const text = editor ? editor.value : details.example;
       copyText(text, event.currentTarget);
     });
+
+  // Favorito
+  const favBtn = detailRow.querySelector(".example-fav");
+  if (favBtn) {
+    favBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const saved = toggleFavorito(lang, token, name);
+      favBtn.textContent = saved ? "★" : "☆";
+      favBtn.classList.toggle("is-fav", saved);
+      showToast(
+        saved
+          ? `★ ${token} adicionado aos favoritos`
+          : `${token} removido dos favoritos`,
+      );
+    });
+  }
+
+  // Quiz
+  const quizBtn = detailRow.querySelector(".example-quiz-btn");
+  if (quizBtn) {
+    quizBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      startQuizForToken(lang, token, name);
+    });
+  }
+
+  // Theme toggle for preview
+  const themeToggle = detailRow.querySelector(".example-theme-toggle");
+  if (themeToggle) {
+    let isDark = false;
+    themeToggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      isDark = !isDark;
+      themeToggle.textContent = isDark ? "☀️" : "🌙";
+      const frame = detailRow.querySelector(".example-preview-frame");
+      if (frame && frame.contentDocument) {
+        frame.contentDocument.body.style.background = isDark ? "#0b0d12" : "";
+        frame.contentDocument.body.style.color = isDark ? "#e2e8f0" : "";
+      }
+      // Rebuild srcdoc with theme
+      if (preview) {
+        const editor = detailRow.querySelector(".example-editor");
+        const code = editor ? editor.value : details.example;
+        const validation = validatePreviewContent(lang, token, code);
+        if (validation.ok) {
+          let srcdoc = preview.buildSrcdoc(code);
+          if (isDark) {
+            srcdoc = srcdoc.replace(
+              "<body>",
+              '<body style="background:#0f172a;color:#e2e8f0">',
+            );
+          }
+          updatePreviewState(detailRow, validation, srcdoc);
+        }
+      }
+    });
+  }
+
   if (canEdit) {
     const editor = detailRow.querySelector(".example-editor");
     const resetButton = detailRow.querySelector(".example-reset");
@@ -2576,3 +2641,829 @@ function applyFilters() {
 enhanceReferenceTables();
 updateCategoryButtons();
 applyFilters();
+
+// ═══════════════════════════════════════════════
+// PROGRESSO & ESTUDADOS
+// ═══════════════════════════════════════════════
+const TOTAL_ITEMS = 500;
+function getStudied() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem("guia-studied") || "[]"));
+  } catch {
+    return new Set();
+  }
+}
+function markStudied(key) {
+  const s = getStudied();
+  s.add(key);
+  localStorage.setItem("guia-studied", JSON.stringify([...s]));
+  updateProgressUI();
+}
+function updateProgressUI() {
+  const count = getStudied().size;
+  const el = document.getElementById("studiedCount");
+  if (el) el.textContent = count;
+  const bar = document.getElementById("globalProgressBar");
+  if (bar) bar.style.width = Math.min(100, (count / TOTAL_ITEMS) * 100) + "%";
+}
+updateProgressUI();
+
+function getAccessCount() {
+  const raw = Number(localStorage.getItem("guia-access-count") || "0");
+  return Number.isFinite(raw) ? raw : 0;
+}
+
+function updateAccessUI() {
+  const el = document.getElementById("accessCount");
+  if (el) el.textContent = getAccessCount();
+}
+
+function incrementAccessCount() {
+  const next = getAccessCount() + 1;
+  localStorage.setItem("guia-access-count", String(next));
+  updateAccessUI();
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function updateBackToTopVisibility() {
+  const btn = document.getElementById("backToTopBtn");
+  if (!btn) return;
+  btn.classList.toggle("show", window.scrollY > 280);
+}
+
+incrementAccessCount();
+updateBackToTopVisibility();
+window.addEventListener("scroll", updateBackToTopVisibility, { passive: true });
+
+// ═══════════════════════════════════════════════
+// HISTÓRICO
+// ═══════════════════════════════════════════════
+function getHistorico() {
+  try {
+    return JSON.parse(localStorage.getItem("guia-historico") || "[]");
+  } catch {
+    return [];
+  }
+}
+function addHistorico(lang, token, name) {
+  let h = getHistorico().filter((x) => !(x.lang === lang && x.token === token));
+  h.unshift({ lang, token, name, ts: Date.now() });
+  if (h.length > 20) h = h.slice(0, 20);
+  localStorage.setItem("guia-historico", JSON.stringify(h));
+}
+function openHistorico() {
+  const h = getHistorico();
+  const el = document.getElementById("historicoContent");
+  if (!h.length) {
+    el.innerHTML =
+      '<p style="color:var(--muted);padding:1rem;text-align:center">Nenhum item visualizado ainda.<br>Clique em qualquer linha para começar.</p>';
+  } else {
+    el.innerHTML =
+      '<div class="fav-list">' +
+      h
+        .map(
+          (item) =>
+            `<div class="fav-item">
+        <span class="fav-lang fav-lang-${item.lang}">${item.lang.toUpperCase()}</span>
+        <span class="fav-token">${escapeHtml(item.token)}</span>
+        <span class="fav-name">${escapeHtml(item.name)}</span>
+        <button class="fav-goto" onclick="closeHistorico();jumpToToken('${item.lang}','${item.token.replace(/'/g, "\\'").replace(/"/g, '\\"')}')">Ir →</button>
+      </div>`,
+        )
+        .join("") +
+      "</div>";
+  }
+  document.getElementById("historicoModal").style.display = "flex";
+}
+function closeHistorico() {
+  document.getElementById("historicoModal").style.display = "none";
+}
+
+// ═══════════════════════════════════════════════
+// FAVORITOS
+// ═══════════════════════════════════════════════
+function getFavoritos() {
+  try {
+    return JSON.parse(localStorage.getItem("guia-favoritos") || "[]");
+  } catch {
+    return [];
+  }
+}
+function isFavorito(lang, token) {
+  return getFavoritos().some((x) => x.lang === lang && x.token === token);
+}
+function toggleFavorito(lang, token, name) {
+  let favs = getFavoritos();
+  const idx = favs.findIndex((x) => x.lang === lang && x.token === token);
+  if (idx >= 0) {
+    favs.splice(idx, 1);
+  } else {
+    favs.push({ lang, token, name });
+  }
+  localStorage.setItem("guia-favoritos", JSON.stringify(favs));
+  return idx < 0;
+}
+function openFavoritos() {
+  const favs = getFavoritos();
+  const el = document.getElementById("favoritosContent");
+  if (!favs.length) {
+    el.innerHTML =
+      '<p style="color:var(--muted);padding:1rem;text-align:center">Nenhum favorito ainda.<br>Abra qualquer tag e clique em ☆ para salvar.</p>';
+  } else {
+    el.innerHTML =
+      '<div class="fav-list">' +
+      favs
+        .map(
+          (item) =>
+            `<div class="fav-item">
+        <span class="fav-lang fav-lang-${item.lang}">${item.lang.toUpperCase()}</span>
+        <span class="fav-token">${escapeHtml(item.token)}</span>
+        <span class="fav-name">${escapeHtml(item.name)}</span>
+        <button class="fav-goto" onclick="closeFavoritos();jumpToToken('${item.lang}','${item.token.replace(/'/g, "\\'").replace(/"/g, '\\"')}')">Ir →</button>
+        <button class="fav-remove" onclick="removeFavAndRefresh('${item.lang}','${item.token.replace(/'/g, "\\'").replace(/"/g, '\\"')}')">✕</button>
+      </div>`,
+        )
+        .join("") +
+      "</div>";
+  }
+  document.getElementById("favoritosModal").style.display = "flex";
+}
+function removeFavAndRefresh(lang, token) {
+  toggleFavorito(lang, token, "");
+  openFavoritos();
+}
+function closeFavoritos() {
+  document.getElementById("favoritosModal").style.display = "none";
+}
+
+// ═══════════════════════════════════════════════
+// TRILHA
+// ═══════════════════════════════════════════════
+function openTrilha() {
+  updateTrilhaChecks();
+  document.getElementById("trilhaModal").style.display = "flex";
+}
+function closeTrilhaModal() {
+  document.getElementById("trilhaModal").style.display = "none";
+}
+function closeTrilhaBanner() {
+  document.getElementById("trilhaBanner").style.display = "none";
+  localStorage.setItem("guia-trilha-banner", "closed");
+}
+function updateTrilhaChecks() {
+  const studied = getStudied();
+  const stepTokens = {
+    1: ["html:<h1> … <h6>", "html:<p>", "html:<a>", "html:<img>", "html:<div>"],
+    2: [
+      "html:<header>",
+      "html:<nav>",
+      "html:<main>",
+      "html:<section>",
+      "html:<footer>",
+    ],
+    3: ["css:color", "css:background", "css:margin", "css:padding"],
+    4: ["css:display", "css:flex", "css:justify-content", "css:align-items"],
+    5: ["js:document.querySelector()", "js:.addEventListener()"],
+    6: [],
+  };
+  for (let i = 1; i <= 6; i++) {
+    const el = document.getElementById("step-check-" + i);
+    if (!el) continue;
+    const tokens = stepTokens[i];
+    if (!tokens.length) {
+      el.textContent = "";
+      continue;
+    }
+    const done = tokens.filter((t) => studied.has(t)).length;
+    const pct = Math.round((done / tokens.length) * 100);
+    el.innerHTML =
+      pct === 100
+        ? '<span style="color:var(--green);font-size:1.2rem">✓</span>'
+        : `<span style="font-size:.75rem;color:var(--muted)">${done}/${tokens.length}</span>`;
+  }
+}
+function jumpToToken(lang, tokenText) {
+  const tab = document.querySelector(`.lang-tab[data-lang="${lang}"]`);
+  if (tab) switchLang(lang, tab);
+  setTimeout(() => {
+    const clean = tokenText
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&amp;/g, "&");
+    const rows = document.querySelectorAll(
+      `table[data-lang="${lang}"] tbody tr:not(.example-row)`,
+    );
+    for (const row of rows) {
+      const tagCell = row.querySelector(".tag-cell");
+      if (tagCell && tagCell.textContent.trim().includes(clean)) {
+        row.scrollIntoView({ behavior: "smooth", block: "center" });
+        setTimeout(() => row.click(), 400);
+        return;
+      }
+    }
+  }, 200);
+}
+function jumpAndClose(lang, token) {
+  closeTrilhaModal();
+  jumpToToken(lang, token);
+}
+
+if (localStorage.getItem("guia-trilha-banner") !== "closed") {
+  const b = document.getElementById("trilhaBanner");
+  if (b) b.style.display = "block";
+}
+
+// ═══════════════════════════════════════════════
+// ERRO COMUM, CASOS DE USO, COMPAT
+// ═══════════════════════════════════════════════
+const commonErrors = {
+  html: {
+    "<img>": {
+      error: "Esquecer o atributo <code>alt</code>",
+      fix: 'Sempre use <code>&lt;img src="..." alt="descrição"&gt;</code> para acessibilidade e SEO.',
+    },
+    "<a>": {
+      error: "Usar <code>#</code> como href sem destino",
+      fix: 'Use <code>href="#secao-id"</code> ou <code>href="pagina.html"</code>. Para ações, prefira <code>&lt;button&gt;</code>.',
+    },
+    "<input>": {
+      error: "Não associar <code>&lt;label&gt;</code> ao input",
+      fix: 'Use <code>&lt;label for="id"&gt;</code> e <code>&lt;input id="id"&gt;</code> para acessibilidade.',
+    },
+    "<div>": {
+      error: "Usar div para tudo em vez de tags semânticas",
+      fix: "Prefira <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code> onde couber.",
+    },
+    "<button>": {
+      error: 'Esquecer <code>type="button"</code> dentro de formulários',
+      fix: 'Sem type, o botão dispara submit por padrão. Use <code>type="button"</code> para ações JS.',
+    },
+    "<form>": {
+      error: "Recarregar a página ao submeter",
+      fix: "Use <code>event.preventDefault()</code> no handler de submit para controlar via JS.",
+    },
+    "<table>": {
+      error: "Usar tabela para layout de página",
+      fix: "Tabelas são para dados tabulares. Use Flexbox ou Grid para layout.",
+    },
+  },
+  css: {
+    margin: {
+      error: "Usar <code>margin: auto</code> sem largura definida",
+      fix: "Para centralizar: <code>margin: 0 auto</code> + <code>width: valor</code> fixo, ou Flexbox com <code>justify-content: center</code>.",
+    },
+    position: {
+      error:
+        "Usar <code>position: absolute</code> sem pai <code>relative</code>",
+      fix: "O elemento pai precisa ter <code>position: relative</code> para ser o contexto de posicionamento.",
+    },
+    "z-index": {
+      error: "<code>z-index</code> não funcionar como esperado",
+      fix: "z-index só funciona com <code>position</code> diferente de <code>static</code>.",
+    },
+    display: {
+      error: "Achar que flex afeta o próprio elemento",
+      fix: "<code>display: flex</code> transforma os filhos diretos em flex items, não o elemento em si.",
+    },
+    color: {
+      error: "Confundir <code>color</code> com <code>background-color</code>",
+      fix: "<code>color</code> é só para texto. Para o fundo, use <code>background</code> ou <code>background-color</code>.",
+    },
+  },
+  js: {
+    "document.querySelector()": {
+      error: "Não verificar se o elemento existe",
+      fix: "Use: <code>const el = querySelector(...); if (el) { ... }</code>",
+    },
+    ".addEventListener()": {
+      error: "Adicionar múltiplos listeners duplicados",
+      fix: "Cada chamada adiciona um novo listener. Garanta que o código roda uma só vez ou use removeEventListener.",
+    },
+    "fetch(url)": {
+      error: "Não tratar erros de rede",
+      fix: "Sempre adicione <code>.catch()</code> e verifique <code>response.ok</code> antes de <code>.json()</code>.",
+    },
+    "localStorage.setItem()": {
+      error: "Salvar objetos sem <code>JSON.stringify()</code>",
+      fix: "Objetos viram \"[object Object]\". Use: <code>localStorage.setItem('k', JSON.stringify(obj))</code>.",
+    },
+    ".map()": {
+      error: "Esquecer de usar o retorno",
+      fix: ".map() retorna um novo array — o original não muda. Armazene: <code>const novo = arr.map(...)</code>.",
+    },
+  },
+};
+const casosDeUso = {
+  html: {
+    "<nav>":
+      "YouTube, GitHub e todos os grandes sites usam &lt;nav&gt; para o menu principal.",
+    "<article>":
+      "Posts no Medium, notícias na CNN e cards de produto na Amazon usam &lt;article&gt;.",
+    "<form>":
+      "Todo formulário de login, cadastro ou checkout usa &lt;form&gt; — do Google ao Mercado Livre.",
+    "<dialog>":
+      'Modais de confirmação como "Tem certeza que deseja deletar?" usam &lt;dialog&gt; nativo.',
+    "<details>":
+      "Seções de FAQ em docs (como GitHub Docs) usam &lt;details&gt; + &lt;summary&gt;.",
+  },
+  css: {
+    display:
+      "Flexbox é usado na navbar do GitHub, nos cards do Netflix e em todo layout moderno.",
+    "grid-template-columns":
+      "O grid de produtos da Amazon e galerias como o Pinterest usam CSS Grid.",
+    transition:
+      "Hover em botões do YouTube e animações suaves de menus usam transition.",
+    position:
+      "Barras de notificação fixas no topo (cookie banners) usam position: fixed.",
+  },
+  js: {
+    "fetch(url)":
+      "Todo feed do Instagram, timeline do Twitter e busca do Google usa fetch para carregar dados.",
+    ".addEventListener()":
+      "Cada clique de botão, scroll infinito e validação de formulário usa addEventListener.",
+    "localStorage.setItem()":
+      "Tema escuro do Twitter, preferências do YouTube e carrinhos usam localStorage.",
+    ".map()":
+      "Renderização de listas em React, Vue e Angular usa .map() extensivamente.",
+  },
+};
+const browserCompat = {
+  html: {
+    "<dialog>": {
+      chrome: "✓",
+      firefox: "✓",
+      safari: "✓ 15.4+",
+      ie: "✗",
+      note: "Suporte total nos navegadores modernos.",
+    },
+    "<details>": {
+      chrome: "✓",
+      firefox: "✓",
+      safari: "✓",
+      ie: "✗",
+      note: "IE não suporta. Use polyfill se necessário.",
+    },
+    "<canvas>": {
+      chrome: "✓",
+      firefox: "✓",
+      safari: "✓",
+      ie: "✓ 9+",
+      note: "Suporte amplo, performance varia.",
+    },
+  },
+  css: {
+    "grid-template-columns": {
+      chrome: "✓ 57+",
+      firefox: "✓ 52+",
+      safari: "✓ 10.1+",
+      ie: "✗ parcial",
+      note: "IE tem implementação antiga com prefixo -ms-.",
+    },
+    "backdrop-filter": {
+      chrome: "✓",
+      firefox: "✓ 103+",
+      safari: "✓",
+      ie: "✗",
+      note: "Firefox só suportou a partir da versão 103.",
+    },
+    animation: {
+      chrome: "✓",
+      firefox: "✓",
+      safari: "✓",
+      ie: "✓ 10+",
+      note: "Suporte amplo. Use @keyframes sem prefixo.",
+    },
+  },
+  js: {
+    "fetch(url)": {
+      chrome: "✓",
+      firefox: "✓",
+      safari: "✓",
+      ie: "✗",
+      note: "IE não suporta fetch. Use polyfill ou XMLHttpRequest.",
+    },
+    "localStorage.setItem()": {
+      chrome: "✓",
+      firefox: "✓",
+      safari: "✓",
+      ie: "✓ 8+",
+      note: "Pode ser bloqueado no modo privado do Safari.",
+    },
+  },
+};
+function getCommonErrorBlock(lang, token) {
+  const e = commonErrors[lang]?.[token];
+  if (!e) return "";
+  return `<div class="example-card error-block"><span class="example-label">⚠️ Erro comum</span><div class="error-content"><div class="error-wrong">❌ ${e.error}</div><div class="error-fix">✅ ${e.fix}</div></div></div>`;
+}
+function getCasosDeUso(lang, token) {
+  const c = casosDeUso[lang]?.[token];
+  if (!c) return "";
+  return `<div class="example-card casos-block"><span class="example-label">🌐 Onde é usado</span><div class="casos-content">${c}</div></div>`;
+}
+function getBrowserCompat(lang, token) {
+  const b = browserCompat[lang]?.[token];
+  if (!b) return "";
+  return `<div class="example-card compat-block"><span class="example-label">🌍 Compatibilidade</span><div class="compat-grid"><span class="compat-item compat-yes">Chrome ${b.chrome}</span><span class="compat-item compat-yes">Firefox ${b.firefox}</span><span class="compat-item compat-yes">Safari ${b.safari}</span><span class="compat-item ${b.ie === "✗" ? "compat-no" : "compat-yes"}">IE ${b.ie}</span></div>${b.note ? `<div class="compat-note">${b.note}</div>` : ""}</div>`;
+}
+
+// ═══════════════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════════════
+const quizBank = {
+  html: [
+    {
+      token: "<p>",
+      question: "Qual tag cria um parágrafo de texto?",
+      options: ["<p>", "<text>", "<para>", "<span>"],
+      answer: 0,
+    },
+    {
+      token: "<a>",
+      question: "Qual atributo define o destino de um link <a>?",
+      options: ["src", "href", "link", "url"],
+      answer: 1,
+    },
+    {
+      token: "<img>",
+      question: "Qual atributo é obrigatório em <img> para acessibilidade?",
+      options: ["src", "width", "alt", "title"],
+      answer: 2,
+    },
+    {
+      token: "<div>",
+      question: "O <div> é um elemento de nível:",
+      options: ["inline", "bloco", "table", "flex"],
+      answer: 1,
+    },
+    {
+      token: "<input>",
+      question: "Qual type cria um campo de senha?",
+      options: [
+        'type="text"',
+        'type="secret"',
+        'type="password"',
+        'type="hidden"',
+      ],
+      answer: 2,
+    },
+    {
+      token: "<button>",
+      question: "Dentro de um <form>, o type padrão de <button> é:",
+      options: ["button", "reset", "submit", "click"],
+      answer: 2,
+    },
+    {
+      token: "<ul>",
+      question: "O elemento filho direto de <ul> deve ser:",
+      options: ["<p>", "<span>", "<li>", "<item>"],
+      answer: 2,
+    },
+    {
+      token: "<form>",
+      question: "Para não recarregar a página ao submeter, usa-se:",
+      options: [
+        "return false",
+        "e.stop()",
+        "event.preventDefault()",
+        "e.cancel()",
+      ],
+      answer: 2,
+    },
+  ],
+  css: [
+    {
+      token: "color",
+      question: 'A propriedade "color" afeta:',
+      options: ["O fundo", "A borda", "A cor do texto", "A opacidade"],
+      answer: 2,
+    },
+    {
+      token: "display",
+      question: 'Para usar flexbox, qual valor de "display"?',
+      options: ["block", "flex", "grid", "inline"],
+      answer: 1,
+    },
+    {
+      token: "margin",
+      question: "Para centralizar com margin, também preciso de:",
+      options: ["height", "display:flex", "width definida", "padding"],
+      answer: 2,
+    },
+    {
+      token: "position",
+      question: "position: absolute se posiciona em relação a:",
+      options: ["O body", "O pai com position≠static", "O viewport", "O irmão"],
+      answer: 1,
+    },
+    {
+      token: "z-index",
+      question: "z-index só funciona com position:",
+      options: [
+        "static",
+        "relative/absolute/fixed",
+        "qualquer",
+        "apenas fixed",
+      ],
+      answer: 1,
+    },
+    {
+      token: "border-radius",
+      question: "Para criar um círculo, usar border-radius:",
+      options: ["0", "8px", "50%", "100px"],
+      answer: 2,
+    },
+    {
+      token: "flex",
+      question: "flex: 1 em um item significa:",
+      options: [
+        "Largura 1px",
+        "Ocupa todo espaço disponível",
+        "Centraliza",
+        "Remove do fluxo",
+      ],
+      answer: 1,
+    },
+  ],
+  js: [
+    {
+      token: "document.querySelector()",
+      question: 'querySelector(".card") seleciona:',
+      options: [
+        "Todos os .card",
+        "O primeiro .card",
+        "O último .card",
+        "Pelo id",
+      ],
+      answer: 1,
+    },
+    {
+      token: ".addEventListener()",
+      question: "Para executar ao clicar:",
+      options: [
+        ".onClick()",
+        'addEventListener("click",fn)',
+        'addEvent("click")',
+        "onclick()",
+      ],
+      answer: 1,
+    },
+    {
+      token: ".map()",
+      question: ".map() em um array:",
+      options: [
+        "Modifica o original",
+        "Retorna novo array",
+        "Remove elementos",
+        "Ordena",
+      ],
+      answer: 1,
+    },
+    {
+      token: ".filter()",
+      question: ".filter() retorna:",
+      options: [
+        "Primeiro que passa",
+        "Todos que passam na condição",
+        "O índice",
+        "Boolean",
+      ],
+      answer: 1,
+    },
+    {
+      token: "fetch(url)",
+      question: "fetch() retorna:",
+      options: ["Dados direto", "Uma Promise", "JSON", "String"],
+      answer: 1,
+    },
+    {
+      token: "JSON.stringify()",
+      question: 'JSON.stringify({n:"Ana"}) produz:',
+      options: ["objeto JS", '"{\\"n\\":\\"Ana\\"}","n=Ana","undefined'],
+      answer: 1,
+    },
+    {
+      token: "localStorage.setItem()",
+      question: "localStorage armazena dados:",
+      options: [
+        "Por 1 sessão",
+        "Permanentemente até limpar",
+        "No servidor",
+        "Por 24h",
+      ],
+      answer: 1,
+    },
+  ],
+};
+let quizState = { questions: [], current: 0, score: 0 };
+function startRandomQuiz() {
+  const all = [...quizBank.html, ...quizBank.css, ...quizBank.js];
+  quizState = {
+    questions: all.sort(() => Math.random() - 0.5).slice(0, 6),
+    current: 0,
+    score: 0,
+  };
+  renderQuiz();
+  document.getElementById("quizModal").style.display = "flex";
+}
+function startQuizForToken(lang, token) {
+  const pool = quizBank[lang] || [];
+  const q = pool.find((q) => q.token === token);
+  const extra = pool
+    .filter((q) => q.token !== token)
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 2);
+  const questions = q ? [q, ...extra] : extra;
+  if (!questions.length) {
+    showToast("Sem quiz para este item ainda.");
+    return;
+  }
+  quizState = { questions, current: 0, score: 0 };
+  renderQuiz();
+  document.getElementById("quizModal").style.display = "flex";
+}
+function renderQuiz() {
+  const el = document.getElementById("quizContent");
+  const { questions, current, score } = quizState;
+  if (current >= questions.length) {
+    const pct = Math.round((score / questions.length) * 100);
+    el.innerHTML = `<div class="quiz-result">
+      <div class="quiz-score-big">${pct === 100 ? "🎉" : pct >= 60 ? "👍" : "📚"}</div>
+      <div class="quiz-score-num">${score}/${questions.length}</div>
+      <div class="quiz-score-pct">${pct}% de acerto</div>
+      <div class="quiz-score-msg">${pct === 100 ? "Perfeito! Você domina esse conteúdo." : pct >= 60 ? "Bom trabalho! Continue praticando." : "Revise os itens e tente novamente."}</div>
+      <button class="quiz-next-btn" onclick="startRandomQuiz()">Novo Quiz</button>
+      <button class="quiz-close-btn" onclick="closeQuiz()">Fechar</button>
+    </div>`;
+    return;
+  }
+  const q = questions[current];
+  el.innerHTML = `
+    <div class="quiz-progress">Pergunta ${current + 1} de ${questions.length} · ${score} acerto(s)</div>
+    <div class="quiz-progress-bar-wrap"><div class="quiz-progress-bar" style="width:${(current / questions.length) * 100}%"></div></div>
+    <div class="quiz-question">${q.question}</div>
+    <div class="quiz-tag-hint">Referente a: <code>${escapeHtml(q.token)}</code></div>
+    <div class="quiz-options">${q.options.map((opt, i) => `<button class="quiz-opt" onclick="answerQuiz(${i})">${escapeHtml(opt)}</button>`).join("")}</div>`;
+}
+function answerQuiz(idx) {
+  const { questions, current } = quizState;
+  const q = questions[current];
+  const correct = idx === q.answer;
+  if (correct) quizState.score++;
+  document.querySelectorAll(".quiz-opt").forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.answer) btn.classList.add("quiz-correct");
+    else if (i === idx && !correct) btn.classList.add("quiz-wrong");
+  });
+  const el = document.getElementById("quizContent");
+  const fb = document.createElement("div");
+  fb.className =
+    "quiz-feedback " + (correct ? "quiz-feedback-ok" : "quiz-feedback-err");
+  fb.innerHTML = correct
+    ? "✅ Correto!"
+    : `❌ Resposta: <strong>${escapeHtml(q.options[q.answer])}</strong>`;
+  el.appendChild(fb);
+  const btn = document.createElement("button");
+  btn.className = "quiz-next-btn";
+  btn.textContent =
+    current + 1 < questions.length ? "Próxima →" : "Ver resultado";
+  btn.onclick = () => {
+    quizState.current++;
+    renderQuiz();
+  };
+  el.appendChild(btn);
+}
+function closeQuiz() {
+  document.getElementById("quizModal").style.display = "none";
+}
+
+// ═══════════════════════════════════════════════
+// MINI-PROJETOS
+// ═══════════════════════════════════════════════
+const miniProjetos = [
+  {
+    title: "Card de Perfil",
+    tags: ["HTML", "CSS"],
+    desc: "Card de usuário com avatar, nome, cargo e botão de ação.",
+    code: `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f0f4ff;display:flex;justify-content:center;align-items:center;min-height:100vh}.card{background:white;border-radius:20px;padding:32px 24px;text-align:center;width:280px;box-shadow:0 12px 40px rgba(37,99,235,.12)}.avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:2rem;color:white;margin:0 auto 16px}h2{font-size:1.2rem;color:#0f172a;margin-bottom:4px}.cargo{color:#64748b;font-size:.85rem;margin-bottom:16px}.tags{display:flex;gap:8px;justify-content:center;margin-bottom:20px}.tag{padding:4px 12px;border-radius:999px;font-size:.75rem;font-weight:700}.tag.html{background:#fff0e8;color:#ea5b1e}.tag.css{background:#e8f0ff;color:#2563eb}.tag.js{background:#fefce8;color:#ca8a04}.btn{width:100%;padding:12px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;font-weight:700;border:none;cursor:pointer;font-size:.9rem}</style></head><body><div class="card"><div class="avatar">👩‍💻</div><h2>Ana Souza</h2><p class="cargo">Front-End Developer</p><div class="tags"><span class="tag html">HTML</span><span class="tag css">CSS</span><span class="tag js">JS</span></div><button class="btn" onclick="this.textContent='Seguindo ✓';this.style.background='#16a34a'">Seguir</button></div></body></html>`,
+  },
+  {
+    title: "Navbar Responsiva",
+    tags: ["HTML", "CSS", "JS"],
+    desc: "Barra de navegação com menu hambúrguer para mobile.",
+    code: `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f8fbff}nav{background:linear-gradient(135deg,#0f172a,#1e3a8a);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0}.logo{color:white;font-weight:800;font-size:1.1rem}.logo span{color:#60a5fa}.nav-links{display:flex;gap:24px;list-style:none}.nav-links a{color:#94a3b8;text-decoration:none;font-size:.9rem;transition:color .2s}.nav-links a:hover{color:white}.ham{display:none;background:none;border:none;cursor:pointer;padding:4px}.ham span{display:block;width:22px;height:2px;background:white;margin:5px 0;transition:all .3s}.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}.ham.open span:nth-child(2){opacity:0}.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}.mob{display:none;background:#0f172a;padding:12px 24px 20px}.mob a{display:block;color:#94a3b8;text-decoration:none;padding:10px 0;border-bottom:1px solid #1e293b}.mob.open{display:block}main{padding:32px 24px}@media(max-width:640px){.nav-links{display:none}.ham{display:block}}</style></head><body><nav><div class="logo">Dev<span>Guia</span></div><ul class="nav-links"><li><a href="#">HTML</a></li><li><a href="#">CSS</a></li><li><a href="#">JS</a></li><li><a href="#">Projetos</a></li></ul><button class="ham" id="ham" onclick="document.getElementById('ham').classList.toggle('open');document.getElementById('mob').classList.toggle('open')"><span></span><span></span><span></span></button></nav><div class="mob" id="mob"><a href="#">HTML</a><a href="#">CSS</a><a href="#">JS</a></div><main><h1>Conteúdo da página</h1><p style="color:#64748b;margin-top:8px">Redimensione para ver o menu hambúrguer.</p></main></body></html>`,
+  },
+  {
+    title: "Formulário de Contato",
+    tags: ["HTML", "CSS", "JS"],
+    desc: "Formulário com validação de campos e feedback visual.",
+    code: `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f0f4ff;display:flex;justify-content:center;padding:24px}.card{background:white;border-radius:20px;padding:32px;width:100%;max-width:400px;box-shadow:0 12px 40px rgba(37,99,235,.1)}h2{margin-bottom:24px;color:#0f172a;font-size:1.3rem}.field{margin-bottom:16px}label{display:block;font-size:.8rem;font-weight:700;color:#64748b;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em}input,textarea{width:100%;padding:12px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font:inherit;font-size:.9rem;transition:border-color .2s;background:#f8fafc}input:focus,textarea:focus{border-color:#2563eb;outline:none;background:white}input.err,textarea.err{border-color:#dc2626}.em{color:#dc2626;font-size:.75rem;margin-top:4px;display:none}.em.show{display:block}textarea{min-height:100px;resize:vertical}.btn{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:white;font-weight:700;font-size:1rem;cursor:pointer}.ok{display:none;text-align:center;padding:20px}</style></head><body><div class="card"><h2>Fale Conosco</h2><div id="f"><div class="field"><label>Nome</label><input id="n" type="text" placeholder="Seu nome"><div class="em" id="en">Digite seu nome.</div></div><div class="field"><label>E-mail</label><input id="e" type="email" placeholder="voce@email.com"><div class="em" id="ee">E-mail inválido.</div></div><div class="field"><label>Mensagem</label><textarea id="m" placeholder="Sua mensagem..."></textarea><div class="em" id="em">Escreva uma mensagem.</div></div><button class="btn" onclick="enviar()">Enviar</button></div><div class="ok" id="ok"><div style="font-size:3rem;margin-bottom:12px">✅</div><h3>Enviado!</h3></div></div><script>function enviar(){let ok=true;function v(el,errId,cond){const e=document.getElementById(errId);if(!cond){el.classList.add('err');e.classList.add('show');ok=false;}else{el.classList.remove('err');e.classList.remove('show');}}const n=document.getElementById('n'),e=document.getElementById('e'),m=document.getElementById('m');v(n,'en',n.value.trim().length>1);v(e,'ee',/^[^@]+@[^@]+\.[^@]+$/.test(e.value));v(m,'em',m.value.trim().length>5);if(ok){document.getElementById('f').style.display='none';document.getElementById('ok').style.display='block';}}</script></body></html>`,
+  },
+  {
+    title: "To-Do List",
+    tags: ["HTML", "CSS", "JS", "localStorage"],
+    desc: "Lista de tarefas com localStorage — dados persistem ao recarregar.",
+    code: `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:#f0f4ff;display:flex;justify-content:center;padding:24px}.app{background:white;border-radius:20px;padding:28px;width:100%;max-width:380px;box-shadow:0 12px 40px rgba(37,99,235,.1)}h2{margin-bottom:20px;color:#0f172a}.row{display:flex;gap:8px;margin-bottom:20px}input{flex:1;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:12px;font:inherit;font-size:.9rem}input:focus{border-color:#2563eb;outline:none}.add{padding:11px 16px;background:#2563eb;color:white;border:none;border-radius:12px;font-weight:700;cursor:pointer;font-size:1.2rem}.task{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #f1f5f9}.task:last-child{border-bottom:none}.task input[type=checkbox]{width:18px;height:18px;cursor:pointer;accent-color:#2563eb}.txt{flex:1;font-size:.9rem;color:#334155}.txt.done{text-decoration:line-through;color:#94a3b8}.del{background:none;border:none;color:#dc2626;cursor:pointer;padding:2px 6px;border-radius:6px}.del:hover{background:#fee2e2}.empty{color:#94a3b8;text-align:center;padding:20px;font-size:.85rem}.stat{font-size:.75rem;color:#94a3b8;margin-bottom:12px}</style></head><body><div class="app"><h2>📝 Minhas Tarefas</h2><div class="row"><input id="ti" type="text" placeholder="Nova tarefa..." onkeydown="if(event.key==='Enter')add()"><button class="add" onclick="add()">+</button></div><div class="stat" id="st"></div><div id="list"></div></div><script>let tasks=JSON.parse(localStorage.getItem('todo')||'[]');function save(){localStorage.setItem('todo',JSON.stringify(tasks));}function render(){const l=document.getElementById('list'),s=document.getElementById('st');if(!tasks.length){l.innerHTML='<div class="empty">Adicione uma tarefa acima!</div>';s.textContent='';return;}const done=tasks.filter(t=>t.done).length;s.textContent=done+' de '+tasks.length+' concluída(s)';l.innerHTML=tasks.map((t,i)=>\`<div class="task"><input type="checkbox" \${t.done?'checked':''} onchange="toggle(\${i})"><span class="txt \${t.done?'done':''}">\${t.text}</span><button class="del" onclick="rm(\${i})">🗑</button></div>\`).join('');}function add(){const inp=document.getElementById('ti');const tx=inp.value.trim();if(!tx)return;tasks.unshift({text:tx,done:false});inp.value='';save();render();}function toggle(i){tasks[i].done=!tasks[i].done;save();render();}function rm(i){tasks.splice(i,1);save();render();}render();</script></body></html>`,
+  },
+  {
+    title: "Toggle Dark Mode",
+    tags: ["CSS Variables", "JS", "localStorage"],
+    desc: "Alternância de tema claro/escuro com CSS Variables e localStorage.",
+    code: `<!DOCTYPE html><html lang="pt-BR" data-theme="light"><head><meta charset="UTF-8"><style>:root{--bg:#f8fbff;--s:white;--t:#0f172a;--m:#64748b;--b:#e2e8f0;--a:#2563eb}[data-theme="dark"]{--bg:#0f172a;--s:#1e293b;--t:#f1f5f9;--m:#94a3b8;--b:#334155;--a:#60a5fa}*{box-sizing:border-box;margin:0;padding:0;transition:background .3s,color .3s,border-color .3s}body{font-family:Arial,sans-serif;background:var(--bg);color:var(--t);min-height:100vh;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.logo{font-weight:800;font-size:1.1rem;color:var(--a)}.tw{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--m)}.tog{width:48px;height:26px;background:var(--b);border-radius:999px;cursor:pointer;position:relative;border:2px solid var(--b);transition:background .3s}.tog.on{background:var(--a);border-color:var(--a)}.tog::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;background:white;border-radius:50%;transition:transform .3s}.tog.on::after{transform:translateX(22px)}.card{background:var(--s);border:1px solid var(--b);border-radius:16px;padding:20px;margin-bottom:14px}.card h3{color:var(--t);margin-bottom:6px}.card p{color:var(--m);font-size:.85rem;line-height:1.6}.chip{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--a);color:white;font-size:.75rem;font-weight:700;margin-top:10px}</style></head><body><div class="top"><div class="logo">DevGuia</div><div class="tw">☀️<div class="tog" id="tog" onclick="toggleTheme()"></div>🌙</div></div><div class="card"><h3>CSS Variables</h3><p>A técnica usa data-theme no &lt;html&gt; e variáveis CSS que mudam com o tema.</p><span class="chip">CSS Vars</span></div><div class="card"><h3>localStorage</h3><p>A preferência é salva no navegador e restaurada ao recarregar a página.</p><span class="chip">Persistência</span></div><script>const saved=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',saved);if(saved==='dark')document.getElementById('tog').classList.add('on');function toggleTheme(){const curr=document.documentElement.getAttribute('data-theme');const next=curr==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',next);document.getElementById('tog').classList.toggle('on',next==='dark');localStorage.setItem('theme',next);}</script></body></html>`,
+  },
+];
+let currentProjeto = 0;
+function openMiniProjetos() {
+  const tabs = document.getElementById("projetosTabs");
+  if (tabs)
+    tabs.innerHTML = miniProjetos
+      .map(
+        (p, i) =>
+          `<button class="proj-tab${i === 0 ? " active" : ""}" onclick="selectProjeto(${i},this)">${p.title}</button>`,
+      )
+      .join("");
+  selectProjeto(0, tabs?.querySelector(".proj-tab"));
+  document.getElementById("miniProjetosModal").style.display = "flex";
+}
+function closeMiniProjetos() {
+  document.getElementById("miniProjetosModal").style.display = "none";
+}
+function selectProjeto(idx, btn) {
+  currentProjeto = idx;
+  document
+    .querySelectorAll(".proj-tab")
+    .forEach((t) => t.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+  const p = miniProjetos[idx];
+  const ed = document.getElementById("projetoEditor");
+  if (ed) ed.value = p.code;
+  const url = document.getElementById("projBrowserUrl");
+  if (url)
+    url.textContent = p.title.toLowerCase().replace(/\s+/g, "-") + ".html";
+  const info = document.getElementById("projetoInfo");
+  if (info)
+    info.innerHTML = `<div class="proj-tags">${p.tags.map((t) => `<span class="proj-tag">${t}</span>`).join("")}</div><div class="proj-desc">${p.desc}</div>`;
+  runProjeto();
+}
+function runProjeto() {
+  const code = document.getElementById("projetoEditor")?.value || "";
+  const frame = document.getElementById("projetoFrame");
+  if (frame) frame.srcdoc = code;
+}
+function resetProjeto() {
+  const p = miniProjetos[currentProjeto];
+  const ed = document.getElementById("projetoEditor");
+  if (ed) ed.value = p.code;
+  runProjeto();
+}
+
+// ═══════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+// ═══════════════════════════════════════════════
+// ATALHOS DE TECLADO
+// ═══════════════════════════════════════════════
+document.addEventListener("keydown", (e) => {
+  const tag = document.activeElement.tagName;
+  if (e.key === "Escape") {
+    closeInlineExample();
+    [
+      "trilhaModal",
+      "miniProjetosModal",
+      "quizModal",
+      "favoritosModal",
+      "historicoModal",
+    ].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = "none";
+    });
+  }
+  if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+    e.preventDefault();
+    document.getElementById("searchInput")?.focus();
+  }
+  if (e.key === "?" && tag !== "INPUT" && tag !== "TEXTAREA") startRandomQuiz();
+});
+
+// ═══════════════════════════════════════════════
+// MARCAR ESTUDADO AO ABRIR EXEMPLO
+// ═══════════════════════════════════════════════
+const _baseOpen = openInlineExample;
+openInlineExample = function (row, lang, token, name, details) {
+  _baseOpen(row, lang, token, name, details);
+  markStudied(lang + ":" + token);
+  addHistorico(lang, token, name);
+};
