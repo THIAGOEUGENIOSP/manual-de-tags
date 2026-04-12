@@ -523,6 +523,7 @@ function getRichHtmlExample(tagName, isVoid) {
 </html>`;
 }
 
+
 function getRichCssExample(property) {
   const sampleValues = {
     "background-color": "#dbeafe",
@@ -2802,6 +2803,52 @@ function closeFavoritos() {
 // ═══════════════════════════════════════════════
 // TRILHA
 // ═══════════════════════════════════════════════
+function getTrailSteps() {
+  return {
+    1: {
+      title: "Estrutura HTML",
+      desc: "Comece pelas tags fundamentais: títulos, parágrafos, links, imagens e listas.",
+      lang: "html",
+      token: "<h1> … <h6>",
+      tokens: ["html:<h1> … <h6>", "html:<p>", "html:<a>", "html:<img>", "html:<div>"],
+    },
+    2: {
+      title: "HTML Semântico",
+      desc: "Aprenda a organizar a página com header, nav, main, section e footer.",
+      lang: "html",
+      token: "<header>",
+      tokens: ["html:<header>", "html:<nav>", "html:<main>", "html:<section>", "html:<footer>"],
+    },
+    3: {
+      title: "CSS Essencial",
+      desc: "Entenda as propriedades base de cor, fundo, espaçamento e tipografia.",
+      lang: "css",
+      token: "color",
+      tokens: ["css:color", "css:background", "css:margin", "css:padding"],
+    },
+    4: {
+      title: "CSS Flexbox",
+      desc: "Passe para alinhamento e distribuição de elementos com Flexbox.",
+      lang: "css",
+      token: "display",
+      tokens: ["css:display", "css:flex", "css:justify-content", "css:align-items"],
+    },
+    5: {
+      title: "JavaScript DOM",
+      desc: "Manipule elementos e eventos antes de avançar para interações maiores.",
+      lang: "js",
+      token: "document.querySelector()",
+      tokens: ["js:document.querySelector()", "js:.addEventListener()"],
+    },
+    6: {
+      title: "Mini-Projetos",
+      desc: "Consolide o aprendizado aplicando HTML, CSS e JS em projetos práticos.",
+      action: "projects",
+      tokens: [],
+    },
+  };
+}
+
 function openTrilha() {
   updateTrilhaChecks();
   document.getElementById("trilhaModal").style.display = "flex";
@@ -2814,25 +2861,12 @@ function closeTrilhaBanner() {
   localStorage.setItem("guia-trilha-banner", "closed");
 }
 function updateTrilhaChecks() {
+  const TRAIL_STEPS = getTrailSteps();
   const studied = getStudied();
-  const stepTokens = {
-    1: ["html:<h1> … <h6>", "html:<p>", "html:<a>", "html:<img>", "html:<div>"],
-    2: [
-      "html:<header>",
-      "html:<nav>",
-      "html:<main>",
-      "html:<section>",
-      "html:<footer>",
-    ],
-    3: ["css:color", "css:background", "css:margin", "css:padding"],
-    4: ["css:display", "css:flex", "css:justify-content", "css:align-items"],
-    5: ["js:document.querySelector()", "js:.addEventListener()"],
-    6: [],
-  };
   for (let i = 1; i <= 6; i++) {
     const el = document.getElementById("step-check-" + i);
     if (!el) continue;
-    const tokens = stepTokens[i];
+    const tokens = TRAIL_STEPS[i]?.tokens || [];
     if (!tokens.length) {
       el.textContent = "";
       continue;
@@ -2871,10 +2905,45 @@ function jumpAndClose(lang, token) {
   jumpToToken(lang, token);
 }
 
+function initTrilhaNavigation() {
+  document.querySelectorAll(".trilha-step").forEach((step) => {
+    if (step.dataset.bound === "true") return;
+    step.dataset.bound = "true";
+
+    const activate = () => {
+      const action = step.dataset.targetAction;
+      if (action === "projects") {
+        closeTrilhaModal();
+        openMiniProjetos();
+        return;
+      }
+
+      const lang = step.dataset.targetLang;
+      const token = step.dataset.targetToken;
+      if (lang && token) {
+        jumpAndClose(lang, token);
+      }
+    };
+
+    step.addEventListener("click", (event) => {
+      if (event.target.closest(".step-tag-btn")) return;
+      activate();
+    });
+
+    step.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        activate();
+      }
+    });
+  });
+}
+
 if (localStorage.getItem("guia-trilha-banner") !== "closed") {
   const b = document.getElementById("trilhaBanner");
   if (b) b.style.display = "block";
 }
+initTrilhaNavigation();
 
 // ═══════════════════════════════════════════════
 // ERRO COMUM, CASOS DE USO, COMPAT

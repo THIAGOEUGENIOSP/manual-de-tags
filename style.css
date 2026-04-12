@@ -458,7 +458,10 @@
 
   .desc-cell { font-size: 0.76rem; color: var(--muted); line-height: 1.45; max-width: 360px; }
   .clickable-row { cursor: pointer; }
-  .row-selected { background: rgba(74,158,255,0.08); }
+  .row-selected {
+    background: linear-gradient(180deg, rgba(74,158,255,0.1), rgba(74,158,255,0.06));
+    box-shadow: inset 0 -1px 0 rgba(74,158,255,0.18);
+  }
 
   .usage-meta {
     display: flex;
@@ -511,18 +514,20 @@
   .example-row:hover { background: transparent; }
 
   .example-row td {
-    padding: 0 1rem 1rem;
+    padding: 0 0 1rem;
     border-bottom: 1px solid var(--border);
   }
 
   .example-inline-panel {
-    padding: 1rem;
-    border: 1px solid var(--border);
-    border-radius: 14px;
+    margin-top: -1px;
+    padding: 1rem 1rem 1.05rem;
+    border: 1px solid rgba(74,158,255,0.18);
+    border-top: none;
+    border-radius: 0 0 14px 14px;
     background:
       radial-gradient(circle at top right, rgba(74,158,255,0.14), transparent 35%),
       linear-gradient(145deg, rgba(17,20,28,0.96), rgba(24,28,39,0.96));
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 12px 28px rgba(0,0,0,0.18);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02), 0 12px 28px rgba(0,0,0,0.16);
   }
 
   .example-inline-head {
@@ -979,9 +984,18 @@
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--surface2);
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, transform 0.2s, background 0.2s;
+  cursor: pointer;
 }
-.trilha-step:hover { border-color: var(--blue); }
+.trilha-step:hover {
+  border-color: var(--blue);
+  background: rgba(74,158,255,0.06);
+  transform: translateY(-1px);
+}
+.trilha-step:focus-visible {
+  outline: 2px solid rgba(74,158,255,0.5);
+  outline-offset: 2px;
+}
 .step-num {
   min-width: 32px;
   height: 32px;
@@ -1513,9 +1527,10 @@
   }
 
   .example-inline-panel {
-    margin-top: -0.2rem;
+    margin-top: -1px;
     padding: 0.9rem;
     border-radius: 12px;
+    border-top: 1px solid rgba(74,158,255,0.18);
   }
 
   .example-card {
