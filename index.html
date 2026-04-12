@@ -81,6 +81,20 @@
   <button class="cat-btn tools-cat" onclick="filterCat('outros',this)">Outros</button>
 </div>
 
+<div class="level-nav" id="levelNav">
+  <button class="level-filter-btn active" onclick="filterLevel('all',this)">Todos os níveis</button>
+  <button class="level-filter-btn" onclick="filterLevel('Basico',this)">Básico</button>
+  <button class="level-filter-btn" onclick="filterLevel('Intermediario',this)">Intermediário</button>
+  <button class="level-filter-btn" onclick="filterLevel('Avancado',this)">Avançado</button>
+</div>
+
+<div class="study-toolbar">
+  <div class="study-mode">
+    <button class="study-btn active" onclick="toggleStudyMode('all',this)">Modo completo</button>
+    <button class="study-btn" onclick="toggleStudyMode('essential',this)">Modo estudo: só essenciais</button>
+  </div>
+</div>
+
 <!-- ══════════════ MAIN CONTENT ══════════════ -->
 <div class="container">
 
