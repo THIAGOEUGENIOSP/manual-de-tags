@@ -138,6 +138,9 @@
   /* ── TOP NAV (Language tabs) ── */
   .lang-tabs {
     display: flex;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0 0.45rem;
     background: var(--surface);
     border-bottom: 1px solid var(--border);
     position: sticky;
@@ -147,10 +150,16 @@
   }
 
   .lang-tab {
-    flex: 1;
-    min-width: 100px;
+    flex: 0 0 auto;
+    min-width: 0;
     padding: 0.85rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
     text-align: center;
+    white-space: nowrap;
+    line-height: 1.1;
     cursor: pointer;
     font-size: 0.8rem;
     font-weight: 800;
@@ -170,9 +179,11 @@
   .lang-tab.active-html { color: var(--orange); border-bottom-color: var(--orange); }
   .lang-tab.active-css  { color: var(--blue);   border-bottom-color: var(--blue); }
   .lang-tab.active-js   { color: var(--yellow); border-bottom-color: var(--yellow); }
+  .lang-tab.active-tools { color: #666; border-bottom-color: #666; }
   .lang-tab[data-lang="all"].active-html,
   .lang-tab[data-lang="all"].active-css,
-  .lang-tab[data-lang="all"].active-js { color: var(--green); border-bottom-color: var(--green); }
+  .lang-tab[data-lang="all"].active-js,
+  .lang-tab[data-lang="all"].active-tools { color: var(--green); border-bottom-color: var(--green); }
 
   /* ── CATEGORY NAV ── */
   .cat-nav {
@@ -217,6 +228,7 @@
   .lang-banner.html-banner { background: rgba(255,107,53,0.08); border-color: var(--orange); }
   .lang-banner.css-banner  { background: rgba(74,158,255,0.08); border-color: var(--blue); }
   .lang-banner.js-banner   { background: rgba(255,209,102,0.08); border-color: var(--yellow); }
+  .lang-banner.tools-banner { background: rgba(102,102,102,0.08); border-color: #666; }
 
   .lang-banner-icon {
     font-family: 'JetBrains Mono', monospace;
@@ -230,6 +242,7 @@
   .html-banner .lang-banner-icon { background: rgba(255,107,53,0.2); color: var(--orange); }
   .css-banner  .lang-banner-icon { background: rgba(74,158,255,0.2);  color: var(--blue); }
   .js-banner   .lang-banner-icon { background: rgba(255,209,102,0.2); color: var(--yellow); }
+  .tools-banner .lang-banner-icon { background: rgba(102,102,102,0.2); color: #666; }
 
   .lang-banner-text h3 { font-size: 1rem; font-weight: 800; }
   .lang-banner-text p  { font-size: 0.75rem; color: var(--muted); margin-top: 0.15rem; font-family: 'JetBrains Mono', monospace; }
@@ -278,6 +291,10 @@
   .js-table thead th:nth-child(2) { background: #b38800; color: white; }
   .js-table thead th:nth-child(3) { background: #d4a400; color: white; border-radius: 0 6px 0 0; }
 
+  .tools-table thead th:nth-child(1) { background: #555; color: white; border-radius: 6px 0 0 0; }
+  .tools-table thead th:nth-child(2) { background: #777; color: white; }
+  .tools-table thead th:nth-child(3) { background: #999; color: white; border-radius: 0 6px 0 0; }
+
   tbody tr { border-bottom: 1px solid var(--border); transition: background 0.13s; }
   tbody tr:hover { background: var(--row-hover); }
   tbody td { padding: 0.6rem 1rem; vertical-align: middle; }
@@ -292,6 +309,7 @@
   .html-table .tag-cell { color: var(--orange); }
   .css-table  .tag-cell { color: var(--blue); }
   .js-table   .tag-cell { color: var(--yellow); }
+  .tools-table .tag-cell { color: #666; }
 
   .name-cell { font-size: 0.8rem; font-weight: 700; color: var(--text); }
   .desc-cell { font-size: 0.76rem; color: var(--muted); line-height: 1.45; max-width: 360px; }

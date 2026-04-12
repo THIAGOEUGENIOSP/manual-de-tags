@@ -34,6 +34,7 @@
   <button class="lang-tab" data-lang="html" onclick="switchLang('html',this)">&lt;/&gt; HTML</button>
   <button class="lang-tab" data-lang="css"  onclick="switchLang('css',this)">{ } CSS</button>
   <button class="lang-tab" data-lang="js"   onclick="switchLang('js',this)">( ) JavaScript</button>
+  <button class="lang-tab" data-lang="tools" onclick="switchLang('tools',this)">🛠️ Ferramentas</button>
 </div>
 
 <!-- ══════════════ CATEGORY NAV ══════════════ -->
@@ -74,6 +75,10 @@
   <button class="cat-btn js-cat" onclick="filterCat('js-console',this)">Console</button>
   <button class="cat-btn js-cat" onclick="filterCat('js-storage',this)">Storage/Window</button>
   <button class="cat-btn js-cat" onclick="filterCat('js-json',this)">JSON/Regex</button>
+  <!-- Tools cats -->
+  <button class="cat-btn tools-cat" onclick="filterCat('git',this)">Git</button>
+  <button class="cat-btn tools-cat" onclick="filterCat('vercel',this)">Vercel</button>
+  <button class="cat-btn tools-cat" onclick="filterCat('outros',this)">Outros</button>
 </div>
 
 <!-- ══════════════ MAIN CONTENT ══════════════ -->
@@ -1004,6 +1009,80 @@
   </table>
 
 </div><!-- /block-js -->
+
+<!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓ TOOLS BLOCK ▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
+<div class="lang-block" id="block-tools">
+
+  <div class="lang-banner tools-banner">
+    <span class="lang-banner-icon">🛠️</span>
+    <div class="lang-banner-text">
+      <h3>Ferramentas — Git, Vercel & Outros</h3>
+      <p>Comandos essenciais para versionamento, deploy e desenvolvimento · Git · Vercel · CLI</p>
+    </div>
+  </div>
+
+  <!-- GIT -->
+  <div class="section-title" data-cat="git" data-lang="tools"><div class="section-dot" style="background:#f05032"></div><h2>Git — Controle de Versão</h2></div>
+  <table class="tools-table" data-cat="git" data-lang="tools">
+    <thead><tr><th>COMANDO</th><th>DESCRIÇÃO</th><th>EXEMPLO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">git init</td><td class="name-cell">Inicializar repositório</td><td class="desc-cell">Cria um novo repositório Git local</td></tr>
+      <tr><td class="tag-cell">git add .</td><td class="name-cell">Adicionar arquivos</td><td class="desc-cell">Adiciona todos os arquivos modificados ao staging</td></tr>
+      <tr><td class="tag-cell">git commit -m "msg"</td><td class="name-cell">Fazer commit</td><td class="desc-cell">Salva mudanças com mensagem descritiva</td></tr>
+      <tr><td class="tag-cell">git status</td><td class="name-cell">Ver status</td><td class="desc-cell">Mostra estado dos arquivos (modificados, staged, etc.)</td></tr>
+      <tr><td class="tag-cell">git log</td><td class="name-cell">Histórico de commits</td><td class="desc-cell">Lista todos os commits do repositório</td></tr>
+      <tr><td class="tag-cell">git branch</td><td class="name-cell">Listar branches</td><td class="desc-cell">Mostra todas as branches locais</td></tr>
+      <tr><td class="tag-cell">git branch nome</td><td class="name-cell">Criar branch</td><td class="desc-cell">Cria nova branch com o nome especificado</td></tr>
+      <tr><td class="tag-cell">git checkout nome</td><td class="name-cell">Trocar branch</td><td class="desc-cell">Muda para a branch especificada</td></tr>
+      <tr><td class="tag-cell">git merge nome</td><td class="name-cell">Mesclar branches</td><td class="desc-cell">Mescla a branch especificada na atual</td></tr>
+      <tr><td class="tag-cell">git remote add origin url</td><td class="name-cell">Adicionar remoto</td><td class="desc-cell">Conecta repositório local a um remoto (GitHub)</td></tr>
+      <tr><td class="tag-cell">git push -u origin main</td><td class="name-cell">Enviar para remoto</td><td class="desc-cell">Envia commits para o repositório remoto</td></tr>
+      <tr><td class="tag-cell">git pull</td><td class="name-cell">Baixar mudanças</td><td class="desc-cell">Baixa e mescla mudanças do remoto</td></tr>
+      <tr><td class="tag-cell">git clone url</td><td class="name-cell">Clonar repositório</td><td class="desc-cell">Copia repositório remoto para local</td></tr>
+    </tbody>
+  </table>
+
+  <!-- VERCEL -->
+  <div class="section-title" data-cat="vercel" data-lang="tools"><div class="section-dot" style="background:#000000"></div><h2>Vercel — Deploy na Web</h2></div>
+  <table class="tools-table" data-cat="vercel" data-lang="tools">
+    <thead><tr><th>COMANDO</th><th>DESCRIÇÃO</th><th>EXEMPLO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">npm i -g vercel</td><td class="name-cell">Instalar Vercel CLI</td><td class="desc-cell">Instala globalmente a CLI do Vercel</td></tr>
+      <tr><td class="tag-cell">vercel login</td><td class="name-cell">Fazer login</td><td class="desc-cell">Autentica com sua conta Vercel</td></tr>
+      <tr><td class="tag-cell">vercel</td><td class="name-cell">Deploy preview</td><td class="desc-cell">Faz deploy de preview (desenvolvimento)</td></tr>
+      <tr><td class="tag-cell">vercel --prod</td><td class="name-cell">Deploy produção</td><td class="desc-cell">Faz deploy para produção</td></tr>
+      <tr><td class="tag-cell">vercel ls</td><td class="name-cell">Listar deploys</td><td class="desc-cell">Lista todos os deploys do projeto</td></tr>
+      <tr><td class="tag-cell">vercel rm nome</td><td class="name-cell">Remover deploy</td><td class="desc-cell">Remove um deploy específico</td></tr>
+      <tr><td class="tag-cell">vercel env add</td><td class="name-cell">Adicionar variável</td><td class="desc-cell">Adiciona variável de ambiente</td></tr>
+      <tr><td class="tag-cell">vercel domains</td><td class="name-cell">Gerenciar domínios</td><td class="desc-cell">Lista e gerencia domínios customizados</td></tr>
+      <tr><td class="tag-cell">vercel link</td><td class="name-cell">Linkar projeto</td><td class="desc-cell">Conecta projeto local a um projeto Vercel</td></tr>
+      <tr><td class="tag-cell">vercel dev</td><td class="name-cell">Desenvolvimento local</td><td class="desc-cell">Executa servidor de desenvolvimento local</td></tr>
+    </tbody>
+  </table>
+
+  <!-- OUTROS -->
+  <div class="section-title" data-cat="outros" data-lang="tools"><div class="section-dot" style="background:#339933"></div><h2>Outros Comandos Úteis</h2></div>
+  <table class="tools-table" data-cat="outros" data-lang="tools">
+    <thead><tr><th>COMANDO</th><th>DESCRIÇÃO</th><th>EXEMPLO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">npm init -y</td><td class="name-cell">Inicializar projeto Node</td><td class="desc-cell">Cria package.json com configurações padrão</td></tr>
+      <tr><td class="tag-cell">npm install pacote</td><td class="name-cell">Instalar pacote</td><td class="desc-cell">Instala pacote npm no projeto</td></tr>
+      <tr><td class="tag-cell">npm run dev</td><td class="name-cell">Executar script</td><td class="desc-cell">Roda script definido em package.json</td></tr>
+      <tr><td class="tag-cell">code .</td><td class="name-cell">Abrir no VS Code</td><td class="desc-cell">Abre o diretório atual no VS Code</td></tr>
+      <tr><td class="tag-cell">mkdir nome</td><td class="name-cell">Criar diretório</td><td class="desc-cell">Cria novo diretório</td></tr>
+      <tr><td class="tag-cell">touch arquivo.ext</td><td class="name-cell">Criar arquivo</td><td class="desc-cell">Cria novo arquivo vazio</td></tr>
+      <tr><td class="tag-cell">ls -la</td><td class="name-cell">Listar arquivos</td><td class="desc-cell">Lista arquivos com detalhes (Linux/Mac)</td></tr>
+      <tr><td class="tag-cell">dir</td><td class="name-cell">Listar arquivos</td><td class="desc-cell">Lista arquivos no Windows</td></tr>
+      <tr><td class="tag-cell">cd caminho</td><td class="name-cell">Navegar diretório</td><td class="desc-cell">Muda para o diretório especificado</td></tr>
+      <tr><td class="tag-cell">pwd</td><td class="name-cell">Diretório atual</td><td class="desc-cell">Mostra o caminho do diretório atual</td></tr>
+      <tr><td class="tag-cell">cp origem destino</td><td class="name-cell">Copiar arquivo</td><td class="desc-cell">Copia arquivo ou diretório</td></tr>
+      <tr><td class="tag-cell">mv origem destino</td><td class="name-cell">Mover/renomear</td><td class="desc-cell">Move ou renomeia arquivo/diretório</td></tr>
+      <tr><td class="tag-cell">rm arquivo</td><td class="name-cell">Remover arquivo</td><td class="desc-cell">Remove arquivo (cuidado!)</td></tr>
+      <tr><td class="tag-cell">rm -rf diretorio</td><td class="name-cell">Remover diretório</td><td class="desc-cell">Remove diretório recursivamente (cuidado!)</td></tr>
+    </tbody>
+  </table>
+
+</div><!-- /block-tools -->
 
 </div><!-- /container -->
 

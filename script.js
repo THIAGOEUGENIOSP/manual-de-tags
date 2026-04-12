@@ -7,13 +7,13 @@
 
     // Update lang tab styles
     document.querySelectorAll('.lang-tab').forEach(t => {
-      t.classList.remove('active-html', 'active-css', 'active-js');
+      t.classList.remove('active-html', 'active-css', 'active-js', 'active-tools');
     });
     const cls = lang === 'all' ? 'active-html' : 'active-' + lang;
     btn.classList.add(cls);
 
     // Show/hide language blocks
-    const blocks = { html: document.getElementById('block-html'), css: document.getElementById('block-css'), js: document.getElementById('block-js') };
+    const blocks = { html: document.getElementById('block-html'), css: document.getElementById('block-css'), js: document.getElementById('block-js'), tools: document.getElementById('block-tools') };
     if (lang === 'all') {
       Object.values(blocks).forEach(b => b.classList.add('visible'));
     } else {
