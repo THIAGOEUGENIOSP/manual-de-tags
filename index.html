@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia Completo — HTML, CSS & JavaScript</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header>
+  <div class="brand-row">
+    <span class="lang-badge badge-html">&lt;/&gt; HTML</span>
+    <span class="lang-badge badge-css">{ } CSS</span>
+    <span class="lang-badge badge-js">( ) JS</span>
+  </div>
+  <h1>Guia Completo <em>Front-End</em></h1>
+  <p class="subtitle">HTML · CSS · JavaScript — Referência total em Português-BR</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num html">140+</div><div class="stat-label">Tags HTML</div></div>
+    <div class="stat"><div class="stat-num css">200+</div><div class="stat-label">Props CSS</div></div>
+    <div class="stat"><div class="stat-num js">180+</div><div class="stat-label">Métodos JS</div></div>
+    <div class="stat"><div class="stat-num total">500+</div><div class="stat-label">Total</div></div>
+  </div>
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Buscar qualquer tag, propriedade ou método..." oninput="applyFilters()">
+  </div>
+</header>
+
+<!-- ══════════════ LANGUAGE TABS ══════════════ -->
+<div class="lang-tabs">
+  <button class="lang-tab active-html" data-lang="all" onclick="switchLang('all',this)">🌐 Tudo</button>
+  <button class="lang-tab" data-lang="html" onclick="switchLang('html',this)">&lt;/&gt; HTML</button>
+  <button class="lang-tab" data-lang="css"  onclick="switchLang('css',this)">{ } CSS</button>
+  <button class="lang-tab" data-lang="js"   onclick="switchLang('js',this)">( ) JavaScript</button>
+</div>
+
+<!-- ══════════════ CATEGORY NAV ══════════════ -->
+<div class="cat-nav" id="catNav">
+  <button class="cat-btn active" onclick="filterCat('all',this)">Todas</button>
+  <!-- HTML cats -->
+  <button class="cat-btn html-cat" onclick="filterCat('estrutura',this)">Estrutura</button>
+  <button class="cat-btn html-cat" onclick="filterCat('texto',this)">Texto</button>
+  <button class="cat-btn html-cat" onclick="filterCat('listas',this)">Listas</button>
+  <button class="cat-btn html-cat" onclick="filterCat('midia',this)">Links & Mídia</button>
+  <button class="cat-btn html-cat" onclick="filterCat('tabelas',this)">Tabelas</button>
+  <button class="cat-btn html-cat" onclick="filterCat('formularios',this)">Formulários</button>
+  <button class="cat-btn html-cat" onclick="filterCat('semantico',this)">Semântico</button>
+  <button class="cat-btn html-cat" onclick="filterCat('script-meta',this)">Script/Meta</button>
+  <button class="cat-btn html-cat" onclick="filterCat('interativo',this)">Interativo</button>
+  <button class="cat-btn html-cat" onclick="filterCat('grafico',this)">Gráfico</button>
+  <button class="cat-btn html-cat" onclick="filterCat('obsoleto',this)">Obsoletos HTML</button>
+  <!-- CSS cats -->
+  <button class="cat-btn css-cat" onclick="filterCat('css-texto',this)">CSS Texto</button>
+  <button class="cat-btn css-cat" onclick="filterCat('css-box',this)">Box Model</button>
+  <button class="cat-btn css-cat" onclick="filterCat('css-layout',this)">Flexbox/Grid</button>
+  <button class="cat-btn css-cat" onclick="filterCat('css-bg',this)">Background</button>
+  <button class="cat-btn css-cat" onclick="filterCat('css-borda',this)">Bordas</button>
+  <button class="cat-btn css-cat" onclick="filterCat('css-posicao',this)">Posição</button>
+  <button class="cat-btn css-cat" onclick="filterCat('css-animacao',this)">Animação</button>
+  <button class="cat-btn css-cat" onclick="filterCat('css-transform',this)">Transform</button>
+  <button class="cat-btn css-cat" onclick="filterCat('css-variaveis',this)">Variáveis/Misc</button>
+  <button class="cat-btn css-cat" onclick="filterCat('css-media',this)">Media Query</button>
+  <!-- JS cats -->
+  <button class="cat-btn js-cat" onclick="filterCat('js-dom',this)">DOM</button>
+  <button class="cat-btn js-cat" onclick="filterCat('js-eventos',this)">Eventos</button>
+  <button class="cat-btn js-cat" onclick="filterCat('js-string',this)">String</button>
+  <button class="cat-btn js-cat" onclick="filterCat('js-array',this)">Array</button>
+  <button class="cat-btn js-cat" onclick="filterCat('js-objeto',this)">Objeto</button>
+  <button class="cat-btn js-cat" onclick="filterCat('js-math',this)">Math</button>
+  <button class="cat-btn js-cat" onclick="filterCat('js-date',this)">Date</button>
+  <button class="cat-btn js-cat" onclick="filterCat('js-async',this)">Async/Fetch</button>
+  <button class="cat-btn js-cat" onclick="filterCat('js-console',this)">Console</button>
+  <button class="cat-btn js-cat" onclick="filterCat('js-storage',this)">Storage/Window</button>
+  <button class="cat-btn js-cat" onclick="filterCat('js-json',this)">JSON/Regex</button>
+</div>
+
+<!-- ══════════════ MAIN CONTENT ══════════════ -->
+<div class="container">
+
+<!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓ HTML BLOCK ▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
+<div class="lang-block visible" id="block-html">
+
+  <div class="lang-banner html-banner">
+    <span class="lang-banner-icon">&lt;/&gt;</span>
+    <div class="lang-banner-text">
+      <h3>HTML — HyperText Markup Language</h3>
+      <p>Linguagem de marcação que estrutura o conteúdo da web · 140+ tags · Versão HTML5</p>
+    </div>
+  </div>
+
+  <!-- ESTRUTURA -->
+  <div class="section-title" data-cat="estrutura" data-lang="html"><div class="section-dot" style="background:#ff6b35"></div><h2>Estrutura do Documento</h2></div>
+  <table class="html-table" data-cat="estrutura" data-lang="html">
+    <thead><tr><th>TAG</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">&lt;!DOCTYPE html&gt;</td><td class="name-cell">Tipo de Documento</td><td class="desc-cell">Declara o tipo e versão do documento para o navegador</td></tr>
+      <tr><td class="tag-cell">&lt;html&gt;</td><td class="name-cell">Elemento Raiz</td><td class="desc-cell">Elemento raiz de todo documento HTML</td></tr>
+      <tr><td class="tag-cell">&lt;head&gt;</td><td class="name-cell">Cabeçalho</td><td class="desc-cell">Contém meta-informações não visíveis na página</td></tr>
+      <tr><td class="tag-cell">&lt;title&gt;</td><td class="name-cell">Título da Aba</td><td class="desc-cell">Texto exibido na aba e favoritos do navegador</td></tr>
+      <tr><td class="tag-cell">&lt;body&gt;</td><td class="name-cell">Corpo</td><td class="desc-cell">Contém todo conteúdo visível da página</td></tr>
+      <tr><td class="tag-cell">&lt;base&gt; <span class="badge badge-void">void</span></td><td class="name-cell">URL Base</td><td class="desc-cell">Define URL base para todos os links relativos do documento</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SCRIPT META -->
+  <div class="section-title" data-cat="script-meta" data-lang="html"><div class="section-dot" style="background:#4a9eff"></div><h2>Meta, Script e Estilo</h2></div>
+  <table class="html-table" data-cat="script-meta" data-lang="html">
+    <thead><tr><th>TAG</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">&lt;meta&gt; <span class="badge badge-void">void</span></td><td class="name-cell">Metadados</td><td class="desc-cell">Define charset, viewport, descrição, autor, OG tags e keywords</td></tr>
+      <tr><td class="tag-cell">&lt;link&gt; <span class="badge badge-void">void</span></td><td class="name-cell">Link Externo</td><td class="desc-cell">Vincula CSS externo, ícone, fonte e manifesto</td></tr>
+      <tr><td class="tag-cell">&lt;style&gt;</td><td class="name-cell">Estilo Interno</td><td class="desc-cell">Insere CSS diretamente no documento</td></tr>
+      <tr><td class="tag-cell">&lt;script&gt;</td><td class="name-cell">Script</td><td class="desc-cell">Insere ou referencia código JavaScript</td></tr>
+      <tr><td class="tag-cell">&lt;noscript&gt;</td><td class="name-cell">Sem Script</td><td class="desc-cell">Conteúdo alternativo quando JS está desativado</td></tr>
+      <tr><td class="tag-cell">&lt;template&gt;</td><td class="name-cell">Template</td><td class="desc-cell">Fragmento HTML inerte, ativado somente via JavaScript</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SEMÂNTICO -->
+  <div class="section-title" data-cat="semantico" data-lang="html"><div class="section-dot" style="background:#3ecf8e"></div><h2>Semântico / Layout</h2></div>
+  <table class="html-table" data-cat="semantico" data-lang="html">
+    <thead><tr><th>TAG</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">&lt;header&gt;</td><td class="name-cell">Cabeçalho da Página</td><td class="desc-cell">Cabeçalho da página ou seção</td></tr>
+      <tr><td class="tag-cell">&lt;nav&gt;</td><td class="name-cell">Navegação</td><td class="desc-cell">Links de navegação principais do site</td></tr>
+      <tr><td class="tag-cell">&lt;main&gt;</td><td class="name-cell">Conteúdo Principal</td><td class="desc-cell">Conteúdo principal e único do documento</td></tr>
+      <tr><td class="tag-cell">&lt;section&gt;</td><td class="name-cell">Seção</td><td class="desc-cell">Seção temática com significado próprio</td></tr>
+      <tr><td class="tag-cell">&lt;article&gt;</td><td class="name-cell">Artigo</td><td class="desc-cell">Conteúdo independente e auto-contido (post, notícia)</td></tr>
+      <tr><td class="tag-cell">&lt;aside&gt;</td><td class="name-cell">Conteúdo Lateral</td><td class="desc-cell">Conteúdo tangencial ao principal (sidebar)</td></tr>
+      <tr><td class="tag-cell">&lt;footer&gt;</td><td class="name-cell">Rodapé</td><td class="desc-cell">Rodapé da página ou seção</td></tr>
+      <tr><td class="tag-cell">&lt;div&gt;</td><td class="name-cell">Divisão</td><td class="desc-cell">Contêiner genérico em bloco sem semântica</td></tr>
+      <tr><td class="tag-cell">&lt;span&gt;</td><td class="name-cell">Span</td><td class="desc-cell">Contêiner inline sem semântica para estilizar texto</td></tr>
+      <tr><td class="tag-cell">&lt;address&gt;</td><td class="name-cell">Endereço</td><td class="desc-cell">Informações de contato do autor ou organização</td></tr>
+      <tr><td class="tag-cell">&lt;hgroup&gt;</td><td class="name-cell">Grupo de Títulos</td><td class="desc-cell">Agrupa título com subtítulos relacionados</td></tr>
+      <tr><td class="tag-cell">&lt;search&gt; <span class="badge badge-new">novo</span></td><td class="name-cell">Busca</td><td class="desc-cell">Elemento semântico para formulários de busca (HTML5.3)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- TEXTO -->
+  <div class="section-title" data-cat="texto" data-lang="html"><div class="section-dot" style="background:#ffd166"></div><h2>Texto e Tipografia</h2></div>
+  <table class="html-table" data-cat="texto" data-lang="html">
+    <thead><tr><th>TAG</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">&lt;h1&gt; … &lt;h6&gt;</td><td class="name-cell">Títulos H1–H6</td><td class="desc-cell">Hierarquia de títulos: h1 o maior, h6 o menor</td></tr>
+      <tr><td class="tag-cell">&lt;p&gt;</td><td class="name-cell">Parágrafo</td><td class="desc-cell">Bloco de texto com espaçamento automático</td></tr>
+      <tr><td class="tag-cell">&lt;br&gt; <span class="badge badge-void">void</span></td><td class="name-cell">Quebra de Linha</td><td class="desc-cell">Quebra de linha simples dentro do texto</td></tr>
+      <tr><td class="tag-cell">&lt;hr&gt; <span class="badge badge-void">void</span></td><td class="name-cell">Linha Horizontal</td><td class="desc-cell">Separação temática com linha horizontal</td></tr>
+      <tr><td class="tag-cell">&lt;strong&gt;</td><td class="name-cell">Ênfase Forte</td><td class="desc-cell">Texto com forte importância semântica (negrito)</td></tr>
+      <tr><td class="tag-cell">&lt;em&gt;</td><td class="name-cell">Ênfase</td><td class="desc-cell">Texto com ênfase semântica (itálico)</td></tr>
+      <tr><td class="tag-cell">&lt;b&gt;</td><td class="name-cell">Negrito Visual</td><td class="desc-cell">Negrito sem semântica especial</td></tr>
+      <tr><td class="tag-cell">&lt;i&gt;</td><td class="name-cell">Itálico Visual</td><td class="desc-cell">Itálico para termos técnicos ou estrangeiros</td></tr>
+      <tr><td class="tag-cell">&lt;u&gt;</td><td class="name-cell">Sublinhado</td><td class="desc-cell">Texto sublinhado — indica anotações ou erros</td></tr>
+      <tr><td class="tag-cell">&lt;s&gt;</td><td class="name-cell">Tachado</td><td class="desc-cell">Texto não mais relevante (riscado)</td></tr>
+      <tr><td class="tag-cell">&lt;del&gt;</td><td class="name-cell">Deletado</td><td class="desc-cell">Texto removido de versão anterior do documento</td></tr>
+      <tr><td class="tag-cell">&lt;ins&gt;</td><td class="name-cell">Inserido</td><td class="desc-cell">Texto adicionado em versão mais recente</td></tr>
+      <tr><td class="tag-cell">&lt;mark&gt;</td><td class="name-cell">Marcado</td><td class="desc-cell">Destaque visual de texto relevante (amarelo padrão)</td></tr>
+      <tr><td class="tag-cell">&lt;small&gt;</td><td class="name-cell">Texto Pequeno</td><td class="desc-cell">Notas de rodapé e avisos legais em tamanho menor</td></tr>
+      <tr><td class="tag-cell">&lt;sub&gt;</td><td class="name-cell">Subscrito</td><td class="desc-cell">Texto subscrito — H₂O, fórmulas</td></tr>
+      <tr><td class="tag-cell">&lt;sup&gt;</td><td class="name-cell">Sobrescrito</td><td class="desc-cell">Texto sobrescrito — x², notas de rodapé</td></tr>
+      <tr><td class="tag-cell">&lt;abbr&gt;</td><td class="name-cell">Abreviação</td><td class="desc-cell">Abreviação ou acrônimo com título explicativo</td></tr>
+      <tr><td class="tag-cell">&lt;cite&gt;</td><td class="name-cell">Citação de Obra</td><td class="desc-cell">Título de uma obra (livro, filme, música)</td></tr>
+      <tr><td class="tag-cell">&lt;q&gt;</td><td class="name-cell">Citação Inline</td><td class="desc-cell">Citação curta com aspas automáticas</td></tr>
+      <tr><td class="tag-cell">&lt;blockquote&gt;</td><td class="name-cell">Bloco de Citação</td><td class="desc-cell">Citação longa em bloco com recuo</td></tr>
+      <tr><td class="tag-cell">&lt;dfn&gt;</td><td class="name-cell">Definição</td><td class="desc-cell">Marca o termo sendo definido no contexto</td></tr>
+      <tr><td class="tag-cell">&lt;kbd&gt;</td><td class="name-cell">Teclado</td><td class="desc-cell">Entrada de teclado (teclas, atalhos)</td></tr>
+      <tr><td class="tag-cell">&lt;samp&gt;</td><td class="name-cell">Saída de Programa</td><td class="desc-cell">Saída de um programa ou sistema</td></tr>
+      <tr><td class="tag-cell">&lt;var&gt;</td><td class="name-cell">Variável</td><td class="desc-cell">Variável matemática ou de programação</td></tr>
+      <tr><td class="tag-cell">&lt;code&gt;</td><td class="name-cell">Código Inline</td><td class="desc-cell">Fragmento de código em fonte monoespaçada</td></tr>
+      <tr><td class="tag-cell">&lt;pre&gt;</td><td class="name-cell">Pré-formatado</td><td class="desc-cell">Preserva espaços, tabulações e quebras de linha</td></tr>
+      <tr><td class="tag-cell">&lt;bdi&gt;</td><td class="name-cell">Isolamento Bidirecional</td><td class="desc-cell">Isola texto com direção diferente do contexto</td></tr>
+      <tr><td class="tag-cell">&lt;bdo&gt;</td><td class="name-cell">Override Bidirecional</td><td class="desc-cell">Sobrescreve direção do texto RTL/LTR</td></tr>
+      <tr><td class="tag-cell">&lt;ruby&gt;</td><td class="name-cell">Ruby</td><td class="desc-cell">Anotações ruby para pronúncia de texto asiático</td></tr>
+      <tr><td class="tag-cell">&lt;rt&gt;</td><td class="name-cell">Texto Ruby</td><td class="desc-cell">Pronúncia ou explicação do caractere ruby</td></tr>
+      <tr><td class="tag-cell">&lt;rp&gt;</td><td class="name-cell">Parêntese Ruby</td><td class="desc-cell">Parênteses fallback para navegadores sem suporte a ruby</td></tr>
+      <tr><td class="tag-cell">&lt;time&gt;</td><td class="name-cell">Tempo / Data</td><td class="desc-cell">Data/hora em formato legível por máquina</td></tr>
+      <tr><td class="tag-cell">&lt;data&gt;</td><td class="name-cell">Dado</td><td class="desc-cell">Vincula conteúdo a valor legível por máquina</td></tr>
+      <tr><td class="tag-cell">&lt;wbr&gt; <span class="badge badge-void">void</span></td><td class="name-cell">Quebra Opcional</td><td class="desc-cell">Ponto sugerido de quebra em palavras longas</td></tr>
+    </tbody>
+  </table>
+
+  <!-- LISTAS -->
+  <div class="section-title" data-cat="listas" data-lang="html"><div class="section-dot" style="background:#b57bee"></div><h2>Listas</h2></div>
+  <table class="html-table" data-cat="listas" data-lang="html">
+    <thead><tr><th>TAG</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">&lt;ul&gt;</td><td class="name-cell">Lista Não Ordenada</td><td class="desc-cell">Lista com marcadores (bolinhas)</td></tr>
+      <tr><td class="tag-cell">&lt;ol&gt;</td><td class="name-cell">Lista Ordenada</td><td class="desc-cell">Lista numerada ou com letras</td></tr>
+      <tr><td class="tag-cell">&lt;li&gt;</td><td class="name-cell">Item de Lista</td><td class="desc-cell">Item dentro de ul, ol ou menu</td></tr>
+      <tr><td class="tag-cell">&lt;dl&gt;</td><td class="name-cell">Lista de Definição</td><td class="desc-cell">Lista de termos com suas definições</td></tr>
+      <tr><td class="tag-cell">&lt;dt&gt;</td><td class="name-cell">Termo</td><td class="desc-cell">Termo em uma lista de definições</td></tr>
+      <tr><td class="tag-cell">&lt;dd&gt;</td><td class="name-cell">Descrição</td><td class="desc-cell">Descrição/explicação do termo correspondente</td></tr>
+      <tr><td class="tag-cell">&lt;menu&gt;</td><td class="name-cell">Menu</td><td class="desc-cell">Lista de comandos ou itens de menu</td></tr>
+    </tbody>
+  </table>
+
+  <!-- MÍDIA -->
+  <div class="section-title" data-cat="midia" data-lang="html"><div class="section-dot" style="background:#06d6a0"></div><h2>Links, Imagens e Mídia</h2></div>
+  <table class="html-table" data-cat="midia" data-lang="html">
+    <thead><tr><th>TAG</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">&lt;a&gt;</td><td class="name-cell">Âncora / Link</td><td class="desc-cell">Hiperlink para páginas, arquivos ou âncoras na mesma página</td></tr>
+      <tr><td class="tag-cell">&lt;img&gt; <span class="badge badge-void">void</span></td><td class="name-cell">Imagem</td><td class="desc-cell">Incorpora imagem (requer src e alt)</td></tr>
+      <tr><td class="tag-cell">&lt;picture&gt;</td><td class="name-cell">Picture</td><td class="desc-cell">Contêiner para imagens responsivas com múltiplas fontes</td></tr>
+      <tr><td class="tag-cell">&lt;source&gt; <span class="badge badge-void">void</span></td><td class="name-cell">Fonte de Mídia</td><td class="desc-cell">Fontes alternativas para picture, video e audio</td></tr>
+      <tr><td class="tag-cell">&lt;figure&gt;</td><td class="name-cell">Figura</td><td class="desc-cell">Agrupa visual (imagem, diagrama) com legenda</td></tr>
+      <tr><td class="tag-cell">&lt;figcaption&gt;</td><td class="name-cell">Legenda da Figura</td><td class="desc-cell">Legenda descritiva para figure</td></tr>
+      <tr><td class="tag-cell">&lt;video&gt;</td><td class="name-cell">Vídeo</td><td class="desc-cell">Player de vídeo com controles nativos</td></tr>
+      <tr><td class="tag-cell">&lt;audio&gt;</td><td class="name-cell">Áudio</td><td class="desc-cell">Player de áudio com controles nativos</td></tr>
+      <tr><td class="tag-cell">&lt;track&gt; <span class="badge badge-void">void</span></td><td class="name-cell">Faixa de Texto</td><td class="desc-cell">Legendas e captions para video/audio</td></tr>
+      <tr><td class="tag-cell">&lt;iframe&gt;</td><td class="name-cell">Frame Inline</td><td class="desc-cell">Incorpora outra página web dentro da página</td></tr>
+      <tr><td class="tag-cell">&lt;embed&gt; <span class="badge badge-void">void</span></td><td class="name-cell">Conteúdo Externo</td><td class="desc-cell">Incorpora plugin ou conteúdo externo</td></tr>
+      <tr><td class="tag-cell">&lt;object&gt;</td><td class="name-cell">Objeto</td><td class="desc-cell">Recurso externo (imagem, PDF, plugin)</td></tr>
+      <tr><td class="tag-cell">&lt;param&gt; <span class="badge badge-void">void</span></td><td class="name-cell">Parâmetro</td><td class="desc-cell">Parâmetros para o elemento object</td></tr>
+      <tr><td class="tag-cell">&lt;map&gt;</td><td class="name-cell">Mapa de Imagem</td><td class="desc-cell">Define mapa de imagem com áreas clicáveis</td></tr>
+      <tr><td class="tag-cell">&lt;area&gt; <span class="badge badge-void">void</span></td><td class="name-cell">Área Clicável</td><td class="desc-cell">Área clicável dentro de um mapa de imagem</td></tr>
+    </tbody>
+  </table>
+
+  <!-- TABELAS -->
+  <div class="section-title" data-cat="tabelas" data-lang="html"><div class="section-dot" style="background:#4a9eff"></div><h2>Tabelas</h2></div>
+  <table class="html-table" data-cat="tabelas" data-lang="html">
+    <thead><tr><th>TAG</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">&lt;table&gt;</td><td class="name-cell">Tabela</td><td class="desc-cell">Define tabela de dados em grade</td></tr>
+      <tr><td class="tag-cell">&lt;caption&gt;</td><td class="name-cell">Legenda</td><td class="desc-cell">Título/legenda para a tabela</td></tr>
+      <tr><td class="tag-cell">&lt;thead&gt;</td><td class="name-cell">Cabeçalho</td><td class="desc-cell">Agrupa linhas de cabeçalho</td></tr>
+      <tr><td class="tag-cell">&lt;tbody&gt;</td><td class="name-cell">Corpo</td><td class="desc-cell">Agrupa conteúdo principal da tabela</td></tr>
+      <tr><td class="tag-cell">&lt;tfoot&gt;</td><td class="name-cell">Rodapé</td><td class="desc-cell">Agrupa linhas de rodapé/totais</td></tr>
+      <tr><td class="tag-cell">&lt;tr&gt;</td><td class="name-cell">Linha</td><td class="desc-cell">Linha horizontal na tabela</td></tr>
+      <tr><td class="tag-cell">&lt;th&gt;</td><td class="name-cell">Célula de Cabeçalho</td><td class="desc-cell">Célula de cabeçalho (negrito + centralizado)</td></tr>
+      <tr><td class="tag-cell">&lt;td&gt;</td><td class="name-cell">Célula de Dados</td><td class="desc-cell">Célula de dados da tabela</td></tr>
+      <tr><td class="tag-cell">&lt;col&gt; <span class="badge badge-void">void</span></td><td class="name-cell">Coluna</td><td class="desc-cell">Propriedades para coluna dentro de colgroup</td></tr>
+      <tr><td class="tag-cell">&lt;colgroup&gt;</td><td class="name-cell">Grupo de Colunas</td><td class="desc-cell">Agrupa colunas para aplicar formatação em bloco</td></tr>
+    </tbody>
+  </table>
+
+  <!-- FORMULÁRIOS -->
+  <div class="section-title" data-cat="formularios" data-lang="html"><div class="section-dot" style="background:#ff6b35"></div><h2>Formulários e Entradas</h2></div>
+  <table class="html-table" data-cat="formularios" data-lang="html">
+    <thead><tr><th>TAG</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">&lt;form&gt;</td><td class="name-cell">Formulário</td><td class="desc-cell">Define formulário para entrada de dados</td></tr>
+      <tr><td class="tag-cell">&lt;input&gt; <span class="badge badge-void">void</span></td><td class="name-cell">Entrada</td><td class="desc-cell">Campo de entrada — type: text, email, password, number, checkbox, radio, file, date, color, range…</td></tr>
+      <tr><td class="tag-cell">&lt;label&gt;</td><td class="name-cell">Rótulo</td><td class="desc-cell">Etiqueta acessível para elemento de formulário</td></tr>
+      <tr><td class="tag-cell">&lt;button&gt;</td><td class="name-cell">Botão</td><td class="desc-cell">Botão clicável (submit, reset ou button)</td></tr>
+      <tr><td class="tag-cell">&lt;textarea&gt;</td><td class="name-cell">Área de Texto</td><td class="desc-cell">Campo de texto múltiplas linhas</td></tr>
+      <tr><td class="tag-cell">&lt;select&gt;</td><td class="name-cell">Seleção</td><td class="desc-cell">Menu dropdown de opções</td></tr>
+      <tr><td class="tag-cell">&lt;option&gt;</td><td class="name-cell">Opção</td><td class="desc-cell">Opção dentro de select ou datalist</td></tr>
+      <tr><td class="tag-cell">&lt;optgroup&gt;</td><td class="name-cell">Grupo de Opções</td><td class="desc-cell">Agrupa opções em um select</td></tr>
+      <tr><td class="tag-cell">&lt;datalist&gt;</td><td class="name-cell">Lista de Dados</td><td class="desc-cell">Sugestões autocomplete para input</td></tr>
+      <tr><td class="tag-cell">&lt;fieldset&gt;</td><td class="name-cell">Conjunto de Campos</td><td class="desc-cell">Agrupa controles relacionados com borda</td></tr>
+      <tr><td class="tag-cell">&lt;legend&gt;</td><td class="name-cell">Legenda do Fieldset</td><td class="desc-cell">Título para fieldset</td></tr>
+      <tr><td class="tag-cell">&lt;output&gt;</td><td class="name-cell">Saída</td><td class="desc-cell">Resultado de cálculo ou ação do usuário</td></tr>
+      <tr><td class="tag-cell">&lt;progress&gt;</td><td class="name-cell">Barra de Progresso</td><td class="desc-cell">Progresso de tarefa com value e max</td></tr>
+      <tr><td class="tag-cell">&lt;meter&gt;</td><td class="name-cell">Medidor</td><td class="desc-cell">Medição escalar em intervalo conhecido</td></tr>
+    </tbody>
+  </table>
+
+  <!-- INTERATIVO -->
+  <div class="section-title" data-cat="interativo" data-lang="html"><div class="section-dot" style="background:#3ecf8e"></div><h2>Elementos Interativos</h2></div>
+  <table class="html-table" data-cat="interativo" data-lang="html">
+    <thead><tr><th>TAG</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">&lt;details&gt;</td><td class="name-cell">Detalhes</td><td class="desc-cell">Widget accordion expansível/recolhível nativo</td></tr>
+      <tr><td class="tag-cell">&lt;summary&gt;</td><td class="name-cell">Sumário</td><td class="desc-cell">Título clicável que expande/recolhe details</td></tr>
+      <tr><td class="tag-cell">&lt;dialog&gt;</td><td class="name-cell">Diálogo / Modal</td><td class="desc-cell">Modal ou caixa de diálogo nativa do navegador</td></tr>
+    </tbody>
+  </table>
+
+  <!-- GRÁFICO -->
+  <div class="section-title" data-cat="grafico" data-lang="html"><div class="section-dot" style="background:#4a9eff"></div><h2>Gráficos, SVG e Código</h2></div>
+  <table class="html-table" data-cat="grafico" data-lang="html">
+    <thead><tr><th>TAG</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">&lt;canvas&gt;</td><td class="name-cell">Canvas</td><td class="desc-cell">Área de desenho 2D/3D controlada por JavaScript</td></tr>
+      <tr><td class="tag-cell">&lt;svg&gt;</td><td class="name-cell">SVG</td><td class="desc-cell">Gráficos vetoriais escaláveis inline</td></tr>
+      <tr><td class="tag-cell">&lt;math&gt;</td><td class="name-cell">MathML</td><td class="desc-cell">Expressões matemáticas MathML inline</td></tr>
+    </tbody>
+  </table>
+
+  <!-- OBSOLETOS -->
+  <div class="section-title" data-cat="obsoleto" data-lang="html"><div class="section-dot" style="background:#ff6b6b"></div><h2>Tags Obsoletas / Depreciadas</h2></div>
+  <table class="html-table" data-cat="obsoleto" data-lang="html">
+    <thead><tr><th>TAG</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">&lt;font&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Fonte</td><td class="desc-cell">Cor/tamanho de fonte — use CSS</td></tr>
+      <tr><td class="tag-cell">&lt;center&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Centralizar</td><td class="desc-cell">Centralizar conteúdo — use CSS</td></tr>
+      <tr><td class="tag-cell">&lt;strike&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Tachado</td><td class="desc-cell">Use &lt;s&gt; ou &lt;del&gt;</td></tr>
+      <tr><td class="tag-cell">&lt;tt&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Teletipo</td><td class="desc-cell">Monoespaçado — use &lt;code&gt;</td></tr>
+      <tr><td class="tag-cell">&lt;frame&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Frame</td><td class="desc-cell">Use &lt;iframe&gt;</td></tr>
+      <tr><td class="tag-cell">&lt;frameset&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Frameset</td><td class="desc-cell">Removido no HTML5</td></tr>
+      <tr><td class="tag-cell">&lt;applet&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Applet Java</td><td class="desc-cell">Completamente removido do HTML5</td></tr>
+      <tr><td class="tag-cell">&lt;marquee&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Marquee</td><td class="desc-cell">Texto rolante — use CSS animation</td></tr>
+      <tr><td class="tag-cell">&lt;blink&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Piscar</td><td class="desc-cell">Removido de todos os navegadores modernos</td></tr>
+      <tr><td class="tag-cell">&lt;big&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Grande</td><td class="desc-cell">Texto maior — use CSS font-size</td></tr>
+      <tr><td class="tag-cell">&lt;acronym&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Acrônimo</td><td class="desc-cell">Use &lt;abbr&gt;</td></tr>
+      <tr><td class="tag-cell">&lt;dir&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Diretório</td><td class="desc-cell">Use &lt;ul&gt;</td></tr>
+      <tr><td class="tag-cell">&lt;isindex&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Índice</td><td class="desc-cell">Use &lt;form&gt; + &lt;input&gt;</td></tr>
+      <tr><td class="tag-cell">&lt;basefont&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Fonte Base</td><td class="desc-cell">Use CSS font-family no body</td></tr>
+      <tr><td class="tag-cell">&lt;listing&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Listagem</td><td class="desc-cell">Use &lt;pre&gt;&lt;code&gt;</td></tr>
+      <tr><td class="tag-cell">&lt;xmp&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Exemplo</td><td class="desc-cell">Use &lt;pre&gt;&lt;code&gt;</td></tr>
+      <tr><td class="tag-cell">&lt;plaintext&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Texto Plano</td><td class="desc-cell">Não use — quebra todo o parser HTML</td></tr>
+      <tr><td class="tag-cell">&lt;nobr&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Sem Quebra</td><td class="desc-cell">Use CSS white-space: nowrap</td></tr>
+      <tr><td class="tag-cell">&lt;spacer&gt; <span class="badge badge-dep">obsoleto</span></td><td class="name-cell">Espaçador</td><td class="desc-cell">Use CSS padding/margin</td></tr>
+    </tbody>
+  </table>
+
+</div><!-- /block-html -->
+
+
+<!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓ CSS BLOCK ▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
+<div class="lang-block" id="block-css">
+
+  <div class="lang-banner css-banner">
+    <span class="lang-banner-icon">{ }</span>
+    <div class="lang-banner-text">
+      <h3>CSS — Cascading Style Sheets</h3>
+      <p>Linguagem de estilo que controla aparência e layout · 200+ propriedades · CSS3</p>
+    </div>
+  </div>
+
+  <!-- CSS TEXTO -->
+  <div class="section-title" data-cat="css-texto" data-lang="css"><div class="section-dot" style="background:#4a9eff"></div><h2>Tipografia e Texto</h2></div>
+  <table class="css-table" data-cat="css-texto" data-lang="css">
+    <thead><tr><th>PROPRIEDADE</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">font-family</td><td class="name-cell">Família da Fonte</td><td class="desc-cell">Define a fonte do texto (Arial, sans-serif, etc.)</td></tr>
+      <tr><td class="tag-cell">font-size</td><td class="name-cell">Tamanho da Fonte</td><td class="desc-cell">Tamanho do texto (px, rem, em, %, vw)</td></tr>
+      <tr><td class="tag-cell">font-weight</td><td class="name-cell">Peso da Fonte</td><td class="desc-cell">Espessura: normal, bold, 100–900</td></tr>
+      <tr><td class="tag-cell">font-style</td><td class="name-cell">Estilo da Fonte</td><td class="desc-cell">normal, italic, oblique</td></tr>
+      <tr><td class="tag-cell">font-variant</td><td class="name-cell">Variante da Fonte</td><td class="desc-cell">normal, small-caps e outros valores OpenType</td></tr>
+      <tr><td class="tag-cell">font</td><td class="name-cell">Fonte (Shorthand)</td><td class="desc-cell">Atalho: style weight size/line-height family</td></tr>
+      <tr><td class="tag-cell">line-height</td><td class="name-cell">Altura da Linha</td><td class="desc-cell">Espaço vertical entre linhas de texto</td></tr>
+      <tr><td class="tag-cell">letter-spacing</td><td class="name-cell">Espaço entre Letras</td><td class="desc-cell">Espaçamento entre caracteres (kerning)</td></tr>
+      <tr><td class="tag-cell">word-spacing</td><td class="name-cell">Espaço entre Palavras</td><td class="desc-cell">Espaçamento entre palavras</td></tr>
+      <tr><td class="tag-cell">text-align</td><td class="name-cell">Alinhamento do Texto</td><td class="desc-cell">left, right, center, justify</td></tr>
+      <tr><td class="tag-cell">text-align-last</td><td class="name-cell">Alinhamento Última Linha</td><td class="desc-cell">Alinhamento da última linha de bloco justificado</td></tr>
+      <tr><td class="tag-cell">text-decoration</td><td class="name-cell">Decoração do Texto</td><td class="desc-cell">none, underline, overline, line-through</td></tr>
+      <tr><td class="tag-cell">text-decoration-color</td><td class="name-cell">Cor da Decoração</td><td class="desc-cell">Cor da linha de sublinhado/tachado</td></tr>
+      <tr><td class="tag-cell">text-decoration-style</td><td class="name-cell">Estilo da Decoração</td><td class="desc-cell">solid, dashed, dotted, double, wavy</td></tr>
+      <tr><td class="tag-cell">text-transform</td><td class="name-cell">Transformação do Texto</td><td class="desc-cell">none, uppercase, lowercase, capitalize</td></tr>
+      <tr><td class="tag-cell">text-indent</td><td class="name-cell">Recuo do Texto</td><td class="desc-cell">Recuo da primeira linha do parágrafo</td></tr>
+      <tr><td class="tag-cell">text-shadow</td><td class="name-cell">Sombra do Texto</td><td class="desc-cell">Sombra: h-offset v-offset blur color</td></tr>
+      <tr><td class="tag-cell">text-overflow</td><td class="name-cell">Estouro do Texto</td><td class="desc-cell">clip ou ellipsis para texto que ultrapassa o container</td></tr>
+      <tr><td class="tag-cell">white-space</td><td class="name-cell">Espaço em Branco</td><td class="desc-cell">normal, nowrap, pre, pre-wrap, pre-line</td></tr>
+      <tr><td class="tag-cell">word-break</td><td class="name-cell">Quebra de Palavra</td><td class="desc-cell">normal, break-all, keep-all, break-word</td></tr>
+      <tr><td class="tag-cell">overflow-wrap</td><td class="name-cell">Quebra de Linha</td><td class="desc-cell">anywhere, break-word — força quebra em palavras longas</td></tr>
+      <tr><td class="tag-cell">direction</td><td class="name-cell">Direção do Texto</td><td class="desc-cell">ltr (esquerda→direita) ou rtl (direita→esquerda)</td></tr>
+      <tr><td class="tag-cell">unicode-bidi</td><td class="name-cell">Bidirecional</td><td class="desc-cell">Controle de texto bidirecional com Unicode</td></tr>
+      <tr><td class="tag-cell">writing-mode</td><td class="name-cell">Modo de Escrita</td><td class="desc-cell">horizontal-tb, vertical-rl, vertical-lr</td></tr>
+      <tr><td class="tag-cell">text-rendering</td><td class="name-cell">Renderização de Texto</td><td class="desc-cell">auto, optimizeSpeed, optimizeLegibility, geometricPrecision</td></tr>
+      <tr><td class="tag-cell">font-display</td><td class="name-cell">Exibição da Fonte</td><td class="desc-cell">Estratégia de carregamento: auto, swap, block, fallback, optional</td></tr>
+      <tr><td class="tag-cell">@font-face</td><td class="name-cell">Fonte Customizada</td><td class="desc-cell">Define fonte personalizada para uso na página</td></tr>
+    </tbody>
+  </table>
+
+  <!-- CSS BOX MODEL -->
+  <div class="section-title" data-cat="css-box" data-lang="css"><div class="section-dot" style="background:#4a9eff"></div><h2>Box Model (Caixa)</h2></div>
+  <table class="css-table" data-cat="css-box" data-lang="css">
+    <thead><tr><th>PROPRIEDADE</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">width</td><td class="name-cell">Largura</td><td class="desc-cell">Largura do elemento (px, %, vw, auto)</td></tr>
+      <tr><td class="tag-cell">height</td><td class="name-cell">Altura</td><td class="desc-cell">Altura do elemento</td></tr>
+      <tr><td class="tag-cell">min-width</td><td class="name-cell">Largura Mínima</td><td class="desc-cell">Largura mínima que o elemento pode ter</td></tr>
+      <tr><td class="tag-cell">max-width</td><td class="name-cell">Largura Máxima</td><td class="desc-cell">Largura máxima — muito usado para containers responsivos</td></tr>
+      <tr><td class="tag-cell">min-height</td><td class="name-cell">Altura Mínima</td><td class="desc-cell">Altura mínima que o elemento pode ter</td></tr>
+      <tr><td class="tag-cell">max-height</td><td class="name-cell">Altura Máxima</td><td class="desc-cell">Altura máxima do elemento</td></tr>
+      <tr><td class="tag-cell">padding</td><td class="name-cell">Preenchimento</td><td class="desc-cell">Espaço interno entre conteúdo e borda (top right bottom left)</td></tr>
+      <tr><td class="tag-cell">padding-top/right/bottom/left</td><td class="name-cell">Padding Individual</td><td class="desc-cell">Preenchimento em lado específico</td></tr>
+      <tr><td class="tag-cell">margin</td><td class="name-cell">Margem</td><td class="desc-cell">Espaço externo ao redor do elemento</td></tr>
+      <tr><td class="tag-cell">margin-top/right/bottom/left</td><td class="name-cell">Margem Individual</td><td class="desc-cell">Margem em lado específico</td></tr>
+      <tr><td class="tag-cell">box-sizing</td><td class="name-cell">Modelo da Caixa</td><td class="desc-cell">content-box (padrão) ou border-box (inclui padding e border)</td></tr>
+      <tr><td class="tag-cell">overflow</td><td class="name-cell">Estouro</td><td class="desc-cell">visible, hidden, scroll, auto — controle do conteúdo que extrapola</td></tr>
+      <tr><td class="tag-cell">overflow-x / overflow-y</td><td class="name-cell">Estouro por Eixo</td><td class="desc-cell">Controle de overflow horizontal ou vertical separadamente</td></tr>
+      <tr><td class="tag-cell">display</td><td class="name-cell">Tipo de Display</td><td class="desc-cell">block, inline, inline-block, flex, grid, none, contents…</td></tr>
+      <tr><td class="tag-cell">visibility</td><td class="name-cell">Visibilidade</td><td class="desc-cell">visible, hidden (oculta mas ocupa espaço), collapse</td></tr>
+      <tr><td class="tag-cell">opacity</td><td class="name-cell">Opacidade</td><td class="desc-cell">Transparência do elemento: 0 (invisível) a 1 (opaco)</td></tr>
+      <tr><td class="tag-cell">aspect-ratio</td><td class="name-cell">Proporção</td><td class="desc-cell">Define proporção largura/altura (ex: 16/9)</td></tr>
+      <tr><td class="tag-cell">box-shadow</td><td class="name-cell">Sombra da Caixa</td><td class="desc-cell">Sombra: h v blur spread color inset</td></tr>
+      <tr><td class="tag-cell">outline</td><td class="name-cell">Contorno</td><td class="desc-cell">Contorno fora da borda (não ocupa espaço)</td></tr>
+      <tr><td class="tag-cell">outline-offset</td><td class="name-cell">Deslocamento do Contorno</td><td class="desc-cell">Distância entre outline e a borda do elemento</td></tr>
+    </tbody>
+  </table>
+
+  <!-- CSS LAYOUT -->
+  <div class="section-title" data-cat="css-layout" data-lang="css"><div class="section-dot" style="background:#3ecf8e"></div><h2>Flexbox & Grid Layout</h2></div>
+  <table class="css-table" data-cat="css-layout" data-lang="css">
+    <thead><tr><th>PROPRIEDADE</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">flex-direction</td><td class="name-cell">Direção do Flex</td><td class="desc-cell">row, row-reverse, column, column-reverse</td></tr>
+      <tr><td class="tag-cell">flex-wrap</td><td class="name-cell">Quebra do Flex</td><td class="desc-cell">nowrap, wrap, wrap-reverse</td></tr>
+      <tr><td class="tag-cell">flex-flow</td><td class="name-cell">Flex Flow (Shorthand)</td><td class="desc-cell">Atalho para flex-direction e flex-wrap</td></tr>
+      <tr><td class="tag-cell">justify-content</td><td class="name-cell">Justificar Conteúdo</td><td class="desc-cell">flex-start, center, flex-end, space-between, space-around, space-evenly</td></tr>
+      <tr><td class="tag-cell">align-items</td><td class="name-cell">Alinhar Itens</td><td class="desc-cell">stretch, flex-start, center, flex-end, baseline</td></tr>
+      <tr><td class="tag-cell">align-content</td><td class="name-cell">Alinhar Conteúdo</td><td class="desc-cell">Alinha múltiplas linhas no eixo cruzado</td></tr>
+      <tr><td class="tag-cell">gap</td><td class="name-cell">Espaço entre Itens</td><td class="desc-cell">Espaço entre linhas e colunas (row-gap + column-gap)</td></tr>
+      <tr><td class="tag-cell">row-gap / column-gap</td><td class="name-cell">Gap por Eixo</td><td class="desc-cell">Espaço entre linhas ou colunas separadamente</td></tr>
+      <tr><td class="tag-cell">flex</td><td class="name-cell">Flex (Shorthand)</td><td class="desc-cell">Atalho: flex-grow flex-shrink flex-basis</td></tr>
+      <tr><td class="tag-cell">flex-grow</td><td class="name-cell">Crescimento</td><td class="desc-cell">Fator de crescimento do item flex</td></tr>
+      <tr><td class="tag-cell">flex-shrink</td><td class="name-cell">Encolhimento</td><td class="desc-cell">Fator de encolhimento do item flex</td></tr>
+      <tr><td class="tag-cell">flex-basis</td><td class="name-cell">Tamanho Base</td><td class="desc-cell">Tamanho inicial antes do crescimento/encolhimento</td></tr>
+      <tr><td class="tag-cell">order</td><td class="name-cell">Ordem</td><td class="desc-cell">Ordem visual do item flex/grid</td></tr>
+      <tr><td class="tag-cell">align-self</td><td class="name-cell">Auto-Alinhamento</td><td class="desc-cell">Alinha item individualmente no eixo cruzado</td></tr>
+      <tr><td class="tag-cell">grid-template-columns</td><td class="name-cell">Colunas do Grid</td><td class="desc-cell">Define colunas: 1fr 1fr, repeat(3,1fr), auto…</td></tr>
+      <tr><td class="tag-cell">grid-template-rows</td><td class="name-cell">Linhas do Grid</td><td class="desc-cell">Define linhas do grid</td></tr>
+      <tr><td class="tag-cell">grid-template-areas</td><td class="name-cell">Áreas do Grid</td><td class="desc-cell">Define áreas nomeadas no grid</td></tr>
+      <tr><td class="tag-cell">grid-template</td><td class="name-cell">Grid Template (Short)</td><td class="desc-cell">Atalho: rows / columns</td></tr>
+      <tr><td class="tag-cell">grid-column</td><td class="name-cell">Coluna do Item</td><td class="desc-cell">Posição de início/fim na coluna: 1 / 3</td></tr>
+      <tr><td class="tag-cell">grid-row</td><td class="name-cell">Linha do Item</td><td class="desc-cell">Posição de início/fim na linha</td></tr>
+      <tr><td class="tag-cell">grid-area</td><td class="name-cell">Área do Item</td><td class="desc-cell">Nome de área ou posição completa do item</td></tr>
+      <tr><td class="tag-cell">justify-items</td><td class="name-cell">Justificar Itens (Grid)</td><td class="desc-cell">Alinha itens horizontalmente dentro da célula</td></tr>
+      <tr><td class="tag-cell">justify-self</td><td class="name-cell">Auto-Justificar (Grid)</td><td class="desc-cell">Alinha item individualmente no eixo inline</td></tr>
+      <tr><td class="tag-cell">place-items</td><td class="name-cell">Place Items</td><td class="desc-cell">Atalho: align-items / justify-items</td></tr>
+      <tr><td class="tag-cell">place-content</td><td class="name-cell">Place Content</td><td class="desc-cell">Atalho: align-content / justify-content</td></tr>
+      <tr><td class="tag-cell">place-self</td><td class="name-cell">Place Self</td><td class="desc-cell">Atalho: align-self / justify-self</td></tr>
+      <tr><td class="tag-cell">grid-auto-flow</td><td class="name-cell">Fluxo Automático</td><td class="desc-cell">row, column, dense — como itens automáticos são posicionados</td></tr>
+      <tr><td class="tag-cell">grid-auto-columns</td><td class="name-cell">Colunas Automáticas</td><td class="desc-cell">Tamanho das colunas criadas implicitamente</td></tr>
+      <tr><td class="tag-cell">grid-auto-rows</td><td class="name-cell">Linhas Automáticas</td><td class="desc-cell">Tamanho das linhas criadas implicitamente</td></tr>
+      <tr><td class="tag-cell">columns</td><td class="name-cell">Colunas de Texto</td><td class="desc-cell">Divide texto em múltiplas colunas (multi-column)</td></tr>
+      <tr><td class="tag-cell">column-count</td><td class="name-cell">Número de Colunas</td><td class="desc-cell">Quantidade de colunas de texto</td></tr>
+      <tr><td class="tag-cell">column-gap</td><td class="name-cell">Espaço entre Colunas</td><td class="desc-cell">Espaço entre colunas de texto</td></tr>
+      <tr><td class="tag-cell">column-rule</td><td class="name-cell">Divisor de Colunas</td><td class="desc-cell">Linha divisória entre colunas de texto</td></tr>
+      <tr><td class="tag-cell">column-span</td><td class="name-cell">Span de Colunas</td><td class="desc-cell">none ou all — elemento ocupa todas as colunas</td></tr>
+    </tbody>
+  </table>
+
+  <!-- CSS BACKGROUND -->
+  <div class="section-title" data-cat="css-bg" data-lang="css"><div class="section-dot" style="background:#ffd166"></div><h2>Background e Cores</h2></div>
+  <table class="css-table" data-cat="css-bg" data-lang="css">
+    <thead><tr><th>PROPRIEDADE</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">background-color</td><td class="name-cell">Cor de Fundo</td><td class="desc-cell">Cor sólida de fundo do elemento</td></tr>
+      <tr><td class="tag-cell">background-image</td><td class="name-cell">Imagem de Fundo</td><td class="desc-cell">url(), linear-gradient(), radial-gradient()</td></tr>
+      <tr><td class="tag-cell">background-repeat</td><td class="name-cell">Repetição do Fundo</td><td class="desc-cell">repeat, no-repeat, repeat-x, repeat-y, space, round</td></tr>
+      <tr><td class="tag-cell">background-position</td><td class="name-cell">Posição do Fundo</td><td class="desc-cell">top, center, bottom, left, right ou valores em px/%</td></tr>
+      <tr><td class="tag-cell">background-size</td><td class="name-cell">Tamanho do Fundo</td><td class="desc-cell">cover, contain, auto, px, %</td></tr>
+      <tr><td class="tag-cell">background-attachment</td><td class="name-cell">Fixação do Fundo</td><td class="desc-cell">scroll, fixed (parallax), local</td></tr>
+      <tr><td class="tag-cell">background-clip</td><td class="name-cell">Recorte do Fundo</td><td class="desc-cell">border-box, padding-box, content-box, text</td></tr>
+      <tr><td class="tag-cell">background-origin</td><td class="name-cell">Origem do Fundo</td><td class="desc-cell">Ponto de referência do background</td></tr>
+      <tr><td class="tag-cell">background</td><td class="name-cell">Background (Shorthand)</td><td class="desc-cell">Atalho para todas as propriedades background</td></tr>
+      <tr><td class="tag-cell">color</td><td class="name-cell">Cor do Texto</td><td class="desc-cell">Cor do texto do elemento</td></tr>
+      <tr><td class="tag-cell">background-blend-mode</td><td class="name-cell">Modo de Mistura</td><td class="desc-cell">Como camadas de fundo se misturam: multiply, screen, overlay…</td></tr>
+      <tr><td class="tag-cell">mix-blend-mode</td><td class="name-cell">Mistura de Elementos</td><td class="desc-cell">Como o elemento se mistura com o que está atrás</td></tr>
+      <tr><td class="tag-cell">filter</td><td class="name-cell">Filtro</td><td class="desc-cell">blur(), brightness(), contrast(), grayscale(), hue-rotate(), saturate()…</td></tr>
+      <tr><td class="tag-cell">backdrop-filter</td><td class="name-cell">Filtro do Fundo</td><td class="desc-cell">Aplica filtro ao conteúdo atrás do elemento (glassmorphism)</td></tr>
+      <tr><td class="tag-cell">accent-color</td><td class="name-cell">Cor de Destaque</td><td class="desc-cell">Cor dos controles de formulário nativos (checkbox, radio…)</td></tr>
+      <tr><td class="tag-cell">caret-color</td><td class="name-cell">Cor do Cursor</td><td class="desc-cell">Cor do cursor de texto em inputs</td></tr>
+    </tbody>
+  </table>
+
+  <!-- CSS BORDAS -->
+  <div class="section-title" data-cat="css-borda" data-lang="css"><div class="section-dot" style="background:#4a9eff"></div><h2>Bordas e Raio</h2></div>
+  <table class="css-table" data-cat="css-borda" data-lang="css">
+    <thead><tr><th>PROPRIEDADE</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">border</td><td class="name-cell">Borda (Shorthand)</td><td class="desc-cell">Atalho: width style color (ex: 1px solid red)</td></tr>
+      <tr><td class="tag-cell">border-width</td><td class="name-cell">Largura da Borda</td><td class="desc-cell">thin, medium, thick ou valor em px</td></tr>
+      <tr><td class="tag-cell">border-style</td><td class="name-cell">Estilo da Borda</td><td class="desc-cell">none, solid, dashed, dotted, double, groove, ridge, inset, outset</td></tr>
+      <tr><td class="tag-cell">border-color</td><td class="name-cell">Cor da Borda</td><td class="desc-cell">Cor da borda do elemento</td></tr>
+      <tr><td class="tag-cell">border-top/right/bottom/left</td><td class="name-cell">Borda por Lado</td><td class="desc-cell">Borda em lado específico</td></tr>
+      <tr><td class="tag-cell">border-radius</td><td class="name-cell">Raio da Borda</td><td class="desc-cell">Arredondamento dos cantos (px, %, 50% = círculo)</td></tr>
+      <tr><td class="tag-cell">border-top-left-radius</td><td class="name-cell">Raio Canto Superior-Esq.</td><td class="desc-cell">Arredondamento do canto superior esquerdo</td></tr>
+      <tr><td class="tag-cell">border-top-right-radius</td><td class="name-cell">Raio Canto Superior-Dir.</td><td class="desc-cell">Arredondamento do canto superior direito</td></tr>
+      <tr><td class="tag-cell">border-bottom-left-radius</td><td class="name-cell">Raio Canto Inferior-Esq.</td><td class="desc-cell">Arredondamento do canto inferior esquerdo</td></tr>
+      <tr><td class="tag-cell">border-bottom-right-radius</td><td class="name-cell">Raio Canto Inferior-Dir.</td><td class="desc-cell">Arredondamento do canto inferior direito</td></tr>
+      <tr><td class="tag-cell">border-image</td><td class="name-cell">Imagem de Borda</td><td class="desc-cell">Usa uma imagem como borda do elemento</td></tr>
+      <tr><td class="tag-cell">border-collapse</td><td class="name-cell">Colapso de Borda</td><td class="desc-cell">collapse ou separate para tabelas</td></tr>
+      <tr><td class="tag-cell">border-spacing</td><td class="name-cell">Espaço entre Bordas</td><td class="desc-cell">Espaço entre células de tabela</td></tr>
+    </tbody>
+  </table>
+
+  <!-- CSS POSIÇÃO -->
+  <div class="section-title" data-cat="css-posicao" data-lang="css"><div class="section-dot" style="background:#b57bee"></div><h2>Posicionamento</h2></div>
+  <table class="css-table" data-cat="css-posicao" data-lang="css">
+    <thead><tr><th>PROPRIEDADE</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">position</td><td class="name-cell">Posição</td><td class="desc-cell">static (padrão), relative, absolute, fixed, sticky</td></tr>
+      <tr><td class="tag-cell">top</td><td class="name-cell">Topo</td><td class="desc-cell">Distância da borda superior do elemento pai/viewport</td></tr>
+      <tr><td class="tag-cell">right</td><td class="name-cell">Direita</td><td class="desc-cell">Distância da borda direita</td></tr>
+      <tr><td class="tag-cell">bottom</td><td class="name-cell">Baixo</td><td class="desc-cell">Distância da borda inferior</td></tr>
+      <tr><td class="tag-cell">left</td><td class="name-cell">Esquerda</td><td class="desc-cell">Distância da borda esquerda</td></tr>
+      <tr><td class="tag-cell">z-index</td><td class="name-cell">Índice Z (Profundidade)</td><td class="desc-cell">Ordem de empilhamento: maior valor = na frente</td></tr>
+      <tr><td class="tag-cell">float</td><td class="name-cell">Flutuar</td><td class="desc-cell">left, right, none — faz elemento flutuar ao lado do texto</td></tr>
+      <tr><td class="tag-cell">clear</td><td class="name-cell">Limpar Float</td><td class="desc-cell">left, right, both — impede elementos de ficarem ao lado do float</td></tr>
+      <tr><td class="tag-cell">inset</td><td class="name-cell">Inset (Shorthand)</td><td class="desc-cell">Atalho para top right bottom left</td></tr>
+      <tr><td class="tag-cell">cursor</td><td class="name-cell">Cursor</td><td class="desc-cell">pointer, default, text, move, not-allowed, grab, crosshair…</td></tr>
+      <tr><td class="tag-cell">pointer-events</td><td class="name-cell">Eventos do Ponteiro</td><td class="desc-cell">auto, none — controla se elemento recebe eventos de mouse</td></tr>
+      <tr><td class="tag-cell">user-select</td><td class="name-cell">Seleção do Usuário</td><td class="desc-cell">none, auto, text, all — controla seleção de texto</td></tr>
+      <tr><td class="tag-cell">resize</td><td class="name-cell">Redimensionamento</td><td class="desc-cell">none, both, horizontal, vertical</td></tr>
+      <tr><td class="tag-cell">scroll-behavior</td><td class="name-cell">Comportamento do Scroll</td><td class="desc-cell">auto ou smooth — scroll suave ao navegar âncoras</td></tr>
+      <tr><td class="tag-cell">scroll-snap-type</td><td class="name-cell">Snap do Scroll</td><td class="desc-cell">Encaixa o scroll em pontos definidos</td></tr>
+      <tr><td class="tag-cell">scroll-snap-align</td><td class="name-cell">Alinhamento do Snap</td><td class="desc-cell">start, center, end — alinha o item ao parar o scroll</td></tr>
+      <tr><td class="tag-cell">overscroll-behavior</td><td class="name-cell">Comportamento de Overscroll</td><td class="desc-cell">Controla o scroll além do limite (bounce, encadeamento)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- CSS ANIMAÇÃO -->
+  <div class="section-title" data-cat="css-animacao" data-lang="css"><div class="section-dot" style="background:#3ecf8e"></div><h2>Transições e Animações</h2></div>
+  <table class="css-table" data-cat="css-animacao" data-lang="css">
+    <thead><tr><th>PROPRIEDADE</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">transition</td><td class="name-cell">Transição (Shorthand)</td><td class="desc-cell">Atalho: property duration timing-function delay</td></tr>
+      <tr><td class="tag-cell">transition-property</td><td class="name-cell">Propriedade da Transição</td><td class="desc-cell">Quais propriedades CSS serão animadas</td></tr>
+      <tr><td class="tag-cell">transition-duration</td><td class="name-cell">Duração da Transição</td><td class="desc-cell">Tempo da transição em segundos (0.3s, 1s)</td></tr>
+      <tr><td class="tag-cell">transition-timing-function</td><td class="name-cell">Curva de Aceleração</td><td class="desc-cell">ease, linear, ease-in, ease-out, ease-in-out, cubic-bezier()</td></tr>
+      <tr><td class="tag-cell">transition-delay</td><td class="name-cell">Atraso da Transição</td><td class="desc-cell">Tempo de espera antes de iniciar a transição</td></tr>
+      <tr><td class="tag-cell">animation</td><td class="name-cell">Animação (Shorthand)</td><td class="desc-cell">Atalho: name duration timing iteration direction fill-mode</td></tr>
+      <tr><td class="tag-cell">animation-name</td><td class="name-cell">Nome da Animação</td><td class="desc-cell">Nome do keyframe para executar</td></tr>
+      <tr><td class="tag-cell">animation-duration</td><td class="name-cell">Duração</td><td class="desc-cell">Duração de um ciclo da animação</td></tr>
+      <tr><td class="tag-cell">animation-timing-function</td><td class="name-cell">Curva da Animação</td><td class="desc-cell">ease, linear, steps(), cubic-bezier()</td></tr>
+      <tr><td class="tag-cell">animation-delay</td><td class="name-cell">Atraso</td><td class="desc-cell">Espera antes de iniciar a animação</td></tr>
+      <tr><td class="tag-cell">animation-iteration-count</td><td class="name-cell">Repetições</td><td class="desc-cell">Número de ciclos: 1, 3, infinite</td></tr>
+      <tr><td class="tag-cell">animation-direction</td><td class="name-cell">Direção</td><td class="desc-cell">normal, reverse, alternate, alternate-reverse</td></tr>
+      <tr><td class="tag-cell">animation-fill-mode</td><td class="name-cell">Modo de Preenchimento</td><td class="desc-cell">none, forwards, backwards, both</td></tr>
+      <tr><td class="tag-cell">animation-play-state</td><td class="name-cell">Estado da Animação</td><td class="desc-cell">running ou paused</td></tr>
+      <tr><td class="tag-cell">@keyframes</td><td class="name-cell">Keyframes</td><td class="desc-cell">Define os quadros-chave da animação (from/to ou 0%/100%)</td></tr>
+      <tr><td class="tag-cell">will-change</td><td class="name-cell">Otimização de Animação</td><td class="desc-cell">Avisa o browser sobre mudanças futuras (transform, opacity)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- CSS TRANSFORM -->
+  <div class="section-title" data-cat="css-transform" data-lang="css"><div class="section-dot" style="background:#ff6b35"></div><h2>Transform e Perspectiva 3D</h2></div>
+  <table class="css-table" data-cat="css-transform" data-lang="css">
+    <thead><tr><th>PROPRIEDADE</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">transform</td><td class="name-cell">Transformar</td><td class="desc-cell">Aplica transformações 2D/3D ao elemento</td></tr>
+      <tr><td class="tag-cell">translate(x, y)</td><td class="name-cell">Mover</td><td class="desc-cell">Desloca o elemento nos eixos X e Y</td></tr>
+      <tr><td class="tag-cell">translateX(n)</td><td class="name-cell">Mover Horizontal</td><td class="desc-cell">Desloca o elemento no eixo X</td></tr>
+      <tr><td class="tag-cell">translateY(n)</td><td class="name-cell">Mover Vertical</td><td class="desc-cell">Desloca o elemento no eixo Y</td></tr>
+      <tr><td class="tag-cell">translateZ(n)</td><td class="name-cell">Mover Profundidade</td><td class="desc-cell">Desloca no eixo Z (profundidade 3D)</td></tr>
+      <tr><td class="tag-cell">scale(x, y)</td><td class="name-cell">Escalar</td><td class="desc-cell">Redimensiona o elemento</td></tr>
+      <tr><td class="tag-cell">rotate(deg)</td><td class="name-cell">Girar</td><td class="desc-cell">Rotaciona o elemento em graus</td></tr>
+      <tr><td class="tag-cell">rotateX/Y/Z(deg)</td><td class="name-cell">Girar em 3D</td><td class="desc-cell">Rotaciona ao redor do eixo X, Y ou Z</td></tr>
+      <tr><td class="tag-cell">skew(x, y)</td><td class="name-cell">Inclinar</td><td class="desc-cell">Inclina o elemento nos eixos X e Y</td></tr>
+      <tr><td class="tag-cell">matrix()</td><td class="name-cell">Matriz 2D</td><td class="desc-cell">Transformação por matriz 2D (6 valores)</td></tr>
+      <tr><td class="tag-cell">matrix3d()</td><td class="name-cell">Matriz 3D</td><td class="desc-cell">Transformação por matriz 3D (16 valores)</td></tr>
+      <tr><td class="tag-cell">transform-origin</td><td class="name-cell">Ponto de Origem</td><td class="desc-cell">Ponto de referência das transformações (center, top left…)</td></tr>
+      <tr><td class="tag-cell">transform-style</td><td class="name-cell">Estilo da Transform</td><td class="desc-cell">flat ou preserve-3d — filhos em espaço 3D</td></tr>
+      <tr><td class="tag-cell">perspective</td><td class="name-cell">Perspectiva</td><td class="desc-cell">Profundidade da perspectiva 3D no elemento pai</td></tr>
+      <tr><td class="tag-cell">perspective-origin</td><td class="name-cell">Origem da Perspectiva</td><td class="desc-cell">Ponto de vista do observador</td></tr>
+      <tr><td class="tag-cell">backface-visibility</td><td class="name-cell">Visibilidade do Verso</td><td class="desc-cell">visible ou hidden — mostra o verso rotacionado</td></tr>
+      <tr><td class="tag-cell">clip-path</td><td class="name-cell">Recorte</td><td class="desc-cell">Recorta o elemento: circle(), polygon(), ellipse(), path()</td></tr>
+    </tbody>
+  </table>
+
+  <!-- CSS VARIÁVEIS -->
+  <div class="section-title" data-cat="css-variaveis" data-lang="css"><div class="section-dot" style="background:#b57bee"></div><h2>Variáveis, Seletores e Misc</h2></div>
+  <table class="css-table" data-cat="css-variaveis" data-lang="css">
+    <thead><tr><th>PROPRIEDADE / REGRA</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">--nome-variavel</td><td class="name-cell">Variável CSS</td><td class="desc-cell">Define variável customizada: --cor-primaria: #ff0000</td></tr>
+      <tr><td class="tag-cell">var(--variavel)</td><td class="name-cell">Usar Variável</td><td class="desc-cell">Usa o valor de uma variável CSS</td></tr>
+      <tr><td class="tag-cell">:root</td><td class="name-cell">Seletor Raiz</td><td class="desc-cell">Seletor de maior especificidade — ideal para variáveis globais</td></tr>
+      <tr><td class="tag-cell">calc()</td><td class="name-cell">Cálculo</td><td class="desc-cell">Calcula valores CSS: calc(100% - 2rem)</td></tr>
+      <tr><td class="tag-cell">min() / max()</td><td class="name-cell">Mínimo / Máximo</td><td class="desc-cell">Retorna o menor ou maior valor de uma lista</td></tr>
+      <tr><td class="tag-cell">clamp(min,val,max)</td><td class="name-cell">Clamp (Limitar)</td><td class="desc-cell">Valor responsivo entre mínimo e máximo</td></tr>
+      <tr><td class="tag-cell">content</td><td class="name-cell">Conteúdo</td><td class="desc-cell">Conteúdo gerado para ::before e ::after</td></tr>
+      <tr><td class="tag-cell">list-style</td><td class="name-cell">Estilo de Lista</td><td class="desc-cell">Atalho: type position image para marcadores</td></tr>
+      <tr><td class="tag-cell">list-style-type</td><td class="name-cell">Tipo de Marcador</td><td class="desc-cell">disc, circle, square, decimal, none…</td></tr>
+      <tr><td class="tag-cell">list-style-position</td><td class="name-cell">Posição do Marcador</td><td class="desc-cell">inside ou outside</td></tr>
+      <tr><td class="tag-cell">table-layout</td><td class="name-cell">Layout da Tabela</td><td class="desc-cell">auto ou fixed</td></tr>
+      <tr><td class="tag-cell">vertical-align</td><td class="name-cell">Alinhamento Vertical</td><td class="desc-cell">baseline, top, middle, bottom para inline/tabela</td></tr>
+      <tr><td class="tag-cell">object-fit</td><td class="name-cell">Ajuste do Objeto</td><td class="desc-cell">fill, contain, cover, none, scale-down para img/video</td></tr>
+      <tr><td class="tag-cell">object-position</td><td class="name-cell">Posição do Objeto</td><td class="desc-cell">Posiciona img/video dentro do container</td></tr>
+      <tr><td class="tag-cell">appearance</td><td class="name-cell">Aparência</td><td class="desc-cell">none — remove estilo nativo do browser</td></tr>
+      <tr><td class="tag-cell">isolation</td><td class="name-cell">Isolamento</td><td class="desc-cell">isolate — cria novo contexto de empilhamento</td></tr>
+      <tr><td class="tag-cell">contain</td><td class="name-cell">Conter</td><td class="desc-cell">none, layout, paint, strict — otimização de renderização</td></tr>
+      <tr><td class="tag-cell">counter-reset</td><td class="name-cell">Reiniciar Contador</td><td class="desc-cell">Cria ou reinicia um contador CSS</td></tr>
+      <tr><td class="tag-cell">counter-increment</td><td class="name-cell">Incrementar Contador</td><td class="desc-cell">Incrementa um contador CSS</td></tr>
+      <tr><td class="tag-cell">quotes</td><td class="name-cell">Aspas</td><td class="desc-cell">Define os caracteres de aspas abertas/fechadas</td></tr>
+    </tbody>
+  </table>
+
+  <!-- CSS MEDIA QUERY -->
+  <div class="section-title" data-cat="css-media" data-lang="css"><div class="section-dot" style="background:#ff6b35"></div><h2>Media Queries e Responsividade</h2></div>
+  <table class="css-table" data-cat="css-media" data-lang="css">
+    <thead><tr><th>REGRA / FEATURE</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">@media</td><td class="name-cell">Consulta de Mídia</td><td class="desc-cell">Aplica estilos condicionalmente por tipo de dispositivo/tela</td></tr>
+      <tr><td class="tag-cell">min-width</td><td class="name-cell">Largura Mínima</td><td class="desc-cell">Mobile-first: aplica estilos a partir de certa largura</td></tr>
+      <tr><td class="tag-cell">max-width</td><td class="name-cell">Largura Máxima</td><td class="desc-cell">Desktop-first: aplica estilos até certa largura</td></tr>
+      <tr><td class="tag-cell">orientation</td><td class="name-cell">Orientação</td><td class="desc-cell">portrait (vertical) ou landscape (horizontal)</td></tr>
+      <tr><td class="tag-cell">prefers-color-scheme</td><td class="name-cell">Tema do Sistema</td><td class="desc-cell">light ou dark — respeita preferência do usuário</td></tr>
+      <tr><td class="tag-cell">prefers-reduced-motion</td><td class="name-cell">Reduzir Movimento</td><td class="desc-cell">reduce — desativa animações para usuários sensíveis</td></tr>
+      <tr><td class="tag-cell">hover</td><td class="name-cell">Suporte a Hover</td><td class="desc-cell">none ou hover — detecta se dispositivo suporta hover</td></tr>
+      <tr><td class="tag-cell">pointer</td><td class="name-cell">Tipo de Ponteiro</td><td class="desc-cell">none, coarse (touch), fine (mouse)</td></tr>
+      <tr><td class="tag-cell">display-mode</td><td class="name-cell">Modo de Exibição</td><td class="desc-cell">standalone, fullscreen — detecta PWA instalado</td></tr>
+      <tr><td class="tag-cell">@container</td><td class="name-cell">Container Query</td><td class="desc-cell">Estilos baseados no tamanho do elemento pai (CSS moderno)</td></tr>
+      <tr><td class="tag-cell">@layer</td><td class="name-cell">Camada em Cascata</td><td class="desc-cell">Define ordem de prioridade na cascata CSS</td></tr>
+      <tr><td class="tag-cell">@supports</td><td class="name-cell">Suporte a Feature</td><td class="desc-cell">Aplica estilos se browser suportar determinada propriedade</td></tr>
+      <tr><td class="tag-cell">@import</td><td class="name-cell">Importar CSS</td><td class="desc-cell">Importa outro arquivo CSS</td></tr>
+      <tr><td class="tag-cell">@charset</td><td class="name-cell">Charset do CSS</td><td class="desc-cell">Define codificação do arquivo CSS</td></tr>
+    </tbody>
+  </table>
+
+</div><!-- /block-css -->
+
+
+<!-- ▓▓▓▓▓▓▓▓▓▓▓▓▓▓ JS BLOCK ▓▓▓▓▓▓▓▓▓▓▓▓▓▓ -->
+<div class="lang-block" id="block-js">
+
+  <div class="lang-banner js-banner">
+    <span class="lang-banner-icon">JS</span>
+    <div class="lang-banner-text">
+      <h3>JavaScript — Linguagem de Programação da Web</h3>
+      <p>Manipula DOM, eventos, dados e lógica · 180+ métodos e objetos · ES6+</p>
+    </div>
+  </div>
+
+  <!-- JS DOM -->
+  <div class="section-title" data-cat="js-dom" data-lang="js"><div class="section-dot" style="background:#ffd166"></div><h2>Manipulação do DOM</h2></div>
+  <table class="js-table" data-cat="js-dom" data-lang="js">
+    <thead><tr><th>MÉTODO / PROPRIEDADE</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">document.getElementById()</td><td class="name-cell">Buscar por ID</td><td class="desc-cell">Retorna o elemento com o ID especificado</td></tr>
+      <tr><td class="tag-cell">document.querySelector()</td><td class="name-cell">Seletor CSS (1 elemento)</td><td class="desc-cell">Retorna o primeiro elemento que corresponde ao seletor CSS</td></tr>
+      <tr><td class="tag-cell">document.querySelectorAll()</td><td class="name-cell">Seletor CSS (todos)</td><td class="desc-cell">Retorna todos os elementos que correspondem ao seletor</td></tr>
+      <tr><td class="tag-cell">document.getElementsByClassName()</td><td class="name-cell">Buscar por Classe</td><td class="desc-cell">Retorna HTMLCollection de elementos com a classe</td></tr>
+      <tr><td class="tag-cell">document.getElementsByTagName()</td><td class="name-cell">Buscar por Tag</td><td class="desc-cell">Retorna HTMLCollection de elementos com a tag</td></tr>
+      <tr><td class="tag-cell">document.createElement()</td><td class="name-cell">Criar Elemento</td><td class="desc-cell">Cria um novo elemento HTML</td></tr>
+      <tr><td class="tag-cell">element.appendChild()</td><td class="name-cell">Adicionar Filho</td><td class="desc-cell">Adiciona um elemento como último filho</td></tr>
+      <tr><td class="tag-cell">element.prepend()</td><td class="name-cell">Adicionar no Início</td><td class="desc-cell">Adiciona elemento(s) como primeiro filho</td></tr>
+      <tr><td class="tag-cell">element.append()</td><td class="name-cell">Adicionar no Final</td><td class="desc-cell">Adiciona elemento(s) ou texto como último filho</td></tr>
+      <tr><td class="tag-cell">element.insertBefore()</td><td class="name-cell">Inserir Antes</td><td class="desc-cell">Insere elemento antes de um filho de referência</td></tr>
+      <tr><td class="tag-cell">element.insertAdjacentHTML()</td><td class="name-cell">Inserir HTML Adjacente</td><td class="desc-cell">Insere HTML em posição relativa: beforebegin, afterbegin, beforeend, afterend</td></tr>
+      <tr><td class="tag-cell">element.removeChild()</td><td class="name-cell">Remover Filho</td><td class="desc-cell">Remove um filho do elemento</td></tr>
+      <tr><td class="tag-cell">element.remove()</td><td class="name-cell">Remover Elemento</td><td class="desc-cell">Remove o próprio elemento do DOM</td></tr>
+      <tr><td class="tag-cell">element.replaceChild()</td><td class="name-cell">Substituir Filho</td><td class="desc-cell">Substitui um filho por outro elemento</td></tr>
+      <tr><td class="tag-cell">element.cloneNode()</td><td class="name-cell">Clonar Elemento</td><td class="desc-cell">Cria cópia do elemento (deep=true copia filhos também)</td></tr>
+      <tr><td class="tag-cell">element.innerHTML</td><td class="name-cell">HTML Interno</td><td class="desc-cell">Lê ou define o HTML interno do elemento</td></tr>
+      <tr><td class="tag-cell">element.textContent</td><td class="name-cell">Conteúdo de Texto</td><td class="desc-cell">Lê ou define o texto puro do elemento (mais seguro)</td></tr>
+      <tr><td class="tag-cell">element.innerText</td><td class="name-cell">Texto Visível</td><td class="desc-cell">Texto visível renderizado (considera CSS visibility)</td></tr>
+      <tr><td class="tag-cell">element.setAttribute()</td><td class="name-cell">Definir Atributo</td><td class="desc-cell">Define o valor de um atributo HTML</td></tr>
+      <tr><td class="tag-cell">element.getAttribute()</td><td class="name-cell">Obter Atributo</td><td class="desc-cell">Retorna o valor de um atributo HTML</td></tr>
+      <tr><td class="tag-cell">element.removeAttribute()</td><td class="name-cell">Remover Atributo</td><td class="desc-cell">Remove um atributo HTML do elemento</td></tr>
+      <tr><td class="tag-cell">element.hasAttribute()</td><td class="name-cell">Verificar Atributo</td><td class="desc-cell">Retorna true se o elemento tiver o atributo</td></tr>
+      <tr><td class="tag-cell">element.classList.add()</td><td class="name-cell">Adicionar Classe</td><td class="desc-cell">Adiciona uma ou mais classes CSS ao elemento</td></tr>
+      <tr><td class="tag-cell">element.classList.remove()</td><td class="name-cell">Remover Classe</td><td class="desc-cell">Remove uma ou mais classes CSS do elemento</td></tr>
+      <tr><td class="tag-cell">element.classList.toggle()</td><td class="name-cell">Alternar Classe</td><td class="desc-cell">Adiciona a classe se não existe, remove se existe</td></tr>
+      <tr><td class="tag-cell">element.classList.contains()</td><td class="name-cell">Verificar Classe</td><td class="desc-cell">Retorna true se o elemento tiver a classe</td></tr>
+      <tr><td class="tag-cell">element.classList.replace()</td><td class="name-cell">Substituir Classe</td><td class="desc-cell">Substitui uma classe por outra</td></tr>
+      <tr><td class="tag-cell">element.style.property</td><td class="name-cell">Estilo Inline</td><td class="desc-cell">Define/lê propriedade CSS inline do elemento</td></tr>
+      <tr><td class="tag-cell">getComputedStyle()</td><td class="name-cell">Estilo Computado</td><td class="desc-cell">Retorna todos os estilos calculados pelo browser</td></tr>
+      <tr><td class="tag-cell">element.dataset</td><td class="name-cell">Data Attributes</td><td class="desc-cell">Acessa atributos data-* do elemento</td></tr>
+      <tr><td class="tag-cell">element.parentElement</td><td class="name-cell">Elemento Pai</td><td class="desc-cell">Referência ao elemento pai</td></tr>
+      <tr><td class="tag-cell">element.children</td><td class="name-cell">Filhos (Elements)</td><td class="desc-cell">HTMLCollection dos filhos elementos</td></tr>
+      <tr><td class="tag-cell">element.childNodes</td><td class="name-cell">Nós Filhos</td><td class="desc-cell">NodeList de todos os nós filhos (inclui texto)</td></tr>
+      <tr><td class="tag-cell">element.nextElementSibling</td><td class="name-cell">Próximo Irmão</td><td class="desc-cell">Próximo elemento irmão no DOM</td></tr>
+      <tr><td class="tag-cell">element.previousElementSibling</td><td class="name-cell">Irmão Anterior</td><td class="desc-cell">Elemento irmão anterior no DOM</td></tr>
+      <tr><td class="tag-cell">element.closest()</td><td class="name-cell">Ancestral Mais Próximo</td><td class="desc-cell">Busca o ancestral mais próximo que corresponde ao seletor</td></tr>
+      <tr><td class="tag-cell">element.matches()</td><td class="name-cell">Verificar Seletor</td><td class="desc-cell">Retorna true se elemento corresponde ao seletor</td></tr>
+      <tr><td class="tag-cell">element.getBoundingClientRect()</td><td class="name-cell">Caixa do Elemento</td><td class="desc-cell">Retorna tamanho e posição do elemento em relação ao viewport</td></tr>
+      <tr><td class="tag-cell">element.scrollIntoView()</td><td class="name-cell">Rolar até Elemento</td><td class="desc-cell">Faz scroll até o elemento ficar visível</td></tr>
+      <tr><td class="tag-cell">document.createTextNode()</td><td class="name-cell">Criar Nó de Texto</td><td class="desc-cell">Cria nó de texto puro</td></tr>
+      <tr><td class="tag-cell">document.createDocumentFragment()</td><td class="name-cell">Fragmento</td><td class="desc-cell">Container leve para operações DOM em lote</td></tr>
+    </tbody>
+  </table>
+
+  <!-- JS EVENTOS -->
+  <div class="section-title" data-cat="js-eventos" data-lang="js"><div class="section-dot" style="background:#ffd166"></div><h2>Eventos</h2></div>
+  <table class="js-table" data-cat="js-eventos" data-lang="js">
+    <thead><tr><th>EVENTO / MÉTODO</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">addEventListener()</td><td class="name-cell">Escutar Evento</td><td class="desc-cell">Registra um listener para um evento no elemento</td></tr>
+      <tr><td class="tag-cell">removeEventListener()</td><td class="name-cell">Remover Listener</td><td class="desc-cell">Remove um listener de evento do elemento</td></tr>
+      <tr><td class="tag-cell">dispatchEvent()</td><td class="name-cell">Disparar Evento</td><td class="desc-cell">Dispara manualmente um evento no elemento</td></tr>
+      <tr><td class="tag-cell">new Event()</td><td class="name-cell">Criar Evento</td><td class="desc-cell">Cria um objeto de evento personalizado</td></tr>
+      <tr><td class="tag-cell">new CustomEvent()</td><td class="name-cell">Evento Customizado</td><td class="desc-cell">Cria evento customizado com dados (detail)</td></tr>
+      <tr><td class="tag-cell">event.preventDefault()</td><td class="name-cell">Prevenir Padrão</td><td class="desc-cell">Cancela o comportamento padrão do evento</td></tr>
+      <tr><td class="tag-cell">event.stopPropagation()</td><td class="name-cell">Parar Propagação</td><td class="desc-cell">Impede o evento de subir para elementos pai</td></tr>
+      <tr><td class="tag-cell">event.stopImmediatePropagation()</td><td class="name-cell">Parar Todos os Listeners</td><td class="desc-cell">Impede outros listeners do mesmo evento</td></tr>
+      <tr><td class="tag-cell">event.target</td><td class="name-cell">Alvo do Evento</td><td class="desc-cell">Elemento que disparou o evento</td></tr>
+      <tr><td class="tag-cell">event.currentTarget</td><td class="name-cell">Alvo Atual</td><td class="desc-cell">Elemento ao qual o listener está vinculado</td></tr>
+      <tr><td class="tag-cell">click</td><td class="name-cell">Clique</td><td class="desc-cell">Clique com botão primário do mouse</td></tr>
+      <tr><td class="tag-cell">dblclick</td><td class="name-cell">Duplo Clique</td><td class="desc-cell">Duplo clique no elemento</td></tr>
+      <tr><td class="tag-cell">mousedown / mouseup</td><td class="name-cell">Pressionar/Soltar Mouse</td><td class="desc-cell">Pressionar ou soltar botão do mouse</td></tr>
+      <tr><td class="tag-cell">mousemove</td><td class="name-cell">Mover Mouse</td><td class="desc-cell">Mouse se move sobre o elemento</td></tr>
+      <tr><td class="tag-cell">mouseenter / mouseleave</td><td class="name-cell">Entrar/Sair (sem bolha)</td><td class="desc-cell">Mouse entra/sai do elemento (não propaga)</td></tr>
+      <tr><td class="tag-cell">mouseover / mouseout</td><td class="name-cell">Sobre/Fora (com bolha)</td><td class="desc-cell">Mouse entra/sai incluindo filhos (propaga)</td></tr>
+      <tr><td class="tag-cell">keydown / keyup</td><td class="name-cell">Tecla Pressionada/Solta</td><td class="desc-cell">Tecla do teclado é pressionada ou solta</td></tr>
+      <tr><td class="tag-cell">keypress</td><td class="name-cell">Tecla Pressionada (char)</td><td class="desc-cell">Deprecated — use keydown</td></tr>
+      <tr><td class="tag-cell">input</td><td class="name-cell">Entrada de Valor</td><td class="desc-cell">Valor do input muda (dispara em tempo real)</td></tr>
+      <tr><td class="tag-cell">change</td><td class="name-cell">Mudança de Valor</td><td class="desc-cell">Valor confirmado (blur ou Enter)</td></tr>
+      <tr><td class="tag-cell">submit</td><td class="name-cell">Envio de Formulário</td><td class="desc-cell">Formulário é submetido</td></tr>
+      <tr><td class="tag-cell">focus / blur</td><td class="name-cell">Foco / Perder Foco</td><td class="desc-cell">Elemento recebe ou perde foco</td></tr>
+      <tr><td class="tag-cell">focusin / focusout</td><td class="name-cell">Foco (com bolha)</td><td class="desc-cell">Foco em elemento ou filho (propaga)</td></tr>
+      <tr><td class="tag-cell">scroll</td><td class="name-cell">Rolagem</td><td class="desc-cell">Elemento ou página é rolada</td></tr>
+      <tr><td class="tag-cell">resize</td><td class="name-cell">Redimensionamento</td><td class="desc-cell">Janela é redimensionada</td></tr>
+      <tr><td class="tag-cell">load</td><td class="name-cell">Carregamento</td><td class="desc-cell">Recurso (página, imagem) foi totalmente carregado</td></tr>
+      <tr><td class="tag-cell">DOMContentLoaded</td><td class="name-cell">DOM Pronto</td><td class="desc-cell">HTML foi analisado e DOM construído (sem esperar imagens)</td></tr>
+      <tr><td class="tag-cell">beforeunload</td><td class="name-cell">Antes de Sair</td><td class="desc-cell">Usuário vai fechar ou navegar para fora da página</td></tr>
+      <tr><td class="tag-cell">touchstart / touchend</td><td class="name-cell">Toque</td><td class="desc-cell">Toque começa ou termina em dispositivo touch</td></tr>
+      <tr><td class="tag-cell">touchmove</td><td class="name-cell">Mover Toque</td><td class="desc-cell">Dedo se move na tela</td></tr>
+      <tr><td class="tag-cell">drag / dragstart / dragend</td><td class="name-cell">Arrastar</td><td class="desc-cell">Eventos da API de drag and drop</td></tr>
+      <tr><td class="tag-cell">drop / dragover</td><td class="name-cell">Soltar / Sobre</td><td class="desc-cell">Elemento é solto ou arrastado sobre alvo</td></tr>
+      <tr><td class="tag-cell">IntersectionObserver</td><td class="name-cell">Observar Interseção</td><td class="desc-cell">Detecta quando elemento entra/sai do viewport</td></tr>
+      <tr><td class="tag-cell">MutationObserver</td><td class="name-cell">Observar Mutações</td><td class="desc-cell">Detecta mudanças no DOM</td></tr>
+      <tr><td class="tag-cell">ResizeObserver</td><td class="name-cell">Observar Redimensionamento</td><td class="desc-cell">Detecta mudanças no tamanho de elementos</td></tr>
+    </tbody>
+  </table>
+
+  <!-- JS STRING -->
+  <div class="section-title" data-cat="js-string" data-lang="js"><div class="section-dot" style="background:#ffd166"></div><h2>Métodos de String</h2></div>
+  <table class="js-table" data-cat="js-string" data-lang="js">
+    <thead><tr><th>MÉTODO</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">string.length</td><td class="name-cell">Comprimento</td><td class="desc-cell">Número de caracteres da string</td></tr>
+      <tr><td class="tag-cell">.charAt(index)</td><td class="name-cell">Caractere na Posição</td><td class="desc-cell">Retorna o caractere no índice especificado</td></tr>
+      <tr><td class="tag-cell">.charCodeAt()</td><td class="name-cell">Código do Caractere</td><td class="desc-cell">Retorna o código Unicode do caractere</td></tr>
+      <tr><td class="tag-cell">.at(index)</td><td class="name-cell">Caractere (com negativo)</td><td class="desc-cell">Acessa índice positivo ou negativo (-1 = último)</td></tr>
+      <tr><td class="tag-cell">.indexOf()</td><td class="name-cell">Posição (1ª ocorrência)</td><td class="desc-cell">Retorna índice da primeira ocorrência (-1 se não achar)</td></tr>
+      <tr><td class="tag-cell">.lastIndexOf()</td><td class="name-cell">Última Posição</td><td class="desc-cell">Retorna índice da última ocorrência</td></tr>
+      <tr><td class="tag-cell">.includes()</td><td class="name-cell">Contém</td><td class="desc-cell">Retorna true se a string contém o valor</td></tr>
+      <tr><td class="tag-cell">.startsWith()</td><td class="name-cell">Começa Com</td><td class="desc-cell">Verifica se a string começa com o valor</td></tr>
+      <tr><td class="tag-cell">.endsWith()</td><td class="name-cell">Termina Com</td><td class="desc-cell">Verifica se a string termina com o valor</td></tr>
+      <tr><td class="tag-cell">.slice(start, end)</td><td class="name-cell">Fatiar</td><td class="desc-cell">Extrai parte da string (aceita índices negativos)</td></tr>
+      <tr><td class="tag-cell">.substring(start, end)</td><td class="name-cell">Substring</td><td class="desc-cell">Extrai parte da string (não aceita negativos)</td></tr>
+      <tr><td class="tag-cell">.toUpperCase()</td><td class="name-cell">Maiúsculas</td><td class="desc-cell">Converte toda a string para maiúsculas</td></tr>
+      <tr><td class="tag-cell">.toLowerCase()</td><td class="name-cell">Minúsculas</td><td class="desc-cell">Converte toda a string para minúsculas</td></tr>
+      <tr><td class="tag-cell">.trim()</td><td class="name-cell">Remover Espaços</td><td class="desc-cell">Remove espaços do início e fim</td></tr>
+      <tr><td class="tag-cell">.trimStart() / .trimEnd()</td><td class="name-cell">Trim por Lado</td><td class="desc-cell">Remove espaços só do início ou só do fim</td></tr>
+      <tr><td class="tag-cell">.replace()</td><td class="name-cell">Substituir</td><td class="desc-cell">Substitui primeira ocorrência por outro valor</td></tr>
+      <tr><td class="tag-cell">.replaceAll()</td><td class="name-cell">Substituir Tudo</td><td class="desc-cell">Substitui todas as ocorrências</td></tr>
+      <tr><td class="tag-cell">.split(separator)</td><td class="name-cell">Dividir</td><td class="desc-cell">Divide string em array pelo separador</td></tr>
+      <tr><td class="tag-cell">.join()</td><td class="name-cell">Unir (Array)</td><td class="desc-cell">Une array em string com separador</td></tr>
+      <tr><td class="tag-cell">.concat()</td><td class="name-cell">Concatenar</td><td class="desc-cell">Une duas ou mais strings</td></tr>
+      <tr><td class="tag-cell">.repeat(n)</td><td class="name-cell">Repetir</td><td class="desc-cell">Repete a string n vezes</td></tr>
+      <tr><td class="tag-cell">.padStart(len, str)</td><td class="name-cell">Preencher Início</td><td class="desc-cell">Preenche o início até atingir o tamanho</td></tr>
+      <tr><td class="tag-cell">.padEnd(len, str)</td><td class="name-cell">Preencher Final</td><td class="desc-cell">Preenche o fim até atingir o tamanho</td></tr>
+      <tr><td class="tag-cell">.match(regex)</td><td class="name-cell">Buscar com Regex</td><td class="desc-cell">Busca padrão regex na string</td></tr>
+      <tr><td class="tag-cell">.matchAll(regex)</td><td class="name-cell">Buscar Todos com Regex</td><td class="desc-cell">Retorna iterador com todas as correspondências</td></tr>
+      <tr><td class="tag-cell">.search(regex)</td><td class="name-cell">Posição do Regex</td><td class="desc-cell">Retorna índice do primeiro match do regex</td></tr>
+      <tr><td class="tag-cell">.normalize()</td><td class="name-cell">Normalizar Unicode</td><td class="desc-cell">Normaliza a string para forma Unicode padrão</td></tr>
+      <tr><td class="tag-cell">Template Literals `${}`</td><td class="name-cell">Template String</td><td class="desc-cell">Interpolação de variáveis em strings com backticks</td></tr>
+      <tr><td class="tag-cell">String.fromCharCode()</td><td class="name-cell">Código para Char</td><td class="desc-cell">Converte código Unicode para caractere</td></tr>
+    </tbody>
+  </table>
+
+  <!-- JS ARRAY -->
+  <div class="section-title" data-cat="js-array" data-lang="js"><div class="section-dot" style="background:#ffd166"></div><h2>Métodos de Array</h2></div>
+  <table class="js-table" data-cat="js-array" data-lang="js">
+    <thead><tr><th>MÉTODO</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">array.length</td><td class="name-cell">Comprimento</td><td class="desc-cell">Número de elementos no array</td></tr>
+      <tr><td class="tag-cell">.push()</td><td class="name-cell">Adicionar no Final</td><td class="desc-cell">Adiciona elementos ao final do array</td></tr>
+      <tr><td class="tag-cell">.pop()</td><td class="name-cell">Remover do Final</td><td class="desc-cell">Remove e retorna o último elemento</td></tr>
+      <tr><td class="tag-cell">.unshift()</td><td class="name-cell">Adicionar no Início</td><td class="desc-cell">Adiciona elementos ao início do array</td></tr>
+      <tr><td class="tag-cell">.shift()</td><td class="name-cell">Remover do Início</td><td class="desc-cell">Remove e retorna o primeiro elemento</td></tr>
+      <tr><td class="tag-cell">.splice(start, del, ...add)</td><td class="name-cell">Modificar no Lugar</td><td class="desc-cell">Remove, substitui ou adiciona elementos em qualquer posição</td></tr>
+      <tr><td class="tag-cell">.slice(start, end)</td><td class="name-cell">Fatiar Array</td><td class="desc-cell">Retorna novo array com elementos do intervalo</td></tr>
+      <tr><td class="tag-cell">.concat()</td><td class="name-cell">Concatenar Arrays</td><td class="desc-cell">Une dois ou mais arrays em um novo</td></tr>
+      <tr><td class="tag-cell">.join(separator)</td><td class="name-cell">Unir em String</td><td class="desc-cell">Converte array para string com separador</td></tr>
+      <tr><td class="tag-cell">.reverse()</td><td class="name-cell">Inverter</td><td class="desc-cell">Inverte a ordem dos elementos (modifica original)</td></tr>
+      <tr><td class="tag-cell">.sort(fn)</td><td class="name-cell">Ordenar</td><td class="desc-cell">Ordena elementos (use função comparadora para números)</td></tr>
+      <tr><td class="tag-cell">.toSorted()</td><td class="name-cell">Ordenar (sem alterar)</td><td class="desc-cell">Retorna novo array ordenado (não modifica original)</td></tr>
+      <tr><td class="tag-cell">.toReversed()</td><td class="name-cell">Inverter (sem alterar)</td><td class="desc-cell">Retorna novo array invertido (não modifica original)</td></tr>
+      <tr><td class="tag-cell">.indexOf()</td><td class="name-cell">Posição do Elemento</td><td class="desc-cell">Retorna índice do primeiro elemento encontrado</td></tr>
+      <tr><td class="tag-cell">.lastIndexOf()</td><td class="name-cell">Última Posição</td><td class="desc-cell">Retorna índice da última ocorrência</td></tr>
+      <tr><td class="tag-cell">.includes()</td><td class="name-cell">Contém Elemento</td><td class="desc-cell">Retorna true se o array contém o valor</td></tr>
+      <tr><td class="tag-cell">.find(fn)</td><td class="name-cell">Encontrar Elemento</td><td class="desc-cell">Retorna o primeiro elemento que satisfaz a condição</td></tr>
+      <tr><td class="tag-cell">.findIndex(fn)</td><td class="name-cell">Índice do Encontrado</td><td class="desc-cell">Retorna índice do primeiro elemento que satisfaz a condição</td></tr>
+      <tr><td class="tag-cell">.findLast(fn)</td><td class="name-cell">Último Encontrado</td><td class="desc-cell">Retorna o último elemento que satisfaz a condição</td></tr>
+      <tr><td class="tag-cell">.filter(fn)</td><td class="name-cell">Filtrar</td><td class="desc-cell">Retorna novo array com elementos que passaram na condição</td></tr>
+      <tr><td class="tag-cell">.map(fn)</td><td class="name-cell">Transformar</td><td class="desc-cell">Retorna novo array com cada elemento transformado</td></tr>
+      <tr><td class="tag-cell">.reduce(fn, init)</td><td class="name-cell">Reduzir</td><td class="desc-cell">Acumula array em um único valor (soma, objeto, etc.)</td></tr>
+      <tr><td class="tag-cell">.reduceRight(fn, init)</td><td class="name-cell">Reduzir da Direita</td><td class="desc-cell">Como reduce, mas da direita para a esquerda</td></tr>
+      <tr><td class="tag-cell">.forEach(fn)</td><td class="name-cell">Para Cada Elemento</td><td class="desc-cell">Executa função para cada elemento (sem retorno)</td></tr>
+      <tr><td class="tag-cell">.some(fn)</td><td class="name-cell">Algum Satisfaz</td><td class="desc-cell">Retorna true se ao menos 1 elemento satisfaz a condição</td></tr>
+      <tr><td class="tag-cell">.every(fn)</td><td class="name-cell">Todos Satisfazem</td><td class="desc-cell">Retorna true se todos os elementos satisfazem a condição</td></tr>
+      <tr><td class="tag-cell">.flat(depth)</td><td class="name-cell">Aplanar</td><td class="desc-cell">Achata arrays aninhados até a profundidade indicada</td></tr>
+      <tr><td class="tag-cell">.flatMap(fn)</td><td class="name-cell">Transformar e Aplanar</td><td class="desc-cell">Map seguido de flat com profundidade 1</td></tr>
+      <tr><td class="tag-cell">.fill(value, start, end)</td><td class="name-cell">Preencher</td><td class="desc-cell">Preenche posições com um valor estático</td></tr>
+      <tr><td class="tag-cell">.copyWithin()</td><td class="name-cell">Copiar Internamente</td><td class="desc-cell">Copia parte do array para outra posição</td></tr>
+      <tr><td class="tag-cell">.entries()</td><td class="name-cell">Entradas [índice, valor]</td><td class="desc-cell">Iterador com pares [índice, valor]</td></tr>
+      <tr><td class="tag-cell">.keys()</td><td class="name-cell">Chaves (Índices)</td><td class="desc-cell">Iterador com os índices do array</td></tr>
+      <tr><td class="tag-cell">.values()</td><td class="name-cell">Valores</td><td class="desc-cell">Iterador com os valores do array</td></tr>
+      <tr><td class="tag-cell">.at(index)</td><td class="name-cell">Elemento por Índice</td><td class="desc-cell">Acessa índice positivo ou negativo</td></tr>
+      <tr><td class="tag-cell">Array.from()</td><td class="name-cell">Array a partir de</td><td class="desc-cell">Cria array a partir de iterável ou array-like</td></tr>
+      <tr><td class="tag-cell">Array.isArray()</td><td class="name-cell">É Array?</td><td class="desc-cell">Verifica se o valor é um array</td></tr>
+      <tr><td class="tag-cell">Array.of()</td><td class="name-cell">Array de Valores</td><td class="desc-cell">Cria array com os valores fornecidos</td></tr>
+      <tr><td class="tag-cell">Spread [...arr]</td><td class="name-cell">Spread Operator</td><td class="desc-cell">Expande array: [...a, ...b] clona ou combina arrays</td></tr>
+      <tr><td class="tag-cell">Destructuring [a, b] = arr</td><td class="name-cell">Desestruturação</td><td class="desc-cell">Extrai valores do array em variáveis</td></tr>
+    </tbody>
+  </table>
+
+  <!-- JS OBJETO -->
+  <div class="section-title" data-cat="js-objeto" data-lang="js"><div class="section-dot" style="background:#ffd166"></div><h2>Métodos de Objeto</h2></div>
+  <table class="js-table" data-cat="js-objeto" data-lang="js">
+    <thead><tr><th>MÉTODO</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">Object.keys(obj)</td><td class="name-cell">Chaves do Objeto</td><td class="desc-cell">Retorna array com as chaves (propriedades) do objeto</td></tr>
+      <tr><td class="tag-cell">Object.values(obj)</td><td class="name-cell">Valores do Objeto</td><td class="desc-cell">Retorna array com os valores do objeto</td></tr>
+      <tr><td class="tag-cell">Object.entries(obj)</td><td class="name-cell">Pares Chave-Valor</td><td class="desc-cell">Retorna array de pares [chave, valor]</td></tr>
+      <tr><td class="tag-cell">Object.assign(target, src)</td><td class="name-cell">Copiar Propriedades</td><td class="desc-cell">Copia propriedades de objetos fonte para o destino</td></tr>
+      <tr><td class="tag-cell">Object.freeze(obj)</td><td class="name-cell">Congelar Objeto</td><td class="desc-cell">Impede modificações no objeto (imutável)</td></tr>
+      <tr><td class="tag-cell">Object.seal(obj)</td><td class="name-cell">Selar Objeto</td><td class="desc-cell">Impede adição/remoção de propriedades (mas permite editar)</td></tr>
+      <tr><td class="tag-cell">Object.create(proto)</td><td class="name-cell">Criar com Protótipo</td><td class="desc-cell">Cria objeto com protótipo específico</td></tr>
+      <tr><td class="tag-cell">Object.fromEntries()</td><td class="name-cell">De Entradas para Objeto</td><td class="desc-cell">Converte array de pares [chave, valor] em objeto</td></tr>
+      <tr><td class="tag-cell">Object.hasOwn(obj, key)</td><td class="name-cell">Tem Propriedade Própria</td><td class="desc-cell">Verifica se objeto tem a propriedade (não herdada)</td></tr>
+      <tr><td class="tag-cell">Object.defineProperty()</td><td class="name-cell">Definir Propriedade</td><td class="desc-cell">Define propriedade com descritores (get, set, enumerable…)</td></tr>
+      <tr><td class="tag-cell">Object.getPrototypeOf()</td><td class="name-cell">Obter Protótipo</td><td class="desc-cell">Retorna o protótipo do objeto</td></tr>
+      <tr><td class="tag-cell">Object.setPrototypeOf()</td><td class="name-cell">Definir Protótipo</td><td class="desc-cell">Define o protótipo do objeto</td></tr>
+      <tr><td class="tag-cell">Spread {...obj}</td><td class="name-cell">Spread de Objeto</td><td class="desc-cell">Clona ou combina objetos: {...a, ...b}</td></tr>
+      <tr><td class="tag-cell">Destructuring {a, b} = obj</td><td class="name-cell">Desestruturação</td><td class="desc-cell">Extrai propriedades do objeto em variáveis</td></tr>
+      <tr><td class="tag-cell">obj?.prop</td><td class="name-cell">Optional Chaining</td><td class="desc-cell">Acessa propriedade sem erro se objeto é null/undefined</td></tr>
+      <tr><td class="tag-cell">obj ?? valor</td><td class="name-cell">Nullish Coalescing</td><td class="desc-cell">Retorna valor padrão se esquerda é null ou undefined</td></tr>
+      <tr><td class="tag-cell">new Map()</td><td class="name-cell">Mapa</td><td class="desc-cell">Coleção de pares chave-valor com qualquer tipo de chave</td></tr>
+      <tr><td class="tag-cell">new Set()</td><td class="name-cell">Conjunto</td><td class="desc-cell">Coleção de valores únicos sem duplicatas</td></tr>
+      <tr><td class="tag-cell">new WeakMap()</td><td class="name-cell">Mapa Fraco</td><td class="desc-cell">Map com chaves objetos e referências fracas (GC)</td></tr>
+      <tr><td class="tag-cell">new WeakSet()</td><td class="name-cell">Conjunto Fraco</td><td class="desc-cell">Set com objetos e referências fracas (GC)</td></tr>
+      <tr><td class="tag-cell">Symbol()</td><td class="name-cell">Símbolo</td><td class="desc-cell">Tipo primitivo único e imutável para chaves</td></tr>
+      <tr><td class="tag-cell">Proxy</td><td class="name-cell">Proxy</td><td class="desc-cell">Intercepta operações em objetos (get, set, has…)</td></tr>
+      <tr><td class="tag-cell">Reflect</td><td class="name-cell">Reflect</td><td class="desc-cell">API para operações de reflexão em objetos</td></tr>
+    </tbody>
+  </table>
+
+  <!-- JS MATH -->
+  <div class="section-title" data-cat="js-math" data-lang="js"><div class="section-dot" style="background:#ffd166"></div><h2>Math — Matemática</h2></div>
+  <table class="js-table" data-cat="js-math" data-lang="js">
+    <thead><tr><th>MÉTODO / CONSTANTE</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">Math.PI</td><td class="name-cell">Pi (π)</td><td class="desc-cell">Constante π ≈ 3.14159265…</td></tr>
+      <tr><td class="tag-cell">Math.E</td><td class="name-cell">Euler (e)</td><td class="desc-cell">Constante e ≈ 2.71828…</td></tr>
+      <tr><td class="tag-cell">Math.abs(n)</td><td class="name-cell">Valor Absoluto</td><td class="desc-cell">Retorna o valor absoluto (sem sinal)</td></tr>
+      <tr><td class="tag-cell">Math.round(n)</td><td class="name-cell">Arredondar</td><td class="desc-cell">Arredonda para o inteiro mais próximo</td></tr>
+      <tr><td class="tag-cell">Math.floor(n)</td><td class="name-cell">Arredondar para Baixo</td><td class="desc-cell">Arredonda sempre para baixo</td></tr>
+      <tr><td class="tag-cell">Math.ceil(n)</td><td class="name-cell">Arredondar para Cima</td><td class="desc-cell">Arredonda sempre para cima</td></tr>
+      <tr><td class="tag-cell">Math.trunc(n)</td><td class="name-cell">Truncar</td><td class="desc-cell">Remove a parte decimal (não arredonda)</td></tr>
+      <tr><td class="tag-cell">Math.max(...n)</td><td class="name-cell">Máximo</td><td class="desc-cell">Retorna o maior valor da lista</td></tr>
+      <tr><td class="tag-cell">Math.min(...n)</td><td class="name-cell">Mínimo</td><td class="desc-cell">Retorna o menor valor da lista</td></tr>
+      <tr><td class="tag-cell">Math.pow(base, exp)</td><td class="name-cell">Potência</td><td class="desc-cell">Retorna base elevada ao expoente</td></tr>
+      <tr><td class="tag-cell">Math.sqrt(n)</td><td class="name-cell">Raiz Quadrada</td><td class="desc-cell">Retorna a raiz quadrada</td></tr>
+      <tr><td class="tag-cell">Math.cbrt(n)</td><td class="name-cell">Raiz Cúbica</td><td class="desc-cell">Retorna a raiz cúbica</td></tr>
+      <tr><td class="tag-cell">Math.random()</td><td class="name-cell">Número Aleatório</td><td class="desc-cell">Retorna número decimal aleatório entre 0 e 1</td></tr>
+      <tr><td class="tag-cell">Math.sign(n)</td><td class="name-cell">Sinal</td><td class="desc-cell">Retorna 1, -1 ou 0 conforme o sinal do número</td></tr>
+      <tr><td class="tag-cell">Math.log(n)</td><td class="name-cell">Logaritmo Natural</td><td class="desc-cell">Logaritmo na base e</td></tr>
+      <tr><td class="tag-cell">Math.log2(n)</td><td class="name-cell">Logaritmo Base 2</td><td class="desc-cell">Logaritmo na base 2</td></tr>
+      <tr><td class="tag-cell">Math.log10(n)</td><td class="name-cell">Logaritmo Base 10</td><td class="desc-cell">Logaritmo na base 10</td></tr>
+      <tr><td class="tag-cell">Math.sin(n)</td><td class="name-cell">Seno</td><td class="desc-cell">Seno do ângulo em radianos</td></tr>
+      <tr><td class="tag-cell">Math.cos(n)</td><td class="name-cell">Cosseno</td><td class="desc-cell">Cosseno do ângulo em radianos</td></tr>
+      <tr><td class="tag-cell">Math.tan(n)</td><td class="name-cell">Tangente</td><td class="desc-cell">Tangente do ângulo em radianos</td></tr>
+      <tr><td class="tag-cell">Math.hypot(...n)</td><td class="name-cell">Hipotenusa</td><td class="desc-cell">Raiz quadrada da soma dos quadrados</td></tr>
+      <tr><td class="tag-cell">parseInt(str, base)</td><td class="name-cell">Converter para Inteiro</td><td class="desc-cell">Converte string para número inteiro</td></tr>
+      <tr><td class="tag-cell">parseFloat(str)</td><td class="name-cell">Converter para Decimal</td><td class="desc-cell">Converte string para número decimal</td></tr>
+      <tr><td class="tag-cell">isNaN(n)</td><td class="name-cell">É NaN?</td><td class="desc-cell">Verifica se o valor é NaN</td></tr>
+      <tr><td class="tag-cell">isFinite(n)</td><td class="name-cell">É Finito?</td><td class="desc-cell">Verifica se o valor é finito</td></tr>
+      <tr><td class="tag-cell">Number.toFixed(n)</td><td class="name-cell">Casas Decimais</td><td class="desc-cell">Formata número com n casas decimais</td></tr>
+      <tr><td class="tag-cell">Number.toLocaleString()</td><td class="name-cell">Formato Local</td><td class="desc-cell">Formata número conforme localidade (R$ 1.000,00)</td></tr>
+    </tbody>
+  </table>
+
+  <!-- JS DATE -->
+  <div class="section-title" data-cat="js-date" data-lang="js"><div class="section-dot" style="background:#ffd166"></div><h2>Date — Data e Hora</h2></div>
+  <table class="js-table" data-cat="js-date" data-lang="js">
+    <thead><tr><th>MÉTODO</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">new Date()</td><td class="name-cell">Data Atual</td><td class="desc-cell">Cria objeto Date com data/hora atual</td></tr>
+      <tr><td class="tag-cell">Date.now()</td><td class="name-cell">Timestamp Atual</td><td class="desc-cell">Milissegundos desde 01/01/1970 (Unix timestamp)</td></tr>
+      <tr><td class="tag-cell">.getFullYear()</td><td class="name-cell">Ano</td><td class="desc-cell">Retorna o ano com 4 dígitos</td></tr>
+      <tr><td class="tag-cell">.getMonth()</td><td class="name-cell">Mês (0-11)</td><td class="desc-cell">Retorna mês (0=Janeiro, 11=Dezembro)</td></tr>
+      <tr><td class="tag-cell">.getDate()</td><td class="name-cell">Dia do Mês</td><td class="desc-cell">Retorna o dia do mês (1-31)</td></tr>
+      <tr><td class="tag-cell">.getDay()</td><td class="name-cell">Dia da Semana</td><td class="desc-cell">Retorna dia da semana (0=Domingo, 6=Sábado)</td></tr>
+      <tr><td class="tag-cell">.getHours()</td><td class="name-cell">Horas</td><td class="desc-cell">Retorna as horas (0-23)</td></tr>
+      <tr><td class="tag-cell">.getMinutes()</td><td class="name-cell">Minutos</td><td class="desc-cell">Retorna os minutos (0-59)</td></tr>
+      <tr><td class="tag-cell">.getSeconds()</td><td class="name-cell">Segundos</td><td class="desc-cell">Retorna os segundos (0-59)</td></tr>
+      <tr><td class="tag-cell">.getTime()</td><td class="name-cell">Timestamp</td><td class="desc-cell">Milissegundos desde 01/01/1970</td></tr>
+      <tr><td class="tag-cell">.setFullYear() etc.</td><td class="name-cell">Definir Data</td><td class="desc-cell">Define partes da data (setMonth, setDate…)</td></tr>
+      <tr><td class="tag-cell">.toLocaleDateString()</td><td class="name-cell">Data Local</td><td class="desc-cell">Data formatada conforme localidade</td></tr>
+      <tr><td class="tag-cell">.toLocaleTimeString()</td><td class="name-cell">Hora Local</td><td class="desc-cell">Hora formatada conforme localidade</td></tr>
+      <tr><td class="tag-cell">.toLocaleString()</td><td class="name-cell">Data e Hora Local</td><td class="desc-cell">Data e hora completos conforme localidade</td></tr>
+      <tr><td class="tag-cell">.toISOString()</td><td class="name-cell">Formato ISO</td><td class="desc-cell">Data em formato ISO 8601</td></tr>
+      <tr><td class="tag-cell">Intl.DateTimeFormat()</td><td class="name-cell">Formato Internacional</td><td class="desc-cell">Formata datas com controle total de idioma e fuso</td></tr>
+    </tbody>
+  </table>
+
+  <!-- JS ASYNC -->
+  <div class="section-title" data-cat="js-async" data-lang="js"><div class="section-dot" style="background:#06d6d6"></div><h2>Async, Promises e Fetch</h2></div>
+  <table class="js-table" data-cat="js-async" data-lang="js">
+    <thead><tr><th>MÉTODO / KEYWORD</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">async function</td><td class="name-cell">Função Assíncrona <span class="badge badge-es6">ES8</span></td><td class="desc-cell">Declara função assíncrona que retorna uma Promise</td></tr>
+      <tr><td class="tag-cell">await</td><td class="name-cell">Aguardar <span class="badge badge-es6">ES8</span></td><td class="desc-cell">Pausa execução até a Promise resolver</td></tr>
+      <tr><td class="tag-cell">new Promise()</td><td class="name-cell">Criar Promise</td><td class="desc-cell">Cria promessa com resolve e reject</td></tr>
+      <tr><td class="tag-cell">Promise.resolve()</td><td class="name-cell">Promise Resolvida</td><td class="desc-cell">Cria Promise já resolvida com o valor</td></tr>
+      <tr><td class="tag-cell">Promise.reject()</td><td class="name-cell">Promise Rejeitada</td><td class="desc-cell">Cria Promise já rejeitada com o erro</td></tr>
+      <tr><td class="tag-cell">Promise.all([])</td><td class="name-cell">Todas as Promises</td><td class="desc-cell">Resolve quando todas as promises resolvem (falha se uma falhar)</td></tr>
+      <tr><td class="tag-cell">Promise.allSettled([])</td><td class="name-cell">Todas Concluídas</td><td class="desc-cell">Aguarda todas completarem, independente de sucesso ou erro</td></tr>
+      <tr><td class="tag-cell">Promise.race([])</td><td class="name-cell">Corrida de Promises</td><td class="desc-cell">Resolve/rejeita com a primeira que completar</td></tr>
+      <tr><td class="tag-cell">Promise.any([])</td><td class="name-cell">Qualquer Promise</td><td class="desc-cell">Resolve com a primeira que resolver (ignora rejeições)</td></tr>
+      <tr><td class="tag-cell">.then(fn)</td><td class="name-cell">Após Resolver</td><td class="desc-cell">Executa função quando a Promise resolve com sucesso</td></tr>
+      <tr><td class="tag-cell">.catch(fn)</td><td class="name-cell">Tratar Erro</td><td class="desc-cell">Executa função quando a Promise é rejeitada</td></tr>
+      <tr><td class="tag-cell">.finally(fn)</td><td class="name-cell">Sempre Executar</td><td class="desc-cell">Executa sempre, independente de sucesso ou erro</td></tr>
+      <tr><td class="tag-cell">fetch(url)</td><td class="name-cell">Buscar Recurso HTTP</td><td class="desc-cell">Faz requisição HTTP, retorna Promise com Response</td></tr>
+      <tr><td class="tag-cell">response.json()</td><td class="name-cell">Converter para JSON</td><td class="desc-cell">Lê o corpo da resposta como JSON</td></tr>
+      <tr><td class="tag-cell">response.text()</td><td class="name-cell">Converter para Texto</td><td class="desc-cell">Lê o corpo da resposta como texto</td></tr>
+      <tr><td class="tag-cell">response.blob()</td><td class="name-cell">Converter para Blob</td><td class="desc-cell">Lê o corpo como Blob (arquivos, imagens)</td></tr>
+      <tr><td class="tag-cell">response.ok</td><td class="name-cell">Resposta OK?</td><td class="desc-cell">true se status HTTP está entre 200-299</td></tr>
+      <tr><td class="tag-cell">response.status</td><td class="name-cell">Código HTTP</td><td class="desc-cell">Código de status HTTP (200, 404, 500…)</td></tr>
+      <tr><td class="tag-cell">AbortController</td><td class="name-cell">Cancelar Requisição</td><td class="desc-cell">Cancela fetch ou outras operações assíncronas</td></tr>
+      <tr><td class="tag-cell">setTimeout(fn, ms)</td><td class="name-cell">Executar após Delay</td><td class="desc-cell">Executa função após o tempo em milissegundos</td></tr>
+      <tr><td class="tag-cell">setInterval(fn, ms)</td><td class="name-cell">Executar Repetidamente</td><td class="desc-cell">Executa função repetidamente no intervalo</td></tr>
+      <tr><td class="tag-cell">clearTimeout(id)</td><td class="name-cell">Cancelar Timeout</td><td class="desc-cell">Cancela setTimeout antes de disparar</td></tr>
+      <tr><td class="tag-cell">clearInterval(id)</td><td class="name-cell">Cancelar Interval</td><td class="desc-cell">Cancela setInterval</td></tr>
+      <tr><td class="tag-cell">requestAnimationFrame(fn)</td><td class="name-cell">Animação no Frame</td><td class="desc-cell">Executa função antes do próximo repaint (60fps)</td></tr>
+      <tr><td class="tag-cell">queueMicrotask(fn)</td><td class="name-cell">Fila de Microtask</td><td class="desc-cell">Agenda microtask para executar após o script atual</td></tr>
+      <tr><td class="tag-cell">for await...of</td><td class="name-cell">For Assíncrono</td><td class="desc-cell">Itera sobre iterável assíncrono</td></tr>
+      <tr><td class="tag-cell">async generator</td><td class="name-cell">Gerador Assíncrono</td><td class="desc-cell">Função que produz valores assíncronos com yield</td></tr>
+    </tbody>
+  </table>
+
+  <!-- JS CONSOLE -->
+  <div class="section-title" data-cat="js-console" data-lang="js"><div class="section-dot" style="background:#ffd166"></div><h2>Console e Debug</h2></div>
+  <table class="js-table" data-cat="js-console" data-lang="js">
+    <thead><tr><th>MÉTODO</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">console.log()</td><td class="name-cell">Exibir no Console</td><td class="desc-cell">Imprime valores no console do navegador</td></tr>
+      <tr><td class="tag-cell">console.warn()</td><td class="name-cell">Aviso</td><td class="desc-cell">Exibe aviso em amarelo no console</td></tr>
+      <tr><td class="tag-cell">console.error()</td><td class="name-cell">Erro</td><td class="desc-cell">Exibe erro em vermelho no console</td></tr>
+      <tr><td class="tag-cell">console.info()</td><td class="name-cell">Informação</td><td class="desc-cell">Exibe informação (geralmente com ícone azul)</td></tr>
+      <tr><td class="tag-cell">console.table()</td><td class="name-cell">Tabela</td><td class="desc-cell">Exibe array/objeto como tabela formatada</td></tr>
+      <tr><td class="tag-cell">console.group()</td><td class="name-cell">Iniciar Grupo</td><td class="desc-cell">Agrupa logs em bloco expansível</td></tr>
+      <tr><td class="tag-cell">console.groupEnd()</td><td class="name-cell">Fechar Grupo</td><td class="desc-cell">Fecha o grupo atual</td></tr>
+      <tr><td class="tag-cell">console.time(label)</td><td class="name-cell">Iniciar Timer</td><td class="desc-cell">Inicia cronômetro para medir performance</td></tr>
+      <tr><td class="tag-cell">console.timeEnd(label)</td><td class="name-cell">Parar Timer</td><td class="desc-cell">Para e exibe o tempo decorrido</td></tr>
+      <tr><td class="tag-cell">console.count(label)</td><td class="name-cell">Contar Chamadas</td><td class="desc-cell">Conta quantas vezes foi chamado</td></tr>
+      <tr><td class="tag-cell">console.assert()</td><td class="name-cell">Asserção</td><td class="desc-cell">Exibe erro somente se condição é falsa</td></tr>
+      <tr><td class="tag-cell">console.clear()</td><td class="name-cell">Limpar Console</td><td class="desc-cell">Limpa todos os logs do console</td></tr>
+      <tr><td class="tag-cell">console.dir()</td><td class="name-cell">Listar Propriedades</td><td class="desc-cell">Exibe todas propriedades do objeto em árvore</td></tr>
+      <tr><td class="tag-cell">console.trace()</td><td class="name-cell">Stack Trace</td><td class="desc-cell">Exibe a pilha de chamadas de funções</td></tr>
+      <tr><td class="tag-cell">debugger</td><td class="name-cell">Ponto de Parada</td><td class="desc-cell">Para execução e abre o debugger do browser</td></tr>
+    </tbody>
+  </table>
+
+  <!-- JS STORAGE -->
+  <div class="section-title" data-cat="js-storage" data-lang="js"><div class="section-dot" style="background:#ffd166"></div><h2>Storage, Window e Navegação</h2></div>
+  <table class="js-table" data-cat="js-storage" data-lang="js">
+    <thead><tr><th>MÉTODO / PROPRIEDADE</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">localStorage.setItem()</td><td class="name-cell">Salvar Local</td><td class="desc-cell">Salva dado permanente no armazenamento local</td></tr>
+      <tr><td class="tag-cell">localStorage.getItem()</td><td class="name-cell">Ler Local</td><td class="desc-cell">Lê dado do localStorage</td></tr>
+      <tr><td class="tag-cell">localStorage.removeItem()</td><td class="name-cell">Remover Local</td><td class="desc-cell">Remove item específico do localStorage</td></tr>
+      <tr><td class="tag-cell">localStorage.clear()</td><td class="name-cell">Limpar Local</td><td class="desc-cell">Remove todos os dados do localStorage</td></tr>
+      <tr><td class="tag-cell">sessionStorage</td><td class="name-cell">Armazenamento de Sessão</td><td class="desc-cell">Como localStorage, mas apagado ao fechar a aba</td></tr>
+      <tr><td class="tag-cell">IndexedDB</td><td class="name-cell">Banco de Dados Local</td><td class="desc-cell">Banco de dados NoSQL no navegador para grandes volumes</td></tr>
+      <tr><td class="tag-cell">document.cookie</td><td class="name-cell">Cookies</td><td class="desc-cell">Lê ou define cookies do documento</td></tr>
+      <tr><td class="tag-cell">window.location</td><td class="name-cell">Localização da Página</td><td class="desc-cell">Objeto com URL, pathname, hash, search, host…</td></tr>
+      <tr><td class="tag-cell">window.location.href</td><td class="name-cell">URL Atual</td><td class="desc-cell">URL completa da página atual</td></tr>
+      <tr><td class="tag-cell">window.location.reload()</td><td class="name-cell">Recarregar</td><td class="desc-cell">Recarrega a página atual</td></tr>
+      <tr><td class="tag-cell">window.history.back()</td><td class="name-cell">Voltar</td><td class="desc-cell">Navega para a página anterior no histórico</td></tr>
+      <tr><td class="tag-cell">window.history.forward()</td><td class="name-cell">Avançar</td><td class="desc-cell">Navega para a próxima página no histórico</td></tr>
+      <tr><td class="tag-cell">history.pushState()</td><td class="name-cell">Adicionar ao Histórico</td><td class="desc-cell">Adiciona entrada ao histórico sem recarregar</td></tr>
+      <tr><td class="tag-cell">history.replaceState()</td><td class="name-cell">Substituir no Histórico</td><td class="desc-cell">Substitui entrada atual no histórico</td></tr>
+      <tr><td class="tag-cell">window.alert()</td><td class="name-cell">Alerta</td><td class="desc-cell">Exibe caixa de diálogo com mensagem</td></tr>
+      <tr><td class="tag-cell">window.confirm()</td><td class="name-cell">Confirmar</td><td class="desc-cell">Caixa OK/Cancelar — retorna true/false</td></tr>
+      <tr><td class="tag-cell">window.prompt()</td><td class="name-cell">Entrada de Usuário</td><td class="desc-cell">Caixa de entrada de texto do usuário</td></tr>
+      <tr><td class="tag-cell">window.open()</td><td class="name-cell">Abrir Janela</td><td class="desc-cell">Abre nova janela ou aba do navegador</td></tr>
+      <tr><td class="tag-cell">window.close()</td><td class="name-cell">Fechar Janela</td><td class="desc-cell">Fecha a janela atual</td></tr>
+      <tr><td class="tag-cell">window.innerWidth / innerHeight</td><td class="name-cell">Tamanho do Viewport</td><td class="desc-cell">Largura e altura da área visível do navegador</td></tr>
+      <tr><td class="tag-cell">window.scrollY / scrollX</td><td class="name-cell">Posição do Scroll</td><td class="desc-cell">Quantidade de pixels rolados verticalmente/horizontalmente</td></tr>
+      <tr><td class="tag-cell">window.scrollTo()</td><td class="name-cell">Rolar para Posição</td><td class="desc-cell">Rola a janela para coordenadas específicas</td></tr>
+      <tr><td class="tag-cell">navigator.userAgent</td><td class="name-cell">Agente do Usuário</td><td class="desc-cell">String de identificação do browser</td></tr>
+      <tr><td class="tag-cell">navigator.language</td><td class="name-cell">Idioma do Browser</td><td class="desc-cell">Idioma configurado no navegador</td></tr>
+      <tr><td class="tag-cell">navigator.geolocation</td><td class="name-cell">Geolocalização</td><td class="desc-cell">API para obter localização GPS do usuário</td></tr>
+      <tr><td class="tag-cell">navigator.clipboard</td><td class="name-cell">Área de Transferência</td><td class="desc-cell">API para ler/escrever no clipboard</td></tr>
+    </tbody>
+  </table>
+
+  <!-- JS JSON REGEX -->
+  <div class="section-title" data-cat="js-json" data-lang="js"><div class="section-dot" style="background:#ffd166"></div><h2>JSON, RegExp e Utilidades</h2></div>
+  <table class="js-table" data-cat="js-json" data-lang="js">
+    <thead><tr><th>MÉTODO / OBJETO</th><th>NOME</th><th>DESCRIÇÃO</th></tr></thead>
+    <tbody>
+      <tr><td class="tag-cell">JSON.stringify()</td><td class="name-cell">Objeto para JSON</td><td class="desc-cell">Converte objeto JavaScript para string JSON</td></tr>
+      <tr><td class="tag-cell">JSON.parse()</td><td class="name-cell">JSON para Objeto</td><td class="desc-cell">Converte string JSON para objeto JavaScript</td></tr>
+      <tr><td class="tag-cell">/padrão/flags</td><td class="name-cell">Expressão Regular</td><td class="desc-cell">Define um padrão de busca: /abc/gi</td></tr>
+      <tr><td class="tag-cell">regex.test(str)</td><td class="name-cell">Testar Padrão</td><td class="desc-cell">Retorna true se string corresponde ao padrão</td></tr>
+      <tr><td class="tag-cell">regex.exec(str)</td><td class="name-cell">Executar Regex</td><td class="desc-cell">Retorna array com match e grupos capturados</td></tr>
+      <tr><td class="tag-cell">typeof</td><td class="name-cell">Tipo do Valor</td><td class="desc-cell">Retorna string com o tipo: "string", "number", "boolean", "object", "undefined", "function"</td></tr>
+      <tr><td class="tag-cell">instanceof</td><td class="name-cell">Instância de</td><td class="desc-cell">Verifica se objeto é instância de uma classe</td></tr>
+      <tr><td class="tag-cell">try...catch...finally</td><td class="name-cell">Tratamento de Erros</td><td class="desc-cell">Captura e trata erros sem quebrar a aplicação</td></tr>
+      <tr><td class="tag-cell">throw new Error()</td><td class="name-cell">Lançar Erro</td><td class="desc-cell">Lança erro customizado</td></tr>
+      <tr><td class="tag-cell">error.message</td><td class="name-cell">Mensagem do Erro</td><td class="desc-cell">Texto descritivo do erro</td></tr>
+      <tr><td class="tag-cell">error.stack</td><td class="name-cell">Pilha do Erro</td><td class="desc-cell">Stack trace completo do erro</td></tr>
+      <tr><td class="tag-cell">class</td><td class="name-cell">Classe <span class="badge badge-es6">ES6</span></td><td class="desc-cell">Define uma classe com constructor, métodos e herança</td></tr>
+      <tr><td class="tag-cell">extends</td><td class="name-cell">Herança</td><td class="desc-cell">Cria classe filha que herda de outra</td></tr>
+      <tr><td class="tag-cell">super()</td><td class="name-cell">Construtor Pai</td><td class="desc-cell">Chama o construtor ou método da classe pai</td></tr>
+      <tr><td class="tag-cell">static</td><td class="name-cell">Método Estático</td><td class="desc-cell">Método pertence à classe, não à instância</td></tr>
+      <tr><td class="tag-cell">get / set</td><td class="name-cell">Getter / Setter</td><td class="desc-cell">Define acessor/modificador de propriedade em classe</td></tr>
+      <tr><td class="tag-cell">import / export</td><td class="name-cell">Módulos ES6 <span class="badge badge-es6">ES6</span></td><td class="desc-cell">Importa e exporta variáveis, funções e classes entre arquivos</td></tr>
+      <tr><td class="tag-cell">export default</td><td class="name-cell">Exportação Padrão</td><td class="desc-cell">Exporta um único valor padrão do módulo</td></tr>
+      <tr><td class="tag-cell">Intl.NumberFormat()</td><td class="name-cell">Formato Numérico</td><td class="desc-cell">Formata números com localidade (moeda, %, etc.)</td></tr>
+      <tr><td class="tag-cell">structuredClone()</td><td class="name-cell">Clone Profundo</td><td class="desc-cell">Cria cópia profunda de objetos/arrays sem referência</td></tr>
+      <tr><td class="tag-cell">crypto.randomUUID()</td><td class="name-cell">UUID Aleatório</td><td class="desc-cell">Gera identificador único universal (UUID v4)</td></tr>
+      <tr><td class="tag-cell">btoa() / atob()</td><td class="name-cell">Base64 Encode/Decode</td><td class="desc-cell">Codifica ou decodifica string em Base64</td></tr>
+      <tr><td class="tag-cell">URL</td><td class="name-cell">Objeto URL</td><td class="desc-cell">Analisa e manipula URLs: new URL("https://...")</td></tr>
+      <tr><td class="tag-cell">URLSearchParams</td><td class="name-cell">Parâmetros de URL</td><td class="desc-cell">Manipula query strings da URL</td></tr>
+      <tr><td class="tag-cell">FormData</td><td class="name-cell">Dados de Formulário</td><td class="desc-cell">Captura dados de formulário para enviar via fetch</td></tr>
+      <tr><td class="tag-cell">Blob</td><td class="name-cell">Objeto Binário</td><td class="desc-cell">Representa dados binários imutáveis (arquivos, imagens)</td></tr>
+      <tr><td class="tag-cell">FileReader</td><td class="name-cell">Leitor de Arquivo</td><td class="desc-cell">Lê conteúdo de arquivos selecionados pelo usuário</td></tr>
+      <tr><td class="tag-cell">Worker</td><td class="name-cell">Web Worker</td><td class="desc-cell">Executa JavaScript em thread separada (sem bloquear UI)</td></tr>
+    </tbody>
+  </table>
+
+</div><!-- /block-js -->
+
+</div><!-- /container -->
+
+<footer>
+  ✦ Guia Completo Front-End — HTML · CSS · JavaScript — 500+ referências — Português-BR ✦
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
