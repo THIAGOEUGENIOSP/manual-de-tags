@@ -84,6 +84,805 @@ function escapeHtml(value) {
     .replace(/>/g, '&gt;');
 }
 
+function getRichHtmlExample(tagName, isVoid) {
+  const richExamples = {
+    a: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .card { padding: 20px; border: 1px solid #d8e0f0; border-radius: 16px; background: white; }
+    a { color: #2563eb; font-weight: 700; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Link em destaque</h1>
+    <p>O elemento <strong>&lt;a&gt;</strong> leva o usuario para outro destino.</p>
+    <a href="https://exemplo.com" target="_blank">Abrir pagina de exemplo</a>
+  </div>
+</body>
+</html>`,
+    button: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    button { padding: 12px 18px; border: 0; border-radius: 12px; background: #2563eb; color: white; font-weight: 700; cursor: pointer; }
+    #saida { margin-top: 14px; color: #334155; }
+  </style>
+</head>
+<body>
+  <button id="acao" type="button">Clique no botao</button>
+  <p id="saida">O botao dispara uma acao.</p>
+
+  <script>
+    document.getElementById('acao').addEventListener('click', () => {
+      document.getElementById('saida').textContent = 'Voce clicou no elemento <button>.';
+    });
+  </script>
+</body>
+</html>`,
+    form: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    form { display: grid; gap: 12px; max-width: 360px; padding: 20px; border-radius: 16px; background: white; border: 1px solid #d8e0f0; }
+    input, button { padding: 12px; border-radius: 12px; font: inherit; }
+    input { border: 1px solid #cbd5e1; }
+    button { border: 0; background: #2563eb; color: white; font-weight: 700; }
+    #mensagem { margin-top: 12px; color: #334155; }
+  </style>
+</head>
+<body>
+  <form id="cadastro">
+    <label for="email">E-mail</label>
+    <input id="email" type="email" placeholder="voce@exemplo.com" required>
+    <button type="submit">Cadastrar</button>
+  </form>
+  <p id="mensagem">O <strong>&lt;form&gt;</strong> agrupa campos e envio.</p>
+
+  <script>
+    document.getElementById('cadastro').addEventListener('submit', event => {
+      event.preventDefault();
+      document.getElementById('mensagem').textContent = 'Formulario enviado sem recarregar a pagina.';
+    });
+  </script>
+</body>
+</html>`,
+    input: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .box { max-width: 380px; padding: 20px; border-radius: 16px; background: white; border: 1px solid #d8e0f0; }
+    input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 12px; font: inherit; }
+    small { display: block; margin-top: 10px; color: #475569; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <label for="nome">Nome</label>
+    <input id="nome" type="text" placeholder="Digite seu nome">
+    <small>O <strong>&lt;input&gt;</strong> captura um valor digitado pelo usuario.</small>
+  </div>
+</body>
+</html>`,
+    nav: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background: #f8fbff; }
+    nav { display: flex; gap: 16px; padding: 18px 24px; background: linear-gradient(135deg, #1e3a8a, #2563eb); }
+    nav a { color: white; text-decoration: none; font-weight: 700; }
+    main { padding: 24px; }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#guias">Guias</a>
+    <a href="#contato">Contato</a>
+  </nav>
+  <main>
+    <h1>O elemento &lt;nav&gt; organiza a navegacao</h1>
+  </main>
+</body>
+</html>`,
+    menu: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .card { padding: 20px; border-radius: 16px; background: white; border: 1px solid #d8e0f0; }
+    menu { display: flex; gap: 12px; list-style: none; padding: 0; margin: 16px 0 0; }
+    menu li { list-style: none; }
+    menu button { padding: 10px 14px; border: 0; border-radius: 12px; background: #2563eb; color: white; font-weight: 700; cursor: pointer; }
+    #saida { margin-top: 14px; color: #475569; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Acoes agrupadas em menu</h2>
+    <p>O elemento <strong>&lt;menu&gt;</strong> pode organizar comandos ou acoes relacionadas.</p>
+    <menu>
+      <li><button type="button" data-acao="Salvar">Salvar</button></li>
+      <li><button type="button" data-acao="Duplicar">Duplicar</button></li>
+      <li><button type="button" data-acao="Compartilhar">Compartilhar</button></li>
+    </menu>
+    <p id="saida">Clique em uma das acoes do menu.</p>
+  </div>
+
+  <script>
+    document.querySelectorAll('menu button').forEach(botao => {
+      botao.addEventListener('click', () => {
+        document.getElementById('saida').textContent = 'Acao escolhida: ' + botao.dataset.acao;
+      });
+    });
+  </script>
+</body>
+</html>`,
+    header: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background: #f8fbff; }
+    header { padding: 28px 24px; background: linear-gradient(135deg, #0f172a, #1d4ed8); color: white; }
+    main { padding: 24px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cabecalho da pagina</h1>
+    <p>O <strong>&lt;header&gt;</strong> introduz a pagina ou secao.</p>
+  </header>
+  <main>Conteudo abaixo do cabecalho.</main>
+</body>
+</html>`,
+    section: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    section { padding: 20px; border-radius: 16px; background: white; border: 1px solid #d8e0f0; }
+  </style>
+</head>
+<body>
+  <section>
+    <h2>Secao de destaque</h2>
+    <p>O elemento <strong>&lt;section&gt;</strong> agrupa um tema dentro da pagina.</p>
+  </section>
+</body>
+</html>`,
+    article: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    article { padding: 20px; border-radius: 16px; background: white; border: 1px solid #d8e0f0; box-shadow: 0 10px 24px rgba(37,99,235,0.08); }
+  </style>
+</head>
+<body>
+  <article>
+    <h2>Post independente</h2>
+    <p>O <strong>&lt;article&gt;</strong> representa um bloco autonomo de conteudo.</p>
+  </article>
+</body>
+</html>`,
+    aside: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .layout { display: grid; grid-template-columns: 1.7fr 1fr; gap: 16px; }
+    main, aside { padding: 20px; border-radius: 16px; border: 1px solid #d8e0f0; background: white; }
+    aside { background: #eef4ff; }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <main>Conteudo principal da pagina.</main>
+    <aside>Dica lateral: o <strong>&lt;aside&gt;</strong> guarda informacoes complementares.</aside>
+  </div>
+</body>
+</html>`,
+    table: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 16px; overflow: hidden; }
+    th, td { padding: 12px; border: 1px solid #d8e0f0; text-align: left; }
+    th { background: #eff6ff; color: #1d4ed8; }
+  </style>
+</head>
+<body>
+  <table>
+    <thead>
+      <tr><th>Nome</th><th>Nivel</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Ana</td><td>Intermediario</td></tr>
+      <tr><td>Caio</td><td>Basico</td></tr>
+    </tbody>
+  </table>
+</body>
+</html>`,
+    img: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    figure { max-width: 420px; margin: 0; padding: 16px; background: white; border: 1px solid #d8e0f0; border-radius: 16px; }
+    img { width: 100%; border-radius: 12px; display: block; }
+    figcaption { margin-top: 10px; color: #475569; }
+  </style>
+</head>
+<body>
+  <figure>
+    <img src="https://picsum.photos/640/360" alt="Paisagem de exemplo">
+    <figcaption>O <strong>&lt;img&gt;</strong> insere uma imagem no documento.</figcaption>
+  </figure>
+</body>
+</html>`
+  };
+
+  if (richExamples[tagName]) return richExamples[tagName];
+  if (isVoid) {
+    return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .box { padding: 20px; border-radius: 16px; background: white; border: 1px solid #d8e0f0; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <p>Exemplo da tag <strong>&lt;${tagName}&gt;</strong>:</p>
+    <${tagName}>
+  </div>
+</body>
+</html>`;
+  }
+
+  return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; color: #0f172a; }
+    .box { padding: 20px; border-radius: 16px; background: white; border: 1px solid #d8e0f0; box-shadow: 0 10px 24px rgba(37,99,235,0.06); }
+    .label { display: inline-flex; margin-bottom: 12px; padding: 6px 10px; border-radius: 999px; background: #e8f0ff; color: #2457d6; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+    .demo { margin-top: 12px; padding: 16px; border: 1px dashed #c9d5ea; border-radius: 14px; background: #f8fbff; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <span class="label">Tag em destaque</span>
+    <p>Este exemplo foi montado para destacar o papel do elemento <strong>&lt;${tagName}&gt;</strong>.</p>
+    <div class="demo">
+      <${tagName}>Conteudo de exemplo dentro de &lt;${tagName}&gt;.</${tagName}>
+    </div>
+  </div>
+</body>
+</html>`;
+}
+
+function getRichCssExample(property) {
+  const sampleValues = {
+    'background-color': '#dbeafe',
+    color: '#2563eb',
+    background: 'linear-gradient(135deg, #1d4ed8, #06b6d4)',
+    display: 'flex',
+    'justify-content': 'space-between',
+    'align-items': 'center',
+    flex: '1',
+    'grid-template-columns': 'repeat(3, minmax(0, 1fr))',
+    position: 'relative',
+    width: '320px',
+    height: '120px',
+    margin: '24px auto',
+    padding: '20px',
+    border: '2px solid #2563eb',
+    'border-radius': '20px',
+    'box-shadow': '0 16px 30px rgba(15, 23, 42, 0.14)',
+    'font-size': '1.2rem',
+    'font-weight': '700',
+    'text-align': 'center',
+    'line-height': '1.7',
+    gap: '16px',
+    transform: 'translateY(-4px) scale(1.02)',
+    transition: 'all 0.25s ease',
+    animation: 'pulse 1.4s infinite',
+    opacity: '0.8'
+  };
+
+  const richExamples = {
+    color: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .card { padding: 20px; border-radius: 16px; background: white; border: 1px solid #d8e0f0; }
+    .texto { color: #2563eb; font-size: 1.2rem; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <p class="texto">A propriedade <strong>color</strong> muda a cor do texto.</p>
+  </div>
+</body>
+</html>`,
+    'background-color': `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .card {
+      padding: 24px;
+      border-radius: 18px;
+      background-color: #dbeafe;
+      border: 1px solid #93c5fd;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Fundo destacado</h2>
+    <p>A propriedade <strong>background-color</strong> pinta o fundo do elemento.</p>
+  </div>
+</body>
+</html>`,
+    background: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #eef4ff; }
+    .banner {
+      padding: 28px;
+      border-radius: 20px;
+      color: white;
+      background: linear-gradient(135deg, #1d4ed8, #06b6d4);
+    }
+  </style>
+</head>
+<body>
+  <div class="banner">
+    <h1>Background em destaque</h1>
+    <p>O fundo ajuda a criar atmosfera e contraste.</p>
+  </div>
+</body>
+</html>`,
+    display: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .grupo {
+      display: flex;
+      gap: 12px;
+      padding: 18px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid #d8e0f0;
+    }
+    .grupo div {
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #dbeafe;
+      border: 1px solid #93c5fd;
+    }
+  </style>
+</head>
+<body>
+  <div class="grupo">
+    <div>Item 1</div>
+    <div>Item 2</div>
+    <div>Item 3</div>
+  </div>
+</body>
+</html>`,
+    'justify-content': `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid #d8e0f0;
+    }
+    button { padding: 10px 14px; border: 0; border-radius: 12px; background: #2563eb; color: white; }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button>Voltar</button>
+    <button>Salvar</button>
+  </div>
+</body>
+</html>`,
+    'align-items': `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .linha {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid #d8e0f0;
+    }
+    .icone {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #bfdbfe;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="linha">
+    <span class="icone">i</span>
+    <strong>Texto alinhado ao centro verticalmente</strong>
+  </div>
+</body>
+</html>`,
+    flex: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .layout { display: flex; gap: 14px; }
+    .principal { flex: 2; padding: 20px; border-radius: 16px; background: white; border: 1px solid #d8e0f0; }
+    .lateral { flex: 1; padding: 20px; border-radius: 16px; background: #eef4ff; border: 1px solid #c7d7f6; }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <div class="principal">Coluna com flex maior</div>
+    <div class="lateral">Coluna menor</div>
+  </div>
+</body>
+</html>`,
+    'grid-template-columns': `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .grade {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .grade div {
+      padding: 20px;
+      border-radius: 14px;
+      background: white;
+      border: 1px solid #d8e0f0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="grade">
+    <div>Card 1</div>
+    <div>Card 2</div>
+    <div>Card 3</div>
+    <div>Card 4</div>
+    <div>Card 5</div>
+    <div>Card 6</div>
+  </div>
+</body>
+</html>`,
+    position: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .area {
+      position: relative;
+      padding: 28px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid #d8e0f0;
+      min-height: 140px;
+    }
+    .aviso {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #1d4ed8;
+      color: white;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="area">
+    <div class="aviso">Posicionado</div>
+    <p>position controla como o elemento se encaixa no layout.</p>
+  </div>
+</body>
+</html>`,
+    transform: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .card {
+      width: 220px;
+      padding: 20px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid #d8e0f0;
+      transform: translateY(-6px) rotate(-1deg) scale(1.02);
+      box-shadow: 0 14px 30px rgba(37,99,235,0.12);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">transform move, gira ou escala o elemento.</div>
+</body>
+</html>`,
+    transition: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    button {
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+  <button>Passe o mouse</button>
+</body>
+</html>`,
+    animation: `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .bolha {
+      width: 88px;
+      height: 88px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      animation: pulse 1.4s infinite;
+    }
+    @keyframes pulse {
+      50% { transform: scale(1.12); opacity: 0.75; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bolha"></div>
+</body>
+</html>`,
+    'box-shadow': `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #eef4ff; }
+    .card {
+      padding: 22px;
+      border-radius: 18px;
+      background: white;
+      border: 1px solid #d8e0f0;
+      box-shadow: 0 16px 36px rgba(15,23,42,0.12);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">box-shadow cria profundidade visual.</div>
+</body>
+</html>`,
+    'border-radius': `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .caixa {
+      padding: 22px;
+      border-radius: 24px;
+      background: white;
+      border: 1px solid #d8e0f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="caixa">border-radius suaviza os cantos.</div>
+</body>
+</html>`
+  };
+
+  if (richExamples[property]) return richExamples[property];
+  const sampleValue = sampleValues[property] || '#2563eb';
+
+  return `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .exemplo {
+      ${property}: ${sampleValue};
+      padding: 18px;
+      border-radius: 16px;
+      background: white;
+      border: 1px solid #d8e0f0;
+    }
+  </style>
+</head>
+<body>
+  <div class="exemplo">Exemplo da propriedade ${property}.</div>
+</body>
+</html>`;
+}
+
+function getRichJsExample(token) {
+  const richExamples = {
+    'document.querySelector()': `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .card { padding: 20px; border-radius: 16px; background: white; border: 1px solid #d8e0f0; }
+    button { padding: 12px 16px; border: 0; border-radius: 12px; background: #2563eb; color: white; font-weight: 700; cursor: pointer; }
+    #saida { margin-top: 14px; color: #334155; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <button id="botao">Alterar texto</button>
+    <p id="saida">Texto inicial.</p>
+  </div>
+
+  <script>
+    const botao = document.querySelector('#botao');
+    const saida = document.querySelector('#saida');
+    botao.addEventListener('click', () => {
+      saida.textContent = 'querySelector encontrou e atualizou o elemento.';
+    });
+  </script>
+</body>
+</html>`,
+    '.addEventListener()': `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .card { padding: 20px; border-radius: 16px; background: white; border: 1px solid #d8e0f0; }
+    button { padding: 12px 16px; border: 0; border-radius: 12px; background: #0f766e; color: white; font-weight: 700; cursor: pointer; }
+    #saida { margin-top: 14px; color: #334155; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <button id="botao">Clique aqui</button>
+    <p id="saida">Aguardando um evento.</p>
+  </div>
+
+  <script>
+    document.getElementById('botao').addEventListener('click', () => {
+      document.getElementById('saida').textContent = 'O evento de clique foi disparado.';
+    });
+  </script>
+</body>
+</html>`,
+    'setTimeout(fn, ms)': `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .card { padding: 20px; border-radius: 16px; background: white; border: 1px solid #d8e0f0; }
+    #saida { color: #334155; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <p id="saida">Esperando 1 segundo...</p>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById('saida').textContent = 'setTimeout executou depois do tempo definido.';
+    }, 1000);
+  </script>
+</body>
+</html>`,
+    'fetch(url)': `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; background: #f8fbff; }
+    .card { padding: 20px; border-radius: 16px; background: white; border: 1px solid #d8e0f0; }
+    button { padding: 12px 16px; border: 0; border-radius: 12px; background: #2563eb; color: white; font-weight: 700; cursor: pointer; }
+    #saida { margin-top: 14px; color: #334155; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <button id="carregar">Carregar usuario</button>
+    <p id="saida">Nenhum dado carregado.</p>
+  </div>
+
+  <script>
+    document.getElementById('carregar').addEventListener('click', () => {
+      fetch('https://jsonplaceholder.typicode.com/users/1')
+        .then(resposta => resposta.json())
+        .then(dados => {
+          document.getElementById('saida').textContent = 'Usuario carregado: ' + dados.name;
+        })
+        .catch(() => {
+          document.getElementById('saida').textContent = 'Falha ao carregar usuario.';
+        });
+    });
+  </script>
+</body>
+</html>`
+  };
+
+  return richExamples[token] || null;
+}
+
 function inferLevel(lang, token, row) {
   const cat = row.closest('table')?.dataset.cat || '';
   const lowerToken = token.toLowerCase();
@@ -271,109 +1070,42 @@ function inferRowDetails(lang, token, row) {
 
     const opening = tagName ? `<${tagName}>` : token;
     const closing = isVoid ? 'Nao tem fechamento' : `Fecha com </${tagName}>`;
-    const exampleMap = {
-      a: '<a href="https://exemplo.com" target="_blank">Visitar site</a>',
-      img: '<img src="foto.jpg" alt="Pessoa sorrindo em um escritorio">',
-      input: '<input type="text" name="nome" placeholder="Digite seu nome">',
-      button: '<button type="button">Salvar alteracoes</button>',
-      section: '<section>\n  <h2>Destaques da semana</h2>\n  <p>Confira as novidades do projeto.</p>\n</section>',
-      article: '<article>\n  <h2>Como aprender HTML</h2>\n  <p>Comece entendendo a estrutura semantica.</p>\n</article>',
-      header: '<header>\n  <h1>Portal de Estudos</h1>\n  <p>Guias praticos de front-end</p>\n</header>',
-      footer: '<footer>\n  <p>Contato: equipe@exemplo.com</p>\n</footer>',
-      nav: '<nav>\n  <a href="#inicio">Inicio</a>\n  <a href="#guias">Guias</a>\n  <a href="#contato">Contato</a>\n</nav>',
-      main: '<main>\n  <h2>Conteudo principal</h2>\n  <p>Esta area concentra as informacoes centrais da pagina.</p>\n</main>',
-      aside: '<aside>\n  <h3>Dica rapida</h3>\n  <p>Use tags semanticas para organizar o layout.</p>\n</aside>',
-      ul: '<ul>\n  <li>HTML</li>\n  <li>CSS</li>\n  <li>JavaScript</li>\n</ul>',
-      ol: '<ol>\n  <li>Criar estrutura</li>\n  <li>Aplicar estilos</li>\n  <li>Adicionar interacao</li>\n</ol>',
-      li: '<li>Item da lista</li>',
-      p: '<p>Este texto explica uma ideia de forma objetiva.</p>',
-      h1: '<h1>Guia de HTML</h1>',
-      h2: '<h2>Conceitos basicos</h2>',
-      div: '<div class="card">Conteudo do cartao</div>',
-      span: '<span class="tag">Novo</span>',
-      form: '<form>\n  <label for="email">E-mail</label>\n  <input id="email" type="email" name="email" placeholder="voce@exemplo.com" required>\n  <button type="submit">Cadastrar</button>\n</form>',
-      label: '<label for="nome">Nome completo</label>',
-      textarea: '<textarea name="mensagem" rows="4" placeholder="Escreva sua mensagem"></textarea>',
-      select: '<select name="nivel">\n  <option>Basico</option>\n  <option>Intermediario</option>\n  <option>Avancado</option>\n</select>',
-      option: '<option value="html">HTML</option>',
-      table: '<table>\n  <thead>\n    <tr><th>Nome</th><th>Nivel</th></tr>\n  </thead>\n  <tbody>\n    <tr><td>Ana</td><td>Intermediario</td></tr>\n    <tr><td>Caio</td><td>Basico</td></tr>\n  </tbody>\n</table>',
-      thead: '<thead>\n  <tr><th>Produto</th><th>Preco</th></tr>\n</thead>',
-      tbody: '<tbody>\n  <tr><td>Mouse</td><td>R$ 99</td></tr>\n</tbody>',
-      tr: '<tr>\n  <td>Celula 1</td>\n  <td>Celula 2</td>\n</tr>',
-      td: '<td>Conteudo da celula</td>',
-      th: '<th>Titulo da coluna</th>',
-      video: '<video controls width="320">\n  <source src="video.mp4" type="video/mp4">\n  Seu navegador nao suporta video.\n</video>',
-      audio: '<audio controls>\n  <source src="audio.mp3" type="audio/mpeg">\n</audio>',
-      source: '<source src="video.mp4" type="video/mp4">',
-      iframe: '<iframe src="https://exemplo.com" title="Pagina incorporada"></iframe>',
-      canvas: '<canvas id="grafico" width="240" height="120"></canvas>\n<script>\n  const ctx = document.getElementById("grafico").getContext("2d");\n  ctx.fillStyle = "#2563eb";\n  ctx.fillRect(20, 20, 80, 60);\n</script>',
-      noscript: '<noscript>Ative o JavaScript para usar todos os recursos.</noscript>',
-      script: '<script src="script.js"></script>',
-      style: '<style>\n  .destaque {\n    color: #2563eb;\n    font-weight: 700;\n  }\n</style>',
-      meta: '<meta name="description" content="Descricao da pagina">',
-      link: '<link rel="stylesheet" href="style.css">',
-      br: '<br>',
-      hr: '<hr>'
-    };
-
-    const example = exampleMap[tagName] || (isVoid ? opening : `${opening}Conteudo${`</${tagName}>`}`);
+    const example = getRichHtmlExample(tagName, isVoid);
     return { opening, closing, example };
   }
 
   if (lang === 'css') {
     const property = token.replace(/\(\)$/, '').trim();
-    const cssExampleMap = {
-      color: '.exemplo {\n  color: #2563eb;\n}',
-      'background-color': '.exemplo {\n  background-color: #e0f2fe;\n}',
-      background: '.exemplo {\n  background: linear-gradient(135deg, #dbeafe, #bfdbfe);\n}',
-      display: '.exemplo {\n  display: flex;\n  gap: 12px;\n}',
-      position: '.exemplo {\n  position: relative;\n  top: 8px;\n}',
-      width: '.exemplo {\n  width: 320px;\n}',
-      height: '.exemplo {\n  height: 120px;\n}',
-      margin: '.exemplo {\n  margin: 24px auto;\n}',
-      padding: '.exemplo {\n  padding: 16px 24px;\n}',
-      border: '.exemplo {\n  border: 2px solid #2563eb;\n}',
-      'border-radius': '.exemplo {\n  border-radius: 16px;\n}',
-      'box-shadow': '.exemplo {\n  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.18);\n}',
-      'font-size': '.exemplo {\n  font-size: 1.25rem;\n}',
-      'font-weight': '.exemplo {\n  font-weight: 700;\n}',
-      'text-align': '.exemplo {\n  text-align: center;\n}',
-      'line-height': '.exemplo {\n  line-height: 1.6;\n}',
-      'grid-template-columns': '.exemplo {\n  display: grid;\n  grid-template-columns: repeat(3, minmax(0, 1fr));\n  gap: 12px;\n}',
-      gap: '.exemplo {\n  display: flex;\n  gap: 16px;\n}',
-      'justify-content': '.exemplo {\n  display: flex;\n  justify-content: space-between;\n}',
-      'align-items': '.exemplo {\n  display: flex;\n  align-items: center;\n}',
-      flex: '.exemplo {\n  display: flex;\n  flex: 1;\n}',
-      transform: '.exemplo {\n  transform: translateY(-4px) scale(1.02);\n}',
-      transition: '.exemplo {\n  transition: all 0.25s ease;\n}',
-      animation: '.exemplo {\n  animation: pulse 1.5s infinite;\n}\n\n@keyframes pulse {\n  50% {\n    transform: scale(1.04);\n  }\n}',
-      opacity: '.exemplo {\n  opacity: 0.85;\n}'
-    };
     return {
       opening: `${property}: valor;`,
       closing: 'Nao tem fechamento',
-      example: cssExampleMap[property] || `.exemplo {\n  ${property}: valor;\n}`
+      example: getRichCssExample(property)
     };
   }
 
   if (lang === 'js') {
+    const richJsExample = getRichJsExample(token);
+    if (richJsExample) {
+      return {
+        opening: token.includes('()') ? `${token.replace('()', '(...)')}` : token,
+        closing: 'Nao tem fechamento',
+        example: richJsExample
+      };
+    }
+
     const jsExampleMap = {
-      'document.querySelector()': "const botao = document.querySelector('#botao');\nbotao.textContent = 'Texto atualizado';",
       'document.querySelectorAll()': "const itens = document.querySelectorAll('.item');\nitens.forEach(item => item.classList.add('ativo'));",
-      '.addEventListener()': "document.getElementById('botao').addEventListener('click', () => {\n  document.getElementById('saida').textContent = 'Evento executado com sucesso.';\n});",
       '.classList.add()': "const card = document.querySelector('.card');\ncard.classList.add('ativo');",
       '.classList.remove()': "const menu = document.querySelector('.menu');\nmenu.classList.remove('aberto');",
       '.classList.toggle()': "const painel = document.querySelector('.painel');\npainel.classList.toggle('visivel');",
       '.setAttribute()': "const link = document.querySelector('a');\nlink.setAttribute('target', '_blank');",
       '.getAttribute()': "const imagem = document.querySelector('img');\nconst descricao = imagem.getAttribute('alt');",
-      'fetch(url)': "fetch('https://api.exemplo.com/usuarios')\n  .then(resposta => resposta.json())\n  .then(dados => {\n    document.getElementById('saida').textContent = dados[0]?.nome || 'Sem dados';\n  })\n  .catch(() => {\n    document.getElementById('saida').textContent = 'Falha ao carregar';\n  });",
       '.map()': "const precos = [10, 20, 30];\nconst comDesconto = precos.map(preco => preco * 0.9);",
       '.filter()': "const numeros = [3, 8, 12, 15];\nconst maiores = numeros.filter(numero => numero > 10);",
       '.find()': "const usuarios = [{ id: 1 }, { id: 2 }];\nconst usuario = usuarios.find(item => item.id === 2);",
       '.forEach()': "['HTML', 'CSS', 'JS'].forEach(item => {\n  console.log(item);\n});",
       '.reduce()': "const valores = [10, 20, 30];\nconst total = valores.reduce((soma, item) => soma + item, 0);",
       '.includes()': "const tecnologias = ['HTML', 'CSS', 'JS'];\nconst temCss = tecnologias.includes('CSS');",
-      'setTimeout(fn, ms)': "setTimeout(() => {\n  document.getElementById('saida').textContent = 'setTimeout executou.';\n}, 1000);",
       'setInterval(fn, ms)': "const timer = setInterval(() => {\n  console.log('Executando a cada segundo');\n}, 1000);",
       'JSON.stringify()': "const usuario = { nome: 'Ana', nivel: 'intermediario' };\nconst json = JSON.stringify(usuario);",
       'JSON.parse()': "const texto = '{\"nome\":\"Ana\"}';\nconst objeto = JSON.parse(texto);",
@@ -481,29 +1213,221 @@ function copyText(text, button) {
   }
 }
 
-function buildHtmlPreview(code) {
-  return /<html[\s>]|<!doctype/i.test(code)
+function buildHtmlPreview(code, token) {
+  const htmlScaffoldMap = {
+    '<header>': `<div class="preview-stage preview-page"><div class="preview-caption">Cabecalho da pagina</div>${code}<main class="preview-main-card"><h2>Conteudo principal</h2><p>Area principal abaixo do header.</p></main></div>`,
+    '<nav>': `<div class="preview-stage preview-page"><div class="preview-caption">Menu de navegacao</div><header class="preview-nav-shell">${code}</header><main class="preview-main-card"><p>O nav organiza os links de acesso.</p></main></div>`,
+    '<section>': `<div class="preview-stage"><div class="preview-caption">Secao agrupando conteudo</div><div class="preview-section-wrap">${code}</div></div>`,
+    '<article>': `<div class="preview-stage"><div class="preview-caption">Bloco autonomo de conteudo</div><div class="preview-article-wrap">${code}</div></div>`,
+    '<aside>': `<div class="preview-stage preview-aside-layout"><main class="preview-main-card"><h2>Conteudo central</h2><p>Texto principal da pagina.</p></main><div class="preview-aside-wrap">${code}</div></div>`,
+    '<footer>': `<div class="preview-stage preview-page"><main class="preview-main-card"><h2>Conteudo principal</h2><p>Informacoes da pagina.</p></main>${code}</div>`,
+    '<form>': `<div class="preview-stage"><div class="preview-caption">Formulario em uso</div><div class="preview-form-wrap">${code}</div></div>`,
+    '<table>': `<div class="preview-stage"><div class="preview-caption">Tabela renderizada</div><div class="preview-table-wrap">${code}</div></div>`,
+    '<ul>': `<div class="preview-stage"><div class="preview-caption">Lista nao ordenada</div><div class="preview-list-wrap">${code}</div></div>`,
+    '<ol>': `<div class="preview-stage"><div class="preview-caption">Lista ordenada</div><div class="preview-list-wrap">${code}</div></div>`,
+    '<img>': `<div class="preview-stage"><div class="preview-caption">Imagem destacada</div><figure class="preview-media-card">${code}<figcaption>Imagem usada para ilustrar um conteudo.</figcaption></figure></div>`,
+    '<video>': `<div class="preview-stage"><div class="preview-caption">Player de video</div><div class="preview-media-card">${code}<p>Area de reproducao de video.</p></div></div>`,
+    '<audio>': `<div class="preview-stage"><div class="preview-caption">Player de audio</div><div class="preview-media-card">${code}<p>Controle de reproducao de audio.</p></div></div>`,
+    '<canvas>': `<div class="preview-stage"><div class="preview-caption">Area de desenho</div><div class="preview-canvas-card">${code}<p>O canvas serve como superficie para desenho via JavaScript.</p></div></div>`,
+    '<button>': `<div class="preview-stage"><div class="preview-caption">Acao clicavel</div><div class="preview-action-row">${code}<span class="preview-help">O botao chama uma acao do usuario.</span></div></div>`,
+    '<a>': `<div class="preview-stage"><div class="preview-caption">Link de navegacao</div><div class="preview-action-row">${code}<span class="preview-help">Leva o usuario para outra rota ou pagina.</span></div></div>`,
+    '<input>': `<div class="preview-stage"><div class="preview-caption">Campo de entrada</div><div class="preview-form-wrap">${code}<small class="preview-help">Aqui o usuario digita dados.</small></div></div>`,
+    '<textarea>': `<div class="preview-stage"><div class="preview-caption">Campo de texto longo</div><div class="preview-form-wrap">${code}</div></div>`,
+    '<select>': `<div class="preview-stage"><div class="preview-caption">Selecao de opcao</div><div class="preview-form-wrap">${code}</div></div>`
+  };
+
+  const content = /<html[\s>]|<!doctype/i.test(code)
     ? code
     : `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <style>
+    :root {
+      color-scheme: light;
+    }
+    * {
+      box-sizing: border-box;
+    }
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      padding: 16px;
+      padding: 18px;
       color: #111827;
+      background: linear-gradient(180deg, #ffffff, #f6f8fc);
+    }
+    .preview-stage {
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid #d8e0f0;
+      border-radius: 16px;
+      background: white;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    }
+    .preview-caption {
+      display: inline-flex;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e8f0ff;
+      color: #2457d6;
+      font: 700 12px Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .preview-main,
+    .preview-shell {
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px dashed #c9d5ea;
+      background: #f8fbff;
+    }
+    .preview-page {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,1), rgba(247,250,255,1));
+    }
+    .preview-main-card,
+    .preview-section-wrap,
+    .preview-article-wrap,
+    .preview-aside-wrap,
+    .preview-form-wrap,
+    .preview-media-card,
+    .preview-canvas-card {
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid #d8e0f0;
       background: #ffffff;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.06);
+    }
+    .preview-nav-shell {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+    }
+    .preview-nav-shell a {
+      color: white;
+      text-decoration: none;
+      margin-right: 12px;
+      font-weight: 700;
+    }
+    .preview-aside-layout {
+      grid-template-columns: 1.6fr 0.9fr;
+      align-items: start;
+    }
+    .preview-aside-wrap {
+      background: linear-gradient(180deg, #eef4ff, #ffffff);
+      border-style: dashed;
+    }
+    .preview-list-wrap li {
+      margin: 8px 0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #f8fbff;
+      border: 1px solid #d8e0f0;
+    }
+    .preview-action-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 10px 0;
+    }
+    .preview-help {
+      color: #475569;
+      font-size: 14px;
+    }
+    .preview-table-wrap {
+      overflow: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 10px 12px;
+      border: 1px solid #d8e0f0;
+      text-align: left;
+    }
+    th {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    input, textarea, select, button {
+      font: inherit;
+    }
+    form {
+      display: grid;
+      gap: 10px;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+    }
+    button {
+      padding: 11px 14px;
+      border: 0;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    a {
+      color: #2563eb;
+      font-weight: 700;
+    }
+    img, video, iframe, canvas {
+      max-width: 100%;
+      border-radius: 12px;
+      border: 1px solid #d8e0f0;
+      background: #f8fafc;
+    }
+    figure {
+      margin: 0;
+    }
+    figcaption {
+      margin-top: 10px;
+      color: #475569;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
-${code}
+${htmlScaffoldMap[token] || `<div class="preview-stage"><div class="preview-caption">Resultado renderizado</div>${code}</div>`}
 </body>
 </html>`;
+
+  return content;
 }
 
 function buildCssPreview(code, token) {
+  if (/<html[\s>]|<!doctype/i.test(code)) {
+    return code;
+  }
+
+  const cssStageMap = {
+    display: '<div class="exemplo"><div>Bloco 1</div><div>Bloco 2</div><div>Bloco 3</div></div>',
+    flex: '<div class="exemplo"><div>Card A</div><div>Card B</div><div>Card C</div></div>',
+    'grid-template-columns': '<div class="exemplo"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div></div>',
+    'justify-content': '<div class="exemplo"><button>Voltar</button><button>Salvar</button></div>',
+    'align-items': '<div class="exemplo"><span class="preview-mini">Icone</span><strong>Titulo alinhado</strong></div>',
+    color: '<div class="exemplo">Texto com foco visual</div>',
+    background: '<div class="exemplo">Area com fundo destacado</div>',
+    border: '<div class="exemplo">Caixa com borda</div>',
+    'border-radius': '<div class="exemplo">Caixa com cantos arredondados</div>',
+    'box-shadow': '<div class="exemplo">Cartao elevado</div>',
+    transform: '<div class="exemplo">Elemento transformado</div>',
+    animation: '<div class="exemplo">Elemento animado</div>',
+    position: '<div class="preview-position-wrap"><div class="exemplo">Caixa alvo</div><span class="preview-pin">Referencia</span></div>'
+  };
+
   return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -515,27 +1439,82 @@ function buildCssPreview(code, token) {
       background: #f5f7fb;
       color: #111827;
     }
+    .preview-caption {
+      display: inline-flex;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #e8f0ff;
+      color: #2457d6;
+      font: 700 12px Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
     .exemplo {
       padding: 16px;
       border: 1px solid #cbd5e1;
       background: linear-gradient(135deg, #ffffff, #e8f1ff);
+      border-radius: 14px;
+      min-height: 64px;
+    }
+    .exemplo > * {
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(37, 99, 235, 0.18);
+    }
+    .preview-mini {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+    }
+    .preview-position-wrap {
+      position: relative;
+      padding: 32px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 14px;
+      background: white;
+    }
+    .preview-pin {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-size: 12px;
+      color: #2563eb;
     }
     ${code}
   </style>
 </head>
 <body>
-  <div class="exemplo">Preview da propriedade ${escapeHtml(token)}</div>
+  <div class="preview-caption">Preview da propriedade ${escapeHtml(token)}</div>
+  ${cssStageMap[token] || '<div class="exemplo">Preview da propriedade</div>'}
 </body>
 </html>`;
 }
 
 function buildJsPreview(token, code) {
+  if (/<html[\s>]|<!doctype/i.test(code)) {
+    return code;
+  }
+
   const previewMap = {
     'document.querySelector()': `<!DOCTYPE html>
 <html lang="pt-BR">
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f8fbff; color: #111827; }
+    .demo { display: grid; gap: 12px; padding: 16px; border: 1px solid #d8e0f0; border-radius: 16px; background: white; }
+    button { padding: 10px 14px; border: 0; border-radius: 10px; background: #2563eb; color: white; }
+  </style>
+</head>
 <body>
-  <button id="botao">Clique</button>
-  <p id="saida">Aguardando...</p>
+  <div class="demo">
+    <strong>querySelector encontra um elemento e altera seu texto.</strong>
+    <button id="botao">Clique</button>
+    <p id="saida">Aguardando...</p>
+  </div>
   <script>
 ${code}
   </script>
@@ -543,9 +1522,19 @@ ${code}
 </html>`,
     '.addEventListener()': `<!DOCTYPE html>
 <html lang="pt-BR">
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f8fbff; color: #111827; }
+    .demo { display: grid; gap: 12px; padding: 16px; border: 1px solid #d8e0f0; border-radius: 16px; background: white; }
+    button { padding: 10px 14px; border: 0; border-radius: 10px; background: #0f766e; color: white; }
+  </style>
+</head>
 <body>
-  <button id="botao">Clique aqui</button>
-  <p id="saida">Nenhum clique ainda.</p>
+  <div class="demo">
+    <strong>O evento reage ao clique do usuario.</strong>
+    <button id="botao">Clique aqui</button>
+    <p id="saida">Nenhum clique ainda.</p>
+  </div>
   <script>
 ${code}
   </script>
@@ -553,8 +1542,17 @@ ${code}
 </html>`,
     'setTimeout(fn, ms)': `<!DOCTYPE html>
 <html lang="pt-BR">
+<head>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f8fbff; color: #111827; }
+    .demo { display: grid; gap: 12px; padding: 16px; border: 1px solid #d8e0f0; border-radius: 16px; background: white; }
+  </style>
+</head>
 <body>
-  <p id="saida">Esperando 1 segundo...</p>
+  <div class="demo">
+    <strong>O texto abaixo muda depois do tempo configurado.</strong>
+    <p id="saida">Esperando 1 segundo...</p>
+  </div>
   <script>
 ${code}
   </script>
@@ -575,6 +1573,9 @@ function validatePreviewContent(lang, token, code) {
   }
 
   if (lang === 'css') {
+    if (/<html[\s>]|<!doctype/i.test(code)) {
+      return { ok: true, message: `Preview completo montado para ${token}.` };
+    }
     if (!code.includes('{') || !code.includes('}')) {
       return { ok: false, message: 'Use uma regra CSS completa, por exemplo .exemplo { color: blue; }.' };
     }
@@ -582,6 +1583,9 @@ function validatePreviewContent(lang, token, code) {
   }
 
   if (lang === 'js') {
+    if (/<html[\s>]|<!doctype/i.test(code)) {
+      return { ok: true, message: `Preview completo montado para ${token}.` };
+    }
     if (!buildJsPreview(token, code)) {
       return { ok: false, message: 'Este item nao possui preview dinamico editavel.' };
     }
@@ -619,7 +1623,7 @@ function getPreviewConfig(lang, token, details) {
   if (lang === 'html') {
     return {
       title: 'Preview',
-      buildSrcdoc: code => buildHtmlPreview(code)
+      buildSrcdoc: code => buildHtmlPreview(code, token)
     };
   }
 
