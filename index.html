@@ -1325,6 +1325,49 @@
 </footer>
 
 <button class="back-to-top" id="backToTopBtn" type="button" onclick="scrollToTop()" aria-label="Voltar ao topo" title="Voltar ao topo">↑</button>
+
+<!-- ══════════════ AI CHAT ══════════════ -->
+<button class="ai-chat-btn" id="aiChatBtn" onclick="toggleAiChat()" aria-label="Assistente de IA" title="Assistente de IA">
+  <span class="ai-chat-btn-icon">✦</span>
+</button>
+
+<div class="ai-chat-panel" id="aiChatPanel" aria-hidden="true">
+  <div class="ai-chat-header">
+    <div class="ai-chat-header-info">
+      <span class="ai-chat-avatar">✦</span>
+      <div>
+        <div class="ai-chat-title">Assistente IA</div>
+        <div class="ai-chat-subtitle">HTML · CSS · JavaScript</div>
+      </div>
+    </div>
+    <button class="ai-chat-close" onclick="toggleAiChat()" aria-label="Fechar chat">✕</button>
+  </div>
+
+  <div class="ai-chat-messages" id="aiChatMessages">
+    <div class="ai-msg ai-msg-bot">
+      <span class="ai-msg-bubble">Olá! Sou o assistente do Guia Front-End. Pode me perguntar sobre qualquer tag HTML, propriedade CSS ou método JavaScript. 😊</span>
+    </div>
+  </div>
+
+  <div class="ai-chat-footer">
+    <div class="ai-chat-input-wrap">
+      <textarea
+        id="aiChatInput"
+        class="ai-chat-input"
+        placeholder="Ex: Como usar a tag &lt;details&gt;?"
+        rows="1"
+        onkeydown="aiChatKeydown(event)"
+        oninput="aiChatAutoResize(this)"
+        aria-label="Mensagem para o assistente"
+      ></textarea>
+      <button class="ai-chat-send" id="aiChatSend" onclick="aiChatSend()" aria-label="Enviar">
+        ➤
+      </button>
+    </div>
+    <div class="ai-chat-hint">Enter para enviar · Shift+Enter para nova linha</div>
+  </div>
+</div>
+
 <script src="script.js"></script>
 </body>
 </html>

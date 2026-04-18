@@ -3629,3 +3629,144 @@ openInlineExample = function (row, lang, token, name, details) {
   markStudied(lang + ":" + token);
   addHistorico(lang, token, name);
 };
+
+// ═══════════════════════════════════════════════
+// AI CHAT
+// ═══════════════════════════════════════════════
+(function () {
+  const MAX_HISTORY = 20;
+  let chatHistory = []; // { role, content }
+  let isLoading = false;
+
+  function getEl(id) { return document.getElementById(id); }
+
+  window.toggleAiChat = function () {
+    const panel = getEl('aiChatPanel');
+    const isOpen = panel.classList.toggle('open');
+    panel.setAttribute('aria-hidden', String(!isOpen));
+    if (isOpen) {
+      getEl('aiChatInput').focus();
+      scrollToBottom();
+    }
+  };
+
+  window.aiChatKeydown = function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      aiChatSend();
+    }
+  };
+
+  window.aiChatAutoResize = function (el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 110) + 'px';
+  };
+
+  window.aiChatSend = async function () {
+    if (isLoading) return;
+
+    const input = getEl('aiChatInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    input.value = '';
+    input.style.height = 'auto';
+
+    appendMessage('user', text);
+    chatHistory.push({ role: 'user', content: text });
+    if (chatHistory.length > MAX_HISTORY) chatHistory = chatHistory.slice(-MAX_HISTORY);
+
+    const typingEl = appendTyping();
+    setLoading(true);
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: chatHistory }),
+      });
+
+      const data = await res.json();
+      typingEl.remove();
+
+      if (!res.ok || data.error) {
+        appendMessage('bot', '⚠️ Ops! Ocorreu um erro: ' + (data.error || 'tente novamente.'));
+      } else {
+        const reply = data.reply || '';
+        appendMessage('bot', reply);
+        chatHistory.push({ role: 'assistant', content: reply });
+        if (chatHistory.length > MAX_HISTORY) chatHistory = chatHistory.slice(-MAX_HISTORY);
+      }
+    } catch {
+      typingEl.remove();
+      appendMessage('bot', '⚠️ Sem conexão. Verifique sua internet e tente novamente.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  function appendMessage(type, text) {
+    const messages = getEl('aiChatMessages');
+    const div = document.createElement('div');
+    div.className = 'ai-msg ai-msg-' + (type === 'user' ? 'user' : 'bot');
+
+    const bubble = document.createElement('span');
+    bubble.className = 'ai-msg-bubble';
+    bubble.innerHTML = formatMessage(text);
+
+    div.appendChild(bubble);
+    messages.appendChild(div);
+    scrollToBottom();
+    return div;
+  }
+
+  function appendTyping() {
+    const messages = getEl('aiChatMessages');
+    const div = document.createElement('div');
+    div.className = 'ai-msg ai-msg-bot';
+
+    const typing = document.createElement('div');
+    typing.className = 'ai-typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+
+    div.appendChild(typing);
+    messages.appendChild(div);
+    scrollToBottom();
+    return div;
+  }
+
+  function formatMessage(text) {
+    // Escapa HTML básico
+    let safe = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    // Blocos de código ```lang\n...\n```
+    safe = safe.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) => {
+      return `<pre><code>${code.trim()}</code></pre>`;
+    });
+
+    // Código inline `...`
+    safe = safe.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+    // Negrito **...**
+    safe = safe.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+    // Quebras de linha
+    safe = safe.replace(/\n/g, '<br>');
+
+    return safe;
+  }
+
+  function scrollToBottom() {
+    const messages = getEl('aiChatMessages');
+    if (messages) messages.scrollTop = messages.scrollHeight;
+  }
+
+  function setLoading(val) {
+    isLoading = val;
+    const btn = getEl('aiChatSend');
+    if (btn) btn.disabled = val;
+  }
+})();
